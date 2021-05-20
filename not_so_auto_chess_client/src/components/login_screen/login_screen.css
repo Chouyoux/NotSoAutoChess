@@ -1,0 +1,51 @@
+.loginScreenButton {
+
+    width: 50%;
+    padding: 12px 20px;
+    margin: 8px 0;
+    box-sizing: border-box;
+
+    border-radius: 15px;
+    border-color: #737da0;
+    box-shadow: 5px 10px 5px rgba(0, 0, 0, 0.3);
+
+    box-shadow: black;
+
+    color: white;
+    font-family: pixel;
+    font-style: bold;
+    font-size: 175%;
+    background-color: #4d5fa0;
+
+    vertical-align: top !important;
+    vertical-align: bottom;
+
+    cursor: pointer;
+    
+}
+
+.loginScreenButton:hover {
+
+    border-color: #5264a5;
+    background-color: #2d46a3;
+    
+}
+
+.screen_form_block {
+
+
+    height: 100%; /* Full-height: remove this if you want "auto" height */
+    width: 50%; /* Set the width of the sidebar */
+    position: fixed; /* Fixed Sidebar (stay in place on scroll) */
+    z-index: 0; /* Stay on top */
+    margin-left: 50%;
+    background-color: #C26D46;
+    overflow-x: hidden; /* Disable horizontal scroll */
+    padding-top: 20px;
+    color: #ffffff;
+
+    text-align: center;
+    display: inline-block;
+
+    
+}

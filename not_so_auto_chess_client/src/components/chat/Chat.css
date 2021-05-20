@@ -1,0 +1,86 @@
+#wrapper {
+
+    position: fixed;
+    padding-bottom: 25px;
+    background-image: url("../../images/chat/chat.png");
+    width: 507px;
+    height: 396px;
+    text-align: center;
+
+    top: 100vh;
+    left: 25px;
+    
+    -webkit-transform: translate(0, -108%);
+    transform: translate(0, -108%);
+
+}
+
+#chatbox {
+
+    text-align: left;
+    margin: 14px auto;
+    margin-bottom: 25px;
+    padding: 10px;
+    background: #7f371d;
+    height: 259px;
+    width: 408px;
+    overflow: auto;
+    color: white;
+
+}
+
+#usermsg {
+
+    width: 399px;
+    height: 13px;
+    border: none;
+    background-color: #7f371d;
+    margin-top: 28px;
+    color: white;
+    margin-left: 9px;
+    font: 12px arial;
+
+}
+
+.error {
+
+    color: #ff0000;
+
+}
+
+#menu {
+
+    padding: 12.5px 25px 12.5px 25px;
+
+}
+
+.msgln {
+
+    margin: 0 0 2px 0;
+
+}
+
+#usermsg:focus, #usermsg:hover {
+
+    outline: none;
+    background-color: #53210f;
+
+}
+
+#submitmsg {
+
+    background-image: url("../../images/chat/send.png");
+    width: 29px;
+    height: 29px;
+    text-align: center;
+    border: none;
+    vertical-align: middle;
+    margin-left: 3px;
+    cursor: pointer;
+
+}
+
+#submitmsg:focus {
+    cursor: pointer;
+    outline: none;
+}

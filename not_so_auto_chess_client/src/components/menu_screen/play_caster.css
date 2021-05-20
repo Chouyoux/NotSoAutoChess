@@ -1,0 +1,16 @@
+.playCasterPlay {
+
+    transform: translate(-50%, 0);
+    -webkit-transform: translate(-50%, 0);
+
+
+    box-shadow: 5px 10px 5px rgba(0, 0, 0, 0.3);
+
+    box-shadow: black;
+
+    color: white;
+    font-family: pixel;
+    font-style: bold;
+    font-size: 175%;
+    
+}
