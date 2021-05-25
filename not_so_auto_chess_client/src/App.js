@@ -59,7 +59,7 @@ function App() {
   return (
       <div className="App" onContextMenu={(event) => event.preventDefault()}>
         < LoginScreen hide={hideLogin} onLogin={onLogin} socket={socket} />
-        < MenuScreen hide={hideMenu} checkLogin={checkLogin} onLogout={onLogout} />
+        < MenuScreen hide={hideMenu} checkLogin={checkLogin} onLogout={onLogout} socket={socket} />
       </div>
   );
 }

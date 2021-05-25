@@ -6,7 +6,7 @@ import getCookie from '../../utils/get_cookie.js'
 import pen from '../../images/profile_screen/pen.png';
 import back_arrow from '../../images/profile_screen/back_arrow.png';
 
-const ProfileScreen = ( { hide, backToMenu, onLogout } ) => {
+const ProfileScreen = ( { hide, backToMenu, onLogout, socket } ) => {
 
     const [isEditingPseudonym, setIsEditingPseudonym] = useState(false);
     const [isEditingEmail, setIsEditingEmail] = useState(false);
@@ -20,16 +20,6 @@ const ProfileScreen = ( { hide, backToMenu, onLogout } ) => {
 
     const [isLoading, setIsLoading] = useState(false);
     const [formState, setFormState] = useState('');
-
-    useEffect(() => {
-
-        if (!hide){
-            updateContent();
-        }
-    
-    });
-
-    
 
     const onSubmit = async (event) => {
 
@@ -52,22 +42,15 @@ const ProfileScreen = ( { hide, backToMenu, onLogout } ) => {
             auth_key : getCookie("auth_key")
         }
 
-        await fetch('http://176.159.165.187:3001/update-user', {
-            method: "POST",
-            body: JSON.stringify(_data),
-            headers: { "Content-type": "application/json; charset=UTF-8" }
-        })
-        .then(response => { return response.json();})
-        .then(data => {
-            if(data) {
-                if (data.code === 200){
-                    setIsEditingPseudonym(false);
-                    setIsEditingEmail(false);
-                    setIsEditingPassword(false);
-                    updateContent();
-                }
-                setFormState(data.message);
+        socket.emit("userUpdate", _data, (response) => {
+            console.log(response);
+            if (response.success){
+                setIsEditingPseudonym(false);
+                setIsEditingEmail(false);
+                setIsEditingPassword(false);
+                updateContent();
             }
+            setFormState(response.message);
         });
 
         
@@ -76,29 +59,20 @@ const ProfileScreen = ( { hide, backToMenu, onLogout } ) => {
 
     const updateContent = function () {
 
-        let _data = {
-            auth_key: getCookie("auth_key")
-        }
-
-        fetch('http://176.159.165.187:3001/get-user', {
-            method: "POST",
-            body: JSON.stringify(_data),
-            headers: { "Content-type": "application/json; charset=UTF-8" }
-        })
-        .then(response => { return response.json();})
-        .then(data => {
-            if(data) {
-                if (data.code === 200){
-                    setOldPseudonym(data.pseudonym);
-                    setOldEmail(data.email);
-                }
-                else {
-                    onLogout();
-                }
+        socket.emit("userGet", { auth_key: getCookie("auth_key") }, (response) => {
+            console.log(response);
+            if (response.success){
+                setOldPseudonym(response.pseudonym);
+                setOldEmail(response.email);
+            }
+            else{
+                onLogout();
             }
         });
 
     }
+    
+    updateContent();
 
     return (
         <div className="profileScreen">

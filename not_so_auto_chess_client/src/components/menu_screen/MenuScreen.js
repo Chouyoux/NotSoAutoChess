@@ -14,7 +14,7 @@ import icon_logout_hover from '../../images/menu_screen/icon_logout_hover.png';
 
 import './menu_screen.css';
 
-const MenuScreen = ( { hide, checkLogin, onLogout } ) => {
+const MenuScreen = ( { hide, checkLogin, onLogout, socket } ) => {
 
     const [showProfile, setShowProfile] = useState(false);
     const [iconProfile, setIconProfile] = useState(icon_profile);
@@ -44,7 +44,7 @@ const MenuScreen = ( { hide, checkLogin, onLogout } ) => {
     return hide ? null : showProfile ?
     (
         <div>
-            <ProfileScreen backToMenu={backToMenu} onLogout={onLogout} hide={!showProfile} />
+            <ProfileScreen backToMenu={backToMenu} onLogout={onLogout} hide={!showProfile} socket={socket} />
         </div>
     ) :
     (
