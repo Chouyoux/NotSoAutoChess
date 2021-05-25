@@ -82,39 +82,21 @@ const FriendsList = ( { socket } ) => {
         socket.emit("userFriendsGet", { auth_key: getCookie("auth_key") }, (response) => {
             console.log(response);
             if (response.success){
-                setFriends([]);
-                for (let i = 0; i < response.friends.length; i++ ){
-                    let friend = response.friends[i];
-                    if (!friends.includes(friend)){
-                        setFriends(friends => [...friends, friend]);
-                    }
-                }
+                setFriends(response.friends);
             }
         });
 
         socket.emit("userInvitationsPendingGet", { auth_key: getCookie("auth_key") }, (response) => {
             console.log(response);
             if (response.success){
-                setInvitationsPending([]);
-                for (let i = 0; i < response.invitations.length; i++ ){
-                    let invitation = response.invitations[i];
-                    if (!invitationsPending.includes(invitation)){
-                        setInvitationsPending(invitationsPending => [...invitationsPending, invitation]);
-                    }
-                }
+                setInvitationsPending(response.invitations);
             }
         });
 
         socket.emit("userInvitationsReceivedGet", { auth_key: getCookie("auth_key") }, (response) => {
             console.log(response);
             if (response.success){
-                setInvitationsReceived([]);
-                for (let i = 0; i < response.invitations.length; i++ ){
-                    let invitation = response.invitations[i];
-                    if (!invitationsReceived.includes(invitation)){
-                        setInvitationsReceived(invitationsReceived => [...invitationsReceived, invitation]);
-                    }
-                }
+                setInvitationsReceived(response.invitations);
             }
         });
 
@@ -126,7 +108,7 @@ const FriendsList = ( { socket } ) => {
         socket.on("updateFriendsList", function() {updateContent()});
 
         return () => {
-            socket.removeEventListener("updateFriendsList", updateContent());
+            socket.removeEventListener("updateFriendsList", function() {updateContent()});
         };
 
     }, []);
