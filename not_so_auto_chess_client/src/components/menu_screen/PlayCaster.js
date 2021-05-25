@@ -12,16 +12,22 @@ const PlayCaster = () => {
     return (
         <div className="playCaster">
 
-            <img
-                className="playCasterPlay selectDisable"
-                onDragStart={(event) => {event.preventDefault();}}
-                alt="Play"
-                src={playButton}
-                onMouseOver={() => {setPlayButton(play_button_hover)}}
-                onMouseOut={() => {setPlayButton(play_button)}}
-                onMouseDown={() => {setPlayButton(play_button_click)}}
-                onMouseUp={() => {setPlayButton(play_button_hover)}}
-            />
+            <a
+                href="https://www.youtube.com/watch?v=dQw4w9WgXcQ"
+                target="_blank"
+            >
+                <img
+                    className="playCasterPlay selectDisable"
+                    onDragStart={(event) => {event.preventDefault();}}
+                    alt="Play"
+                    src={playButton}
+                    onMouseOver={() => {setPlayButton(play_button_hover)}}
+                    onMouseOut={() => {setPlayButton(play_button)}}
+                    onMouseDown={() => {setPlayButton(play_button_click)}}
+                    onMouseUp={() => {setPlayButton(play_button_hover)}}
+                />
+            </a>
+            
             
         </div>
     )
