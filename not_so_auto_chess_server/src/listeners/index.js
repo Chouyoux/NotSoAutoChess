@@ -11,7 +11,7 @@ module.exports = io => {
 
     files.map(fileName => {
       if (fileName !== "index.js") {
-        console.debug("Initializing listener at: %s", fileName);
+        console.debug("Initializing websocket listener at: %s", fileName);
         const listener = require(path.resolve(__dirname, fileName));
         listener(io);
       }

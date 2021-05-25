@@ -31,13 +31,13 @@
 
 #usermsg {
 
-    width: 399px;
+    width: 400px;
     height: 13px;
     border: none;
     background-color: #7f371d;
     margin-top: 28px;
     color: white;
-    margin-left: 9px;
+    margin-left: 8px;
     font: 12px arial;
 
 }
@@ -75,7 +75,8 @@
     text-align: center;
     border: none;
     vertical-align: middle;
-    margin-left: 3px;
+    margin-left: 6px;
+    margin-bottom: 1px;
     cursor: pointer;
 
 }

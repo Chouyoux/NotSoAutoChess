@@ -9,22 +9,26 @@ app.use(cors());
 const port = 3001;
 
 // MongoBD imports / parameters
-const mongoose = require("./database");
+require("./database")
+.then((result) => {
+  console.log("Connected to Database !");
 
-// Socket.io imports / parameters
-const initListeners = require("./listeners");
-var io = require("socket.io")(http);
-initListeners(io);
-
-app.get("/", function(req, res) {
-  res.send("<h1>Welcome to Not So Auto Chess back-end services ! <3</h1>");
-});
-
-require('./routes/add_user')(app);
-require('./routes/get_user')(app);
-require('./routes/update_user')(app);
-require('./routes/authentify_user')(app);
-
-http.listen(port, function() {
-  console.log("Server listening on *:"+port);
-});
+  // Socket.io imports / parameters
+  var io = require("socket.io")(http, {
+    cors: {
+      origin: '*',
+    }
+  });
+  require("./listeners")(io);
+  
+  app.get("/", function(req, res) {
+    res.send("<h1>Welcome to Not So Auto Chess back-end services ! <3</h1>");
+  });
+  
+  require('./routes')(app);
+  
+  http.listen(port, function() {
+    console.log("Server listening on *:"+port);
+  });
+})
+.catch((err) => console.log(err));

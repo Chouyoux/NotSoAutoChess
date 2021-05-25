@@ -3,8 +3,4 @@ const DB_URI = "mongodb+srv://chouyoux:"+pw+"@notsoautochess.toiop.mongodb.net/N
 
 const mongoose = require('mongoose');
 
-mongoose.connect(DB_URI, {useNewUrlParser: true, useUnifiedTopology: true})
-    .then((result) => console.log("Connected to Database !"))
-    .catch((err) => console.log(err));
-
-module.exports = mongoose;
+module.exports = mongoose.connect(DB_URI, {useNewUrlParser: true, useUnifiedTopology: true, useFindAndModify: false});

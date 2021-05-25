@@ -2,7 +2,7 @@ import logo from '../../images/login_screen/logo.png';
 import React from 'react'
 import './sidebar.css';
 
-const sidebar = () => {
+const Sidebar = () => {
     return (
         <div className="sidebar">
             <img src={logo} onDragStart={(event) => {event.preventDefault();}} className="App-logo selectDisable" alt="logo" />
@@ -12,4 +12,4 @@ const sidebar = () => {
     )
 }
 
-export default sidebar
+export default Sidebar

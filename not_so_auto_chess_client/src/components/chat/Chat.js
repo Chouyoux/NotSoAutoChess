@@ -7,7 +7,7 @@ const Chat = () => {
       <div id="menu" />
       <div id="chatbox" />
       <div name="message" action="">
-        <input name="usermsg" type="text" id="usermsg" size="63" autocomplete="off" />
+        <input name="usermsg" type="text" id="usermsg" size="63" autoComplete="off" />
         <input name="submitmsg" type="button"  id="submitmsg"/>
       </div>
     </div>

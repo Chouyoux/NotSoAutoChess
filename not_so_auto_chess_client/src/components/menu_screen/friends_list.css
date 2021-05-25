@@ -45,57 +45,59 @@
 
 .friendsList > .FLFold {
 
-    position: fixed;
-
-    -webkit-transform: translate(0, 9px);
-    transform: translate(0, 9px);
-
+    position: relative;
+    display: inline-flex;
+    
 }
 
 .friendsList > h2 {
 
+    display: inline-flex;
     margin: 0;
     padding: 0;
-
-    -webkit-transform: translate(22px, 0);
-    transform: translate(22px, 0);
+    margin-left: 10px;
 
 }
 
 .contact {
 
-    margin-bottom: 25px;
+    display: inline-flex;
+    line-height: 35px;
 
 }
 
 .contact > img {
 
-
-    position: fixed;
-    left: 100%;
+    position: relative;
     width: 32px;
     height: 30px;
 
 }
 
 .contact > p {
-    
 
-    position: fixed;
+    position: relative ;
     font-size: 20px;
+    width: 100px;
 
 }
 
 .contact > .FLFirstIcon {
     
+    display: inline-flex;
+
     -webkit-transform: translate(-97px, 40%);
     transform: translate(-97px, 40%);
+    margin-left: 125px;
 
 }
 
 .contact > .FLSecondIcon {
+
+    display: inline-flex;
     
     -webkit-transform: translate(-63px, 40%);
     transform: translate(-63px, 40%);
+    margin-left: -25px;
 
 }

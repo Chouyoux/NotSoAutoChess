@@ -21,9 +21,6 @@ const userSchema = new Schema(
         friends: {
             type: [String]
         },
-        blocked: {
-            type: [String]
-        },
         invitations_received: {
             type: [String]
         },

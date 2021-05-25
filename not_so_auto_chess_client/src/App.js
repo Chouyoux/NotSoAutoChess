@@ -1,10 +1,16 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { useCookies } from 'react-cookie';
-import LoginScreen from './components/login_screen/login_screen'
-import MenuScreen from './components/menu_screen/menu_screen'
-import './App.css';
+import LoginScreen from './components/login_screen/LoginScreen'
+import MenuScreen from './components/menu_screen/MenuScreen'
+
+import io from 'socket.io-client'
+
 import getCookie from './utils/get_cookie.js'
 
+import './App.css';
+
+
+const socket = io.connect('http://176.159.165.187:3001');
 
 function App() {
 
@@ -13,36 +19,22 @@ function App() {
 
   const [cookies, removeCookie] = useCookies(['auth_key']);
 
-  useEffect(() => {
+  const checkLogin = function() {
 
-    checkLogin();
+    var logged = false;
 
-  });
+    logged = socket.emit("signIn", { auth_key: getCookie("auth_key") }, (response) => {
+      if (response.success){
+        onLogin();
+        return true;
+      }
+      else{
+        onLogout();
+        return false;
+      }
+    });
 
-  const checkLogin = async function() {
-    
-    let _data = {
-      auth_key: getCookie("auth_key")
-    }
-
-    await fetch('http://176.159.165.187:3001/authentify-user', {
-      method: "POST",
-      body: JSON.stringify(_data),
-      headers: { "Content-type": "application/json; charset=UTF-8" }
-    })
-      .then(response => { return response.json(); })
-      .then(data => {
-        if (data) {
-          if (data.code === 200) {
-            onLogin();
-            return true;
-          }
-          else {
-            onLogout();
-            return false;
-          }
-        }
-      });
+    return logged;
 
   }
 
@@ -55,15 +47,18 @@ function App() {
 
   const onLogout = function() {
 
+
     removeCookie('auth_key');
     setHideLogin(false);
     setHideMenu(true);
 
   }
 
+  checkLogin();
+
   return (
       <div className="App" onContextMenu={(event) => event.preventDefault()}>
-        < LoginScreen hide={hideLogin} onLogin={onLogin} />
+        < LoginScreen hide={hideLogin} onLogin={onLogin} socket={socket} />
         < MenuScreen hide={hideMenu} checkLogin={checkLogin} onLogout={onLogout} />
       </div>
   );
