@@ -1,13 +1,12 @@
 import {React, useState, useEffect} from 'react';
 import "./friends_list.css";
 
+import FriendsListFolder from './FriendsListFolder';
 import Friend from './Friend';
 import ReceivedInvite from './ReceivedInvite'
 import PendingInvite from './PendingInvite'
 
 import getCookie from '../../utils/get_cookie.js';
-
-import fold from '../../images/friend_list/fold.png';
 
 const FriendsList = ( { socket } ) => {
 
@@ -151,20 +150,16 @@ const FriendsList = ( { socket } ) => {
                         onChange={(event) => setAddPseudonym(event.target.value)}
                         value={addPseudonym}
                     />
-                    <p>{addFormState}</p>
+                    <p className="friendsListAddState">{addFormState !== "" ? addFormState : <div><br /></div>}</p>
                 </form>
 
-                <img className="FLFold" alt="Fold" src={fold} />
-                <h2>Friends</h2> <br />
-                {friends_elements}
+                
 
-                <br /> <br /> <img className="FLFold" alt="Fold" src={fold} />
-                <h2>Received Invites</h2> <br />
-                {invitations_received_elements}
-
-                <br /> <br /> <img className="FLFold" alt="Fold" src={fold} />
-                <h2>Pending Invites</h2> <br />
-                {invitations_pending_elements}
+                <FriendsListFolder title="Friends" elements={friends_elements} />
+                
+                <FriendsListFolder title="Received Invites" elements={invitations_received_elements} />
+                
+                <FriendsListFolder title="Pending Invites" elements={invitations_pending_elements} />
             </div>
         </div>
     )

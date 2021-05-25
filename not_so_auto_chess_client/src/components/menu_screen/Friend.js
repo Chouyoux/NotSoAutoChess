@@ -13,29 +13,29 @@ const Friend = ( {name, key, onRemove} ) => {
 
     return (
         <div className="contact" key={key}>
-        <p>{name}</p>
-        <img
-            className="FLFirstIcon selectDisable"
-            onDragStart={(event) => {event.preventDefault();}}
-            unselectable="on"
-            alt="add_group"
-            src={addFriendToGroupIcon}
-            onClick={() => {setAddFriendToGroupIcon(add_friend_to_group);}}
-            onMouseOver={() => {setAddFriendToGroupIcon(add_friend_to_group_hover)}}
-            onMouseOut={() => {setAddFriendToGroupIcon(add_friend_to_group)}}
-        />
-        <img
-            className="FLSecondIcon selectDisable"
-            onDragStart={(event) => {event.preventDefault();}}
-            unselectable="on"
-            alt="remove"
-            src={removeFriendIcon}
-            onClick={() => {setRemoveFriendIcon(remove_friend);}}
-            onMouseOver={() => {setRemoveFriendIcon(remove_friend_hover)}}
-            onMouseOut={() => {setRemoveFriendIcon(remove_friend)}}
-            onClick={() => onRemove(name)}
-        />
-    </div>
+            <p>{name}</p>
+            <img
+                className="FLFirstIcon selectDisable"
+                onDragStart={(event) => {event.preventDefault();}}
+                unselectable="on"
+                alt="add_group"
+                src={addFriendToGroupIcon}
+                onClick={() => {setAddFriendToGroupIcon(add_friend_to_group);}}
+                onMouseOver={() => {setAddFriendToGroupIcon(add_friend_to_group_hover)}}
+                onMouseOut={() => {setAddFriendToGroupIcon(add_friend_to_group)}}
+            />
+            <img
+                className="FLSecondIcon selectDisable"
+                onDragStart={(event) => {event.preventDefault();}}
+                unselectable="on"
+                alt="remove"
+                src={removeFriendIcon}
+                onClick={() => {setRemoveFriendIcon(remove_friend);}}
+                onMouseOver={() => {setRemoveFriendIcon(remove_friend_hover)}}
+                onMouseOut={() => {setRemoveFriendIcon(remove_friend)}}
+                onClick={() => onRemove(name)}
+            />
+        </div>
     )
 }
 

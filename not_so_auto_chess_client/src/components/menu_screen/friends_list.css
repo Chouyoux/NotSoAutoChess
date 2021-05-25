@@ -43,19 +43,26 @@
 
 }
 
-.friendsList > .FLFold {
+.FLFold {
 
     position: relative;
     display: inline-flex;
     
 }
 
-.friendsList > h2 {
+.friendsListFolderTitle {
 
+    font-size: 22px;
     display: inline-flex;
     margin: 0;
     padding: 0;
     margin-left: 10px;
+
+}
+
+.FLFolder {
+
+    cursor: pointer;
 
 }
 
@@ -82,7 +89,7 @@
 
 }
 
-.contact > .FLFirstIcon {
+.FLFirstIcon {
     
     display: inline-flex;
 
@@ -92,12 +99,35 @@
 
 }
 
-.contact > .FLSecondIcon {
+.FLSecondIcon {
 
     display: inline-flex;
     
     -webkit-transform: translate(-63px, 40%);
     transform: translate(-63px, 40%);
     margin-left: -25px;
+
+}
+
+.friendsListAddForm {
+
+    width: 100%;
+    text-align: center;
+
+}
+
+.friendsListAddInput {
+
+    width: 90%;
+    box-sizing: border-box;
+    margin-top: 15px;
+
+    border-radius: 4px;
+}
+
+.friendsListAddState{
+
+    font-size: 16px;
+    margin-bottom: 25px;
 
 }
