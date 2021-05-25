@@ -1,11 +1,28 @@
 // Express imports / parameters
+
+var does_https = false;
+
 var app = require("express")();
-var http = require("http").createServer(app);
+var http = require('http');
+var fs = require('fs');
+var https = require('https');
+
+if (does_https){
+  var privateKey  = fs.readFileSync('/etc/letsencrypt/live/notsoautochess.com/privkey.pem', 'utf8');
+  var certificate = fs.readFileSync('/etc/letsencrypt/live/notsoautochess.com/cert.pem', 'utf8');
+  var credentials = {key: privateKey, cert: certificate};
+  var httpsServer = https.createServer(credentials, app);
+
+
+}
+
 var bodyParser = require('body-parser');
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 var cors = require('cors');
 app.use(cors());
+var httpServer = http.createServer(app);
+var httpsServer = https.createServer(credentials, app);
 const port = 3001;
 
 // MongoBD imports / parameters
@@ -14,7 +31,7 @@ require("./database")
   console.log("Connected to Database !");
 
   // Socket.io imports / parameters
-  var io = require("socket.io")(http, {
+  var io = require("socket.io")(does_https ? httpsServer : httpServer, {
     cors: {
       origin: '*',
     }
@@ -27,8 +44,13 @@ require("./database")
   
   require('./routes')(app);
   
-  http.listen(port, function() {
-    console.log("Server listening on *:"+port);
+  httpServer.listen(port, function() {
+    console.log("Server listening http on *:"+port);
   });
+  if (does_https){
+    httpsServer.listen(port+1, function() {
+      console.log("Server listening https on *:"+port+1);
+    });
+  }
 })
 .catch((err) => console.log(err));
