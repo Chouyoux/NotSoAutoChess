@@ -7,7 +7,7 @@ import decline from '../../images/friend_list/decline.png';
 import decline_hover from '../../images/friend_list/decline_hover.png';
 import decline_click from '../../images/friend_list/decline_click.png';
 
-const ReceivedInvite = ( {name, key} ) => {
+const ReceivedInvite = ( {name, key, onValidate, onDecline} ) => {
 
     const [validateIcon, setValidateIcon] = useState(validate);
     const [declineIcon, setDeclineIcon] = useState(decline);
@@ -25,6 +25,7 @@ const ReceivedInvite = ( {name, key} ) => {
                 onMouseOut={() => {setValidateIcon(validate)}}
                 onMouseDown={() => {setValidateIcon(validate_click)}}
                 onMouseUp={() => {setValidateIcon(validate_hover)}}
+                onClick={() => onValidate(name)}
             />
             <img
                 className="FLSecondIcon selectDisable"
@@ -36,6 +37,7 @@ const ReceivedInvite = ( {name, key} ) => {
                 onMouseOut={() => {setDeclineIcon(decline)}}
                 onMouseDown={() => {setDeclineIcon(decline_click)}}
                 onMouseUp={() => {setDeclineIcon(decline_hover)}}
+                onClick={() => onDecline(name)}
             />
         </div>
     )

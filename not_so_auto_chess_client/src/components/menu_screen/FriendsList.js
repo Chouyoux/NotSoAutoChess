@@ -3,6 +3,7 @@ import "./friends_list.css";
 
 import Friend from './Friend';
 import ReceivedInvite from './ReceivedInvite'
+import PendingInvite from './PendingInvite'
 
 import getCookie from '../../utils/get_cookie.js';
 
@@ -36,6 +37,42 @@ const FriendsList = ( { socket } ) => {
             }
             setAddPseudonym("");
             setAddFormState(response.message);
+        });
+
+    }
+
+    const onValidate = function (name) {
+
+        if (!name || name === "") return;
+
+        let _data = {
+            auth_key : getCookie("auth_key"),
+            pseudonym: name
+        }
+
+        socket.emit("userFriendsAdd", _data, (response) => {
+            console.log(response);
+            if (response.success){
+                updateContent();
+            }
+        });
+
+    }
+
+    const onDecline = function (name) {
+
+        if (!name || name === "") return;
+
+        let _data = {
+            auth_key : getCookie("auth_key"),
+            pseudonym: name
+        }
+
+        socket.emit("userFriendsRemove", _data, (response) => {
+            console.log(response);
+            if (response.success){
+                updateContent();
+            }
         });
 
     }
@@ -88,9 +125,9 @@ const FriendsList = ( { socket } ) => {
 
         socket.on("updateFriendsList", function() {updateContent()});
 
-        /*return function cleanup() {
+        return () => {
             socket.removeEventListener("updateFriendsList", updateContent());
-        };*/
+        };
 
     }, []);
 
@@ -98,14 +135,14 @@ const FriendsList = ( { socket } ) => {
 
     for (const [index, value] of friends.entries()) {
         friends_elements.push(
-            <Friend name={value} key={index} />
+            <Friend name={value} key={index} onRemove={onDecline} />
         );
     }
     const invitations_received_elements = [];
 
     for (const [index, value] of invitationsReceived.entries()) {
         invitations_received_elements.push(
-            <ReceivedInvite name={value} key={index} />
+            <ReceivedInvite name={value} key={index+friends.length} onValidate={onValidate} onDecline={onDecline} />
         );
     }
 
@@ -113,9 +150,7 @@ const FriendsList = ( { socket } ) => {
 
     for (const [index, value] of invitationsPending.entries()) {
         invitations_pending_elements.push(
-            <div><div className="contact" key={index}>
-                <p>{value}</p>
-            </div>  <br /></div>
+            <PendingInvite name={value} key={index+friends.length+invitations_received_elements.length} onDecline={onDecline} />
         );
     }
 

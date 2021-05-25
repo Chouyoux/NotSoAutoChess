@@ -6,7 +6,7 @@ import remove_friend_hover from '../../images/friend_list/remove_friend_hover.pn
 import add_friend_to_group from '../../images/friend_list/add_friend_to_group.png';
 import add_friend_to_group_hover from '../../images/friend_list/add_friend_to_group_hover.png';
 
-const Friend = ( {name, key} ) => {
+const Friend = ( {name, key, onRemove} ) => {
 
     const [removeFriendIcon, setRemoveFriendIcon] = useState(remove_friend);
     const [addFriendToGroupIcon, setAddFriendToGroupIcon] = useState(add_friend_to_group);
@@ -33,6 +33,7 @@ const Friend = ( {name, key} ) => {
             onClick={() => {setRemoveFriendIcon(remove_friend);}}
             onMouseOver={() => {setRemoveFriendIcon(remove_friend_hover)}}
             onMouseOut={() => {setRemoveFriendIcon(remove_friend)}}
+            onClick={() => onRemove(name)}
         />
     </div>
     )
