@@ -25,7 +25,7 @@ const SubscriptionForm = ( { hide } ) => {
             password2: password2
         }
 
-        await fetch('http://176.159.165.187:3001/add-user', {
+        await fetch('https://notsoautochess.com:3002/add-user', {
             method: "POST",
             body: JSON.stringify(_data),
             headers: { "Content-type": "application/json; charset=UTF-8" }

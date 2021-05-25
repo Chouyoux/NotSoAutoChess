@@ -12,8 +12,6 @@ if (does_https){
   var certificate = fs.readFileSync('/etc/letsencrypt/live/notsoautochess.com/cert.pem', 'utf8');
   var credentials = {key: privateKey, cert: certificate};
   var httpsServer = https.createServer(credentials, app);
-
-
 }
 
 var bodyParser = require('body-parser');
@@ -49,7 +47,7 @@ require("./database")
   });
   if (does_https){
     httpsServer.listen(port+1, function() {
-      console.log("Server listening https on *:"+port+1);
+      console.log("Server listening https on *:"+(port+1));
     });
   }
 })

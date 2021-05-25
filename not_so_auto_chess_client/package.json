@@ -16,7 +16,6 @@
     "web-vitals": "^1.1.2"
   },
   "scripts": {
-    "https": "serve -s build --listen 443 --ssl-key /etc/letsencrypt/live/notsoautochess.com/privkey.pem --ssl-cert /etc/letsencrypt/live/notsoautochess.com/cert.pem",
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
