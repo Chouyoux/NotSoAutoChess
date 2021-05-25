@@ -189,6 +189,24 @@ class UsersController {
 
     }
 
+    getUserByPseudonym(pseudonym){
+
+        for (var i = 0; i < this._users.length ; i++){
+
+            let user = this._users[i];
+
+            if (user.pseudonym === pseudonym){
+
+                return user;
+
+            }
+
+        }
+
+        return null;
+
+    }
+
     setSocketById(_id, socket){
 
         for (var i = 0; i < this._users.length ; i++){

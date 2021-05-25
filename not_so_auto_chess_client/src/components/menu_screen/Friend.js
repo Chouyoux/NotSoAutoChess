@@ -6,13 +6,13 @@ import remove_friend_hover from '../../images/friend_list/remove_friend_hover.pn
 import add_friend_to_group from '../../images/friend_list/add_friend_to_group.png';
 import add_friend_to_group_hover from '../../images/friend_list/add_friend_to_group_hover.png';
 
-const Friend = ( {name} ) => {
+const Friend = ( {name, key} ) => {
 
     const [removeFriendIcon, setRemoveFriendIcon] = useState(remove_friend);
     const [addFriendToGroupIcon, setAddFriendToGroupIcon] = useState(add_friend_to_group);
 
     return (
-        <div className="contact">
+        <div className="contact" key={key}>
         <p>{name}</p>
         <img
             className="FLFirstIcon selectDisable"

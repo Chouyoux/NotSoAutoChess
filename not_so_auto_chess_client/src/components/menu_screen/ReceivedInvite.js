@@ -7,13 +7,13 @@ import decline from '../../images/friend_list/decline.png';
 import decline_hover from '../../images/friend_list/decline_hover.png';
 import decline_click from '../../images/friend_list/decline_click.png';
 
-const ReceivedInvite = ( { name } ) => {
+const ReceivedInvite = ( {name, key} ) => {
 
     const [validateIcon, setValidateIcon] = useState(validate);
     const [declineIcon, setDeclineIcon] = useState(decline);
 
     return (
-        <div className="contact">
+        <div className="contact" key={key}>
             <p>{name}</p>
             <img
                 className="FLFirstIcon selectDisable"

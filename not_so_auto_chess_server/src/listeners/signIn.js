@@ -12,7 +12,9 @@ module.exports = function(socket) {
   
           const _id = Users.authenfityPseudonymePassword(data.pseudonym, data.password);
           if (_id){
+            Users.getUserById(_id).socket = this;
             callback({success:true, token: Users.getUserById(_id).auth_key});
+            return;
           }
   
         }
@@ -21,7 +23,9 @@ module.exports = function(socket) {
   
           const _id = Users.authentifyAuthKey(data.auth_key);
           if (_id){
+            Users.getUserById(_id).socket = this;
             callback({success:true, token: Users.getUserById(_id).auth_key});
+            return;
           }
   
         }

@@ -12,12 +12,24 @@ class User {
         this.socket = null;
     }
 
+    hasFriend(friend){
+        return this.friends.includes(friend);
+    }
+
     addFriend(friend){
         this.friends.push(friend);
     }
 
     removeFriend(friend){
-        this.friends.remove(friend);
+        var filtered = this.friends.filter(function(value, index, arr){ 
+            return friend.toString() !== value.toString();
+        });
+
+        this.friends = filtered;
+    }
+
+    hasPendingInvite(pendingInvite){
+        return this.invitations_pending.includes(pendingInvite);
     }
 
     addPendingInvite(pendingInvite){
@@ -25,7 +37,15 @@ class User {
     }
 
     removePendingInvite(pendingInvite){
-        this.invitations_pending.remove(pendingInvite);
+        var filtered = this.invitations_pending.filter(function(value, index, arr){ 
+            return pendingInvite.toString() !== value.toString();
+        });
+
+        this.invitations_pending = filtered;
+    }
+
+    hasReceivedInvite(receivedInvite){
+        return this.invitations_received.includes(receivedInvite);
     }
 
     addReceivedInvite(receivedInvite){
@@ -33,7 +53,11 @@ class User {
     }
 
     removeReceivedInvite(receivedInvite){
-        this.invitations_received.remove(receivedInvite);
+        var filtered = this.invitations_received.filter(function(value, index, arr){ 
+            return receivedInvite.toString() !== value.toString();
+        });
+
+        this.invitations_received = filtered;
     }
 
     

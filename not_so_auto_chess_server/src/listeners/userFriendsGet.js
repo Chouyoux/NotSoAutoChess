@@ -1,7 +1,7 @@
 const Users = require('../controllers/users');
 module.exports = function(socket) {
 
-    socket.on('userFriendsGet', function(data, callback){ // {auth_key, ?pseudonym, ?email, ?password}
+    socket.on('userFriendsGet', function(data, callback){ // {auth_key}
 
         if (!data.auth_key){
             callback({success:false, message:"Authenfitication failed."});

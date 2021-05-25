@@ -21,7 +21,7 @@ const ProfileScreen = ( { hide, backToMenu, onLogout, socket } ) => {
     const [isLoading, setIsLoading] = useState(false);
     const [formState, setFormState] = useState('');
 
-    const onSubmit = async (event) => {
+    const onSubmit = (event) => {
 
         // prevent redirect
         event.preventDefault();
