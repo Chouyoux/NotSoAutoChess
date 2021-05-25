@@ -71,8 +71,10 @@ const ProfileScreen = ( { hide, backToMenu, onLogout, socket } ) => {
         });
 
     }
-    
-    updateContent();
+
+    useEffect(() => {
+        updateContent();
+    }, []);
 
     return (
         <div className="profileScreen">
@@ -109,7 +111,7 @@ const ProfileScreen = ( { hide, backToMenu, onLogout, socket } ) => {
                 <div>
                     <input
                         className="profileInput"
-                        type="email"
+                        type="text"
                         id="email"
                         name="email"
                         placeholder={oldEmail}

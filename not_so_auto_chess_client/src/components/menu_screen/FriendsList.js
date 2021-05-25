@@ -1,85 +1,104 @@
-import React from 'react'
-import "./friends_list.css"
+import {React, useState, useEffect} from 'react';
+import "./friends_list.css";
 
-import remove_friend from '../../images/friend_list/remove_friend.png';
-import remove_friend_hover from '../../images/friend_list/remove_friend.png';
+import Friend from './Friend';
+import ReceivedInvite from './ReceivedInvite'
 
-import add_friend_to_group from '../../images/friend_list/add_friend_to_group.png';
-import add_friend_to_group_hover from '../../images/friend_list/add_friend_to_group_hover.png';
-
-import validate from '../../images/friend_list/validate.png';
-import validate_hover from '../../images/friend_list/validate_hover.png';
-import validate_click from '../../images/friend_list/validate_click.png';
-import decline from '../../images/friend_list/decline.png';
-import decline_hover from '../../images/friend_list/decline_hover.png';
-import decline_click from '../../images/friend_list/decline_click.png';
+import getCookie from '../../utils/get_cookie.js';
 
 import fold from '../../images/friend_list/fold.png';
 
-const FriendsList = () => {
+const FriendsList = ( { socket } ) => {
+
+    const [friends, setFriends] = useState([]);
+    const [invitationsPending, setInvitationsPending] = useState([]);
+    const [invitationsReceived, setInvitationsReceived] = useState([]);
+
+    const updateContent = function () {
+
+        socket.emit("userFriendsGet", { auth_key: getCookie("auth_key") }, (response) => {
+            console.log(response);
+            if (response.success){
+                for (let i = 0; i < response.friends.length; i++ ){
+                    let friend = response.friends[i];
+                    if (!friends.includes(friend)){
+                        setFriends(friends => [...friends, friend]);
+                    }
+                }
+            }
+        });
+
+        socket.emit("userInvitationsPendingGet", { auth_key: getCookie("auth_key") }, (response) => {
+            console.log(response);
+            if (response.success){
+                for (let i = 0; i < response.invitations.length; i++ ){
+                    let invitation = response.invitations[i];
+                    if (!invitationsPending.includes(invitation)){
+                        setInvitationsPending(invitationsPending => [...invitationsPending, invitation]);
+                    }
+                }
+            }
+        });
+
+        socket.emit("userInvitationsReceivedGet", { auth_key: getCookie("auth_key") }, (response) => {
+            console.log(response);
+            if (response.success){
+                for (let i = 0; i < response.invitations.length; i++ ){
+                    let invitation = response.invitations[i];
+                    if (!invitationsReceived.includes(invitation)){
+                        setInvitationsReceived(invitationsReceived => [...invitationsReceived, invitation]);
+                    }
+                }
+            }
+        });
+
+    }
+
+    useEffect(() => {
+        updateContent();
+    }, []);
+
+    const friends_elements = [];
+
+    for (const [index, value] of friends.entries()) {
+        friends_elements.push(
+            <Friend name={value} />
+        );
+    }
+    const invitations_received_elements = [];
+
+    for (const [index, value] of invitationsReceived.entries()) {
+        invitations_received_elements.push(
+            <ReceivedInvite name={value} />
+        );
+    }
+
+    const invitations_pending_elements = [];
+
+    for (const [index, value] of invitationsPending.entries()) {
+        invitations_pending_elements.push(
+            <div className="contact" key={index}>
+                <p>{value}</p>  <br />
+            </div>
+        );
+    }
+
+
     return (
         <div className="friendsListDiv">
             <div className="friendsList">
+
                 <img className="FLFold" alt="Fold" src={fold} />
                 <h2>Friends</h2> <br />
-                <div className="contact">
-                    <p>Spololo</p>
-                    <img className="FLFirstIcon" alt="decline" src={add_friend_to_group} />
-                    <img className="FLSecondIcon" alt="remove" src={remove_friend} />
-                </div>
-                <div className="contact">
-                    <p>Kaltaiid</p>
-                    <img className="FLFirstIcon" alt="decline" src={add_friend_to_group} />
-                    <img className="FLSecondIcon" alt="remove" src={remove_friend} />
-                </div>
-                <div className="contact">
-                    <p>0123456789...</p>
-                    <img className="FLFirstIcon" alt="decline" src={add_friend_to_group} />
-                    <img className="FLSecondIcon" alt="remove" src={remove_friend} />
-                </div>
-                <div className="contact">
-                    <p>Mr. Michel</p>
-                    <img className="FLFirstIcon" alt="decline" src={add_friend_to_group} />
-                    <img className="FLSecondIcon" alt="remove" src={remove_friend} />
-                </div>
-                <br /> <br /> <img className="FLFold" alt="Fold" src={fold} />
-                <h2>Pending Invites</h2> <br />
-                <div className="contact">
-                    <p>Spololo</p>
-                </div> <br />
-                <div className="contact">
-                    <p>Kaltaiid</p>
-                </div> <br />
-                <div className="contact">
-                    <p>0123456789...</p>
-                </div>
+                {friends_elements}
+
                 <br /> <br /> <img className="FLFold" alt="Fold" src={fold} />
                 <h2>Received Invites</h2> <br />
-                <div className="contact">
-                    <p>Spololo</p>
-                    <img className="FLFirstIcon" alt="validate" src={validate} />
-                    <img className="FLSecondIcon" alt="decline" src={decline} />
-                </div>
-                <div className="contact">
-                    <p>Kaltaiid</p>
-                    <img className="FLFirstIcon" alt="validate" src={validate} />
-                    <img className="FLSecondIcon" alt="decline" src={decline} />
-                </div>
-                <div className="contact">
-                    <p>Cyrellema</p>
-                    <img className="FLFirstIcon" alt="validate" src={validate} />
-                    <img className="FLSecondIcon" alt="decline" src={decline} />
-                </div>
-                <div className="contact">
-                    <p>Chouyoux</p>
-                    <img className="FLFirstIcon" alt="validate" src={validate} />
-                    <img className="FLSecondIcon" alt="decline" src={decline} />
-                </div>
-                <div className="contact">
-                    <p>Mr. Michel</p>
-                    <img className="FLFirstIcon" alt="validate" src={validate} />
-                    <img className="FLSecondIcon" alt="decline" src={decline} />
-                </div>
+                {invitations_received_elements}
+
+                <br /> <br /> <img className="FLFold" alt="Fold" src={fold} />
+                <h2>Pending Invites</h2> <br />
+                {invitations_pending_elements}
             </div>
         </div>
     )

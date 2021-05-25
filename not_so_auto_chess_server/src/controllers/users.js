@@ -27,7 +27,7 @@ class UsersController {
     async collect(){
 
         for await (const user of DBUser.find()) {
-            this._users.push(new User(user._id, user.pseudonym, user.email, user.password, user.auth_key, user.friends, user.pending_invites, user.received_invites));
+            this._users.push(new User(user._id, user.pseudonym, user.email, user.password, user.auth_key, user.friends, user.invitations_pending, user.invitations_received));
         }
 
     }
@@ -48,6 +48,9 @@ class UsersController {
                     pseudonym: user.pseudonym,
                     email: user.email,
                     password: user.password,
+                    friends: user.friends,
+                    invitations_pending: user.invitations_pending,
+                    invitations_received: user.invitations_received,
                     auth_key: user.auth_key
                 };
 
@@ -61,6 +64,9 @@ class UsersController {
                     pseudonym: user.pseudonym,
                     email: user.email,
                     password: user.password,
+                    friends: user.friends,
+                    invitations_pending: user.invitations_pending,
+                    invitations_received: user.invitations_received,
                     auth_key: user.auth_key
                 });
 
@@ -171,7 +177,7 @@ class UsersController {
 
             let user = this._users[i];
 
-            if (user._id === _id){
+            if (user._id.toString() === _id.toString()){
 
                 return user;
 

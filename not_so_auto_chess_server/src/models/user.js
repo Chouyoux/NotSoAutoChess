@@ -1,14 +1,14 @@
 class User {
 
-    constructor(_id, pseudonym, email, password, auth_key, friends, pending_invites, received_invites){
+    constructor(_id, pseudonym, email, password, auth_key, friends, invitations_pending, invitations_received){
         this._id = _id || null;
         this.pseudonym = pseudonym;
         this.email = email;
         this.password = password;
         this.auth_key = auth_key || null;
         this.friends = friends ? [...friends] : [];
-        this.pending_invites = pending_invites ? [...pending_invites] : [];
-        this.received_invites = received_invites ? [...received_invites] : [];
+        this.invitations_pending = invitations_pending ? [...invitations_pending] : [];
+        this.invitations_received = invitations_received ? [...invitations_received] : [];
         this.socket = null;
     }
 
@@ -21,19 +21,19 @@ class User {
     }
 
     addPendingInvite(pendingInvite){
-        this.pending_invites.push(pendingInvite);
+        this.invitations_pending.push(pendingInvite);
     }
 
     removePendingInvite(pendingInvite){
-        this.pending_invites.remove(pendingInvite);
+        this.invitations_pending.remove(pendingInvite);
     }
 
     addReceivedInvite(receivedInvite){
-        this.received_invites.push(receivedInvite);
+        this.invitations_received.push(receivedInvite);
     }
 
     removeReceivedInvite(receivedInvite){
-        this.received_invites.remove(receivedInvite);
+        this.invitations_received.remove(receivedInvite);
     }
 
     

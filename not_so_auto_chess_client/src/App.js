@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useCookies } from 'react-cookie';
 import LoginScreen from './components/login_screen/LoginScreen'
 import MenuScreen from './components/menu_screen/MenuScreen'
@@ -24,6 +24,7 @@ function App() {
     var logged = false;
 
     logged = socket.emit("signIn", { auth_key: getCookie("auth_key") }, (response) => {
+      console.log(response);
       if (response.success){
         onLogin();
         return true;
@@ -54,7 +55,9 @@ function App() {
 
   }
 
-  checkLogin();
+  useEffect(() => {
+    checkLogin();
+  }, []);
 
   return (
       <div className="App" onContextMenu={(event) => event.preventDefault()}>

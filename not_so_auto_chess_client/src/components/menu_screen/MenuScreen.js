@@ -28,12 +28,6 @@ const MenuScreen = ( { hide, checkLogin, onLogout, socket } ) => {
         leave: { x: 300 }
     })
 
-    const unmountFriendlist = function () {
-
-        setShowFriendList(false);
-
-    }
-
     const backToMenu = function () {
 
         checkLogin();
@@ -90,7 +84,7 @@ const MenuScreen = ( { hide, checkLogin, onLogout, socket } ) => {
             </div>
 
             {friendsTransition((style, item) =>
-                item ? <animated.div style={style}> <FriendsList unmount={unmountFriendlist} /> </animated.div> : null
+                item ? <animated.div style={style}> <FriendsList socket={socket} /> </animated.div> : null
             )}
 
         </div>
