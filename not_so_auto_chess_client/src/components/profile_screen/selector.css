@@ -2,10 +2,11 @@
 
     display: inline-flex;
     width: 10%;
-    min-width: 125px;
+    min-width: 128px;
 
     text-align: center;
     align-content: center;
+    justify-content: center;
 
 
 }
@@ -16,7 +17,9 @@
     scrollbar-width: none; /* Firefox */
     -ms-overflow-style: none;  /* Internet Explorer 10+ */
 
-    position: fixed;
+    min-width: 128px;
+
+    position:fixed;
     width: 10%;
     max-height: 100%;
 
