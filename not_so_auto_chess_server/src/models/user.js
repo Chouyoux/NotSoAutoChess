@@ -1,6 +1,6 @@
 class User {
 
-    constructor(_id, pseudonym, email, password, auth_key, friends, invitations_pending, invitations_received){
+    constructor(_id, pseudonym, email, password, auth_key, friends, invitations_pending, invitations_received, avatar, set){
         this._id = _id || null;
         this.pseudonym = pseudonym;
         this.email = email;
@@ -9,6 +9,8 @@ class User {
         this.friends = friends ? [...friends] : [];
         this.invitations_pending = invitations_pending ? [...invitations_pending] : [];
         this.invitations_received = invitations_received ? [...invitations_received] : [];
+        this.avatar = avatar ? avatar : 0;
+        this.set = set ? set : 0;
         this.socket = null;
     }
 

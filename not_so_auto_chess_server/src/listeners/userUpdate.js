@@ -3,7 +3,7 @@ const validateEmail = require("../utils/validateEmail");
     
 module.exports = function(socket) {
 
-    socket.on('userUpdate', function(data, callback){ // {auth_key, ?pseudonym, ?email, ?password}
+    socket.on('userUpdate', function(data, callback){ // {auth_key, ?pseudonym, ?email, ?password, ?avatar, ?set}
 
         if (!data.auth_key){
             callback({success:false, message:"Authenfitication failed."});
@@ -16,7 +16,7 @@ module.exports = function(socket) {
             return;
         }
 
-        if (!data.pseudonym && !data.email && !data.password){
+        if (!data.pseudonym && !data.email && !data.password && !data.avatar && !data.set){
             callback({success:false, message:"Request body wrongly formatted."});
             return;
         }
@@ -25,6 +25,8 @@ module.exports = function(socket) {
         let new_pseudonym = user.pseudonym;
         let new_email = user.email;
         let new_password = user.password;
+        let new_avatar = data.avatar != null ? data.avatar : user.avatar;
+        let new_set = data.set != null ? data.set : user.set;
 
         if (data.pseudonym){
             if (Users.pseudonymIsUsed(data.pseudonym)){
@@ -61,6 +63,8 @@ module.exports = function(socket) {
         user.pseudonym = new_pseudonym;
         user.email = new_email;
         user.password = new_password;
+        user.avatar = new_avatar;
+        user.set = new_set;
 
         let online_friends = Users.getOnlineFriends(_id);
         for (var i = 0; i < online_friends.length; i++){

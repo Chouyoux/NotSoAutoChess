@@ -26,6 +26,14 @@ const userSchema = new Schema(
         },
         invitations_pending: {
             type: [String]
+        },
+        avatar: {
+            type: [Number],
+            default: 0
+        },
+        set: {
+            type: [Number],
+            default: 0
         }
     },
     {

@@ -10,17 +10,17 @@ module.exports = function(socket) {
   
         if (data.pseudonym && data.password){
   
-          const _id = Users.authenfityPseudonymePassword(data.pseudonym, data.password);
-          if (_id){
-            Users.getUserById(_id).socket = this;
+          const user = Users.authenfityPseudonymePassword(data.pseudonym, data.password);
+          if (user){
+            user.socket = this;
 
-            let online_friends = Users.getOnlineFriends(_id);
+            let online_friends = Users.getOnlineFriends(user._id);
             for (var i = 0; i < online_friends.length; i++){
               let online_friend = online_friends[i];
               online_friend.socket.emit("updateFriendsList");
             }
 
-            callback({success:true, token: Users.getUserById(_id).auth_key});
+            callback({success:true, token: Users.getUserById(user._id).auth_key});
             return;
           }
   
@@ -37,7 +37,7 @@ module.exports = function(socket) {
               let online_friend = online_friends[i];
               online_friend.socket.emit("updateFriendsList");
             }
-            
+
             callback({success:true, token: Users.getUserById(_id).auth_key});
             return;
           }

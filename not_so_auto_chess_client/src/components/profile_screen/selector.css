@@ -1,0 +1,46 @@
+.selector {
+
+    display: inline-flex;
+    width: 10%;
+    min-width: 125px;
+
+    text-align: center;
+    align-content: center;
+
+
+}
+
+.selectorFull {
+
+    overflow-y: scroll;
+    scrollbar-width: none; /* Firefox */
+    -ms-overflow-style: none;  /* Internet Explorer 10+ */
+
+    position: fixed;
+    width: 10%;
+    max-height: 100%;
+
+    transform: translateY(-25%);
+    display: grid;
+    grid-template-columns: repeat(1, 1);
+    grid-gap: 10px;
+    z-index: 1000;
+
+}
+
+.selectorFullImg {
+
+    display: relative;
+    cursor: pointer;
+    width: 100%;
+
+}
+
+.selectorImg {
+
+    cursor: pointer;
+    display: inline-flex;
+    width: 100%;
+    margin: 10px;
+
+}

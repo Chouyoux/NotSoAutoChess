@@ -27,7 +27,7 @@ class UsersController {
     async collect(){
 
         for await (const user of DBUser.find()) {
-            this._users.push(new User(user._id, user.pseudonym, user.email, user.password, user.auth_key, user.friends, user.invitations_pending, user.invitations_received));
+            this._users.push(new User(user._id, user.pseudonym, user.email, user.password, user.auth_key, user.friends, user.invitations_pending, user.invitations_received, user.avatar, user.set));
         }
 
     }
@@ -51,7 +51,9 @@ class UsersController {
                     friends: user.friends,
                     invitations_pending: user.invitations_pending,
                     invitations_received: user.invitations_received,
-                    auth_key: user.auth_key
+                    auth_key: user.auth_key,
+                    avatar: user.avatar,
+                    set: user.set
                 };
 
                 await DBUser.findOneAndUpdate(filter, update);
@@ -67,7 +69,9 @@ class UsersController {
                     friends: user.friends,
                     invitations_pending: user.invitations_pending,
                     invitations_received: user.invitations_received,
-                    auth_key: user.auth_key
+                    auth_key: user.auth_key,
+                    avatar: user.avatar,
+                    set: user.set
                 });
 
                 await user_to_save.save();
@@ -129,7 +133,7 @@ class UsersController {
             throw new Error("Sorry, the email \"" + email + "\" is already taken.");
         }
 
-        this._users.push(new User(null, pseudonym, email, password, null, null, null, null));
+        this._users.push(new User(null, pseudonym, email, password, null, null, null, null, null, null));
 
     }
 
@@ -143,7 +147,7 @@ class UsersController {
 
                 const key = UsersController.generateAuthKey(user._id);
                 this._users[i].auth_key = key;
-                return user._id;
+                return user;
 
             }
 

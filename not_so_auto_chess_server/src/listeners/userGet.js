@@ -17,7 +17,7 @@ module.exports = function(socket) {
 
         let user = Users.getUserById(_id);
 
-        callback({success:true, "pseudonym" : user.pseudonym, "email" : user.email});
+        callback({success:true, "pseudonym" : user.pseudonym, "email" : user.email, "avatar" : user.avatar, "set" : user.set});
   
     });
 

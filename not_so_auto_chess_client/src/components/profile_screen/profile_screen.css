@@ -27,8 +27,8 @@
 .profileForm {
     
     text-align: center;
-    -webkit-transform: translate(0, 18%);
-    transform: translate(0, 20%);
+    -webkit-transform: translate(0, 0%);
+    transform: translate(0, 0%);
 
 }
 
@@ -77,6 +77,7 @@
 .profileInput:disabled {
     opacity: .5;
     cursor: default;
+    z-index: 0;
 }
 
 .profileButton {
