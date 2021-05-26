@@ -37,6 +37,11 @@ module.exports = function(socket) {
             return;
         }
 
+        if (user.hasFriend(friend._id)){
+            callback({success:false, message:data.pseudonym+" already is in your friends."});
+            return;
+        }
+
         if (user.hasReceivedInvite(friend._id)){
                 
             user.removeReceivedInvite(friend._id);
