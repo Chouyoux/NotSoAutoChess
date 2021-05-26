@@ -62,6 +62,12 @@ module.exports = function(socket) {
         user.email = new_email;
         user.password = new_password;
 
+        let online_friends = Users.getOnlineFriends(_id);
+        for (var i = 0; i < online_friends.length; i++){
+            let online_friend = online_friends[i];
+            online_friend.socket.emit("updateFriendsList");
+        }
+
         callback({success:true, "message" : "Profile updated."});
   
     });
