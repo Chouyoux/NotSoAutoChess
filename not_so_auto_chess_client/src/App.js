@@ -9,8 +9,7 @@ import getCookie from './utils/get_cookie.js'
 
 import './App.css';
 
-
-const socket = io.connect('https://notsoautochess.com:3002');
+const socket = io.connect('http://176.159.165.187:3001');
 
 function App() {
 
@@ -18,6 +17,8 @@ function App() {
   const [hideMenu, setHideMenu] = useState(true);
 
   const [cookies, removeCookie] = useCookies(['auth_key']);
+
+  const [wasLogged, setWasLogged] = useState(false);
 
   const checkLogin = function() {
 
@@ -43,12 +44,13 @@ function App() {
 
     setHideLogin(true);
     setHideMenu(false);
+    setWasLogged(true);
 
   }
 
   const onLogout = function() {
 
-
+    socket.emit("signOut", { auth_key: getCookie("auth_key") });
     removeCookie('auth_key');
     setHideLogin(false);
     setHideMenu(true);

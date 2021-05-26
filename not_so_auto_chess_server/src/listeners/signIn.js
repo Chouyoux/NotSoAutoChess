@@ -13,6 +13,13 @@ module.exports = function(socket) {
           const _id = Users.authenfityPseudonymePassword(data.pseudonym, data.password);
           if (_id){
             Users.getUserById(_id).socket = this;
+
+            let online_friends = Users.getOnlineFriends(_id);
+            for (var i = 0; i < online_friends.length; i++){
+              let online_friend = online_friends[i];
+              online_friend.socket.emit("updateFriendsList");
+            }
+
             callback({success:true, token: Users.getUserById(_id).auth_key});
             return;
           }
@@ -24,6 +31,13 @@ module.exports = function(socket) {
           const _id = Users.authentifyAuthKey(data.auth_key);
           if (_id){
             Users.getUserById(_id).socket = this;
+
+            let online_friends = Users.getOnlineFriends(_id);
+            for (var i = 0; i < online_friends.length; i++){
+              let online_friend = online_friends[i];
+              online_friend.socket.emit("updateFriendsList");
+            }
+            
             callback({success:true, token: Users.getUserById(_id).auth_key});
             return;
           }

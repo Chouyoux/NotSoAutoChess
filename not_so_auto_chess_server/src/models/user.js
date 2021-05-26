@@ -12,8 +12,20 @@ class User {
         this.socket = null;
     }
 
+    isConnected(){
+        return this.socket && this.socket.connected;
+    }
+
     hasFriend(friend){
-        return this.friends.includes(friend);
+        for (var i = 0; i < this.friends.length; i++){
+            let afriend = this.friends[i];
+
+            if (afriend.toString() === friend.toString()){
+                return true;
+            }
+        }
+
+        return false;
     }
 
     addFriend(friend){
@@ -29,7 +41,15 @@ class User {
     }
 
     hasPendingInvite(pendingInvite){
-        return this.invitations_pending.includes(pendingInvite);
+        for (var i = 0; i < this.invitations_pending.length; i++){
+            let ainvitations_pending = this.invitations_pending[i];
+
+            if (ainvitations_pending.toString() === pendingInvite.toString()){
+                return true;
+            }
+        }
+
+        return false;
     }
 
     addPendingInvite(pendingInvite){
@@ -45,7 +65,15 @@ class User {
     }
 
     hasReceivedInvite(receivedInvite){
-        return this.invitations_received.includes(receivedInvite);
+        for (var i = 0; i < this.invitations_received.length; i++){
+            let ainvitations_received = this.invitations_received[i];
+
+            if (ainvitations_received.toString() === receivedInvite.toString()){
+                return true;
+            }
+        }
+
+        return false;
     }
 
     addReceivedInvite(receivedInvite){

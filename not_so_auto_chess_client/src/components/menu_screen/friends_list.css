@@ -89,6 +89,12 @@
 
 }
 
+.contact > p.offline {
+
+    color: lightgrey;
+
+}
+
 .FLFirstIcon {
     
     display: inline-flex;

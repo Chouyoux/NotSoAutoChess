@@ -207,6 +207,24 @@ class UsersController {
 
     }
 
+    getUserBySocket(socket_id){
+        
+        for (var i = 0; i < this._users.length ; i++){
+
+            let user = this._users[i];
+
+            if (user.socket && user.socket.id === socket_id){
+
+                return user;
+
+            }
+
+        }
+
+        return null;
+
+    }
+
     setSocketById(_id, socket){
 
         for (var i = 0; i < this._users.length ; i++){
@@ -223,11 +241,62 @@ class UsersController {
 
     }
 
+    getOnlineUsers(){
+
+        var online_users = [];
+        
+        for (var i = 0; i < this._users.length ; i++){
+
+            let user = this._users[i];
+
+            if (user.isConnected()){
+
+                online_users.push(user);
+
+            }
+
+        }
+
+        return online_users;
+
+    }
+
+    getOnlineFriends(_id){
+
+        let online_users = this.getOnlineUsers();
+        var online_friends = [];
+        
+        for (var i = 0; i < online_users.length ; i++){
+
+            let online_user = online_users[i];
+
+            if (online_user.hasFriend(_id)){
+
+                online_friends.push(online_user);
+
+            }
+
+        }
+
+        return online_friends;
+
+    }
+
     count(){
 
         let count = 0;
         this._users.forEach(() => {count++;})
         console.log("There are " + count + " users subscribed");
+
+    }
+
+    printUsers(){
+        
+        for (var i = 0; i < this._users.length ; i++){
+
+            console.log(this._users[i]);
+
+        }
 
     }
 

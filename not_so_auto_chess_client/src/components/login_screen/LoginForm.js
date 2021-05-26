@@ -11,9 +11,8 @@ const LoginForm = ( { hide, onLogin, socket } ) => {
 
     const [cookies, setCookie] = useCookies(['auth_key']);
 
-    const onSubmit = async (event) => {
-
-        // prevent redirect
+    const onSubmit = (event) => {
+        
         event.preventDefault();
 
         setIsLoading(true);
@@ -29,7 +28,6 @@ const LoginForm = ( { hide, onLogin, socket } ) => {
                 setIsLoading(false);
             }
         });
-
 
     };
 

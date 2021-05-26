@@ -10,7 +10,7 @@ const PendingInvite = ( {name, key, onDecline} ) => {
 
     return (
         <div className="contact" key={key}>
-            <p>{name}</p>
+            <p>{name.length > 9 ? name.substring(0, 8)+"..." : name}</p>
             <img
                 className="FLFirstIcon selectDisable"
                 onDragStart={(event) => {event.preventDefault();}}

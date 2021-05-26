@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import './subscription_form.css';
 
-const SubscriptionForm = ( { hide } ) => {
+const SubscriptionForm = ( { hide, socket } ) => {
 
     const [pseudonym, setPseudonym] = useState('');
     const [email, setEmail] = useState('');
@@ -10,14 +10,12 @@ const SubscriptionForm = ( { hide } ) => {
     const [isLoading, setIsLoading] = useState(false);
     const [formState, setFormState] = useState('');
 
-    const onSubmit = async (event) => {
+    const onSubmit = (event) => {
 
-        // prevent redirect
         event.preventDefault();
 
         setIsLoading(true);
 
-        // fetch request
         let _data = {
             pseudonym: pseudonym,
             email: email,
@@ -25,27 +23,18 @@ const SubscriptionForm = ( { hide } ) => {
             password2: password2
         }
 
-        await fetch('https://notsoautochess.com:3002/add-user', {
-            method: "POST",
-            body: JSON.stringify(_data),
-            headers: { "Content-type": "application/json; charset=UTF-8" }
-        })
-        .then(response => { return response.json();})
-        .then(data => {
-            if(data) {
-                if (data.code === 201){
-                    setPseudonym('');
-                    setEmail('');
-                    setPassword1('');
-                    setPassword2('');
-                }
-                setFormState(data.message);
+        socket.emit("userAdd", _data, (response) => {
+            console.log(response);
+            if (response.success){
+                setPseudonym('');
+                setEmail('');
+                setPassword1('');
+                setPassword2('');
             }
+            setFormState(response.message);
+            setIsLoading(false);
         });
 
-        // reset form and loading state
-        
-        setIsLoading(false);
     };
 
     

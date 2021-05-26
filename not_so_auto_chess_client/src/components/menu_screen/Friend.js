@@ -6,15 +6,19 @@ import remove_friend_hover from '../../images/friend_list/remove_friend_hover.pn
 import add_friend_to_group from '../../images/friend_list/add_friend_to_group.png';
 import add_friend_to_group_hover from '../../images/friend_list/add_friend_to_group_hover.png';
 
-const Friend = ( {name, key, onRemove} ) => {
+const Friend = ( {online, name, key, onRemove} ) => {
 
     const [removeFriendIcon, setRemoveFriendIcon] = useState(remove_friend);
     const [addFriendToGroupIcon, setAddFriendToGroupIcon] = useState(add_friend_to_group);
 
     return (
         <div className="contact" key={key}>
-            <p>{name}</p>
-            <img
+
+            <p className={online ? "online" : "offline"}>{name.length > 9 ? name.substring(0, 8)+"..." : name}</p>
+            
+            {
+                online ?
+                <img
                 className="FLFirstIcon selectDisable"
                 onDragStart={(event) => {event.preventDefault();}}
                 unselectable="on"
@@ -23,9 +27,12 @@ const Friend = ( {name, key, onRemove} ) => {
                 onClick={() => {setAddFriendToGroupIcon(add_friend_to_group);}}
                 onMouseOver={() => {setAddFriendToGroupIcon(add_friend_to_group_hover)}}
                 onMouseOut={() => {setAddFriendToGroupIcon(add_friend_to_group)}}
-            />
+                />
+                : null
+            }
+            
             <img
-                className="FLSecondIcon selectDisable"
+                className={(online ? "FLSecondIcon" : "FLFirstIcon")+" selectDisable"}
                 onDragStart={(event) => {event.preventDefault();}}
                 unselectable="on"
                 alt="remove"

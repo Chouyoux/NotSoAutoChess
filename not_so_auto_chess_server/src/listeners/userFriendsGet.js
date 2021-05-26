@@ -20,7 +20,9 @@ module.exports = function(socket) {
         for (let i = 0; i < user.friends.length; i++){
 
             let friend = Users.getUserById(user.friends[i]);
-            friends.push(friend.pseudonym);
+            let online = friend.isConnected();
+
+            friends.push({pseudonym: friend.pseudonym, online: online});
 
         }
 

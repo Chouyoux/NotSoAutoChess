@@ -113,14 +113,24 @@ const FriendsList = ( { socket } ) => {
     }, []);
 
     const friends_elements = [];
-
+    const offline_friends = [];
     for (const [index, value] of friends.entries()) {
+        if (!value.online) {
+            offline_friends.push(value);
+        }
+        else {
+            friends_elements.push(
+                <Friend online={value.online} name={value.pseudonym} key={index} onRemove={onDecline} />
+            );
+        }
+    }
+    for (const [index, value] of offline_friends.entries()) {
         friends_elements.push(
-            <Friend name={value} key={index} onRemove={onDecline} />
+            <Friend online={value.online} name={value.pseudonym} key={index} onRemove={onDecline} />
         );
     }
-    const invitations_received_elements = [];
 
+    const invitations_received_elements = [];
     for (const [index, value] of invitationsReceived.entries()) {
         invitations_received_elements.push(
             <ReceivedInvite name={value} key={index+friends.length} onValidate={onValidate} onDecline={onDecline} />
@@ -128,7 +138,6 @@ const FriendsList = ( { socket } ) => {
     }
 
     const invitations_pending_elements = [];
-
     for (const [index, value] of invitationsPending.entries()) {
         invitations_pending_elements.push(
             <PendingInvite name={value} key={index+friends.length+invitations_received_elements.length} onDecline={onDecline} />

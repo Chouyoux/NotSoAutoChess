@@ -6,13 +6,13 @@ import './login_screen.css';
 
 const LoginScreen = ( { hide, onLogin, socket } ) => {
 
-    const [login, setLogin] = useState(false);
+    const [login, setLogin] = useState(true);
 
     return hide ? null : (
         <div>
             <Sidebar />
             <div className="screen_form_block">
-                <SubscriptionForm hide={login} />
+                <SubscriptionForm hide={login} socket={socket} />
                 <LoginForm hide={!login} onLogin={onLogin} socket={socket} />
                 <button
                     className="loginScreenButton"

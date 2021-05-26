@@ -40,8 +40,6 @@ require("./database")
     res.send("<h1>Welcome to Not So Auto Chess back-end services ! <3</h1>");
   });
   
-  require('./routes')(app);
-  
   httpServer.listen(port, function() {
     console.log("Server listening http on *:"+port);
   });
