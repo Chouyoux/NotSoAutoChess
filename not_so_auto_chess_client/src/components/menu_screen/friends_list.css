@@ -137,3 +137,26 @@
     margin-bottom: 25px;
 
 }
+
+.friendsListLobby {
+
+    justify-content: center;
+    text-align: center;
+    align-content: center;
+
+}
+
+.friendsListLobbyAvatars {
+
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+    grid-gap: 4px;
+
+}
+
+.friendsListLobbyAvatar {
+
+    cursor: pointer;
+    width: 48px;
+
+}

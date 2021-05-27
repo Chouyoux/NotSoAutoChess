@@ -1,6 +1,7 @@
 import {React, useState, useEffect} from 'react';
 import "./friends_list.css";
 
+import FriendsListLobby from './FriendsListLobby';
 import FriendsListFolder from './FriendsListFolder';
 import Friend from './Friend';
 import ReceivedInvite from './ReceivedInvite'
@@ -149,6 +150,8 @@ const FriendsList = ( { socket } ) => {
         <div className="friendsListDiv">
             <div className="friendsList">
 
+                <FriendsListLobby friends={[]} /> <br /><br />
+
                 <form className="friendsListAddForm" onSubmit={onSubmit}>
                     <input
                         className="friendsListAddInput"
@@ -159,16 +162,16 @@ const FriendsList = ( { socket } ) => {
                         onChange={(event) => setAddPseudonym(event.target.value)}
                         value={addPseudonym}
                     />
-                    <p className="friendsListAddState">{addFormState !== "" ? addFormState : <div><br /></div>}</p>
+                    <p className="friendsListAddState">{addFormState !== "" ? addFormState : null}</p>
                 </form>
 
                 
 
-                <FriendsListFolder title="Friends" elements={friends_elements} />
+                <FriendsListFolder title="Friends" elements={friends_elements} defaultOpen={true} />
                 
-                <FriendsListFolder title="Received Invites" elements={invitations_received_elements} />
+                <FriendsListFolder title="Received Invites" elements={invitations_received_elements} defaultOpen={true} />
                 
-                <FriendsListFolder title="Pending Invites" elements={invitations_pending_elements} />
+                <FriendsListFolder title="Pending Invites" elements={invitations_pending_elements} defaultOpen={false} />
             </div>
         </div>
     )

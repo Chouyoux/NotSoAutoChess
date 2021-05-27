@@ -3,9 +3,9 @@ import React, {useState} from 'react';
 import fold_open from '../../images/friend_list/fold_open.png';
 import fold_close from '../../images/friend_list/fold_close.png';
 
-const FriendsListFolder = ( { title, elements } ) => {
+const FriendsListFolder = ( { title, elements, defaultOpen } ) => {
 
-    const [open, setOpen] = useState(true);
+    const [open, setOpen] = useState(defaultOpen);
 
     return (
         <div>
