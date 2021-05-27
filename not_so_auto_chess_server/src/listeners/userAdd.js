@@ -67,8 +67,6 @@ module.exports = function (socket) {
 
         user.save()
           .then((result) => {
-            res.status(201);
-            res.send({"code" : 201, "message" : data.pseudonym + " has been registered !"});
             console.log(data.pseudonym + " (" + data.email + ") just created an account.")
           })
           .catch((err) => console.log(err));
