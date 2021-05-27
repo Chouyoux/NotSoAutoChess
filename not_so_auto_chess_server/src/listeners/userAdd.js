@@ -75,6 +75,7 @@ module.exports = function (socket) {
         Users.add(data.pseudonym, data.email, data.password1);
         const final_user = Users.getUserByPseudonym(data.pseudonym);
         final_user._id = user._id;
+        callback({ success: true, message: data.pseudonym + " has been registered !" });
 
     });
 

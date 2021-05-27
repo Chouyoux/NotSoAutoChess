@@ -1,6 +1,6 @@
 // Express imports / parameters
 
-var does_https = false;
+var does_https = true;
 
 var app = require("express")();
 var http = require('http');
