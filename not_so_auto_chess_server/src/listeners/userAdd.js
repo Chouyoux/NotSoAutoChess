@@ -60,16 +60,16 @@ module.exports = function (socket) {
         }
 
         const user = new DBUser({
-            pseudonym: req.body.pseudonym,
-            email: req.body.email,
-            password: req.body.password1
+            pseudonym: data.pseudonym,
+            email: data.email,
+            password: data.password1
         });
 
         user.save()
           .then((result) => {
             res.status(201);
-            res.send({"code" : 201, "message" : req.body.pseudonym + " has been registered !"});
-            console.log(req.body.pseudonym + " (" + req.body.email + ") just created an account.")
+            res.send({"code" : 201, "message" : data.pseudonym + " has been registered !"});
+            console.log(data.pseudonym + " (" + data.email + ") just created an account.")
           })
           .catch((err) => console.log(err));
 
