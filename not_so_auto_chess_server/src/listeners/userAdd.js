@@ -1,4 +1,5 @@
 const Users = require('../controllers/users');
+const DBUser = require("../database/user");
 const validateEmail = require("../utils/validateEmail");
 
 module.exports = function (socket) {
@@ -58,11 +59,24 @@ module.exports = function (socket) {
             return;
         }
 
+        const user = new DBUser({
+            pseudonym: req.body.pseudonym,
+            email: req.body.email,
+            password: req.body.password1
+        });
+
+        user.save()
+          .then((result) => {
+            res.status(201);
+            res.send({"code" : 201, "message" : req.body.pseudonym + " has been registered !"});
+            console.log(req.body.pseudonym + " (" + req.body.email + ") just created an account.")
+          })
+          .catch((err) => console.log(err));
+
 
         Users.add(data.pseudonym, data.email, data.password1);
-        
-        callback({ success: true, message: data.pseudonym + " has been registered !" });
-        console.log(data.pseudonym + " (" + data.email + ") just created an account.");
+        const final_user = Users.getUserByPseudonym(data.pseudonym);
+        final_user._id = user._id;
 
     });
 
