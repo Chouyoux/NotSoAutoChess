@@ -150,7 +150,7 @@ const FriendsList = ( { socket } ) => {
         <div className="friendsListDiv">
             <div className="friendsList">
 
-                <FriendsListLobby friends={[]} /> <br /><br />
+                <FriendsListLobby socket={socket} /> <br /><br />
 
                 <form className="friendsListAddForm" onSubmit={onSubmit}>
                     <input

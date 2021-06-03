@@ -1,27 +1,27 @@
 const Users = require('../controllers/users');
 module.exports = function (socket) {
 
-    socket.on('userLobbyAccept', function (data, callback) { // {auth_key, inviter_id}
+    socket.on('userLobbyAccept', function (data, callback) { // {auth_key, inviter_pseudonym}
 
         if (!data.auth_key) {
-            callback({ success: false, message: "Authenfitication failed." });
+            callback({ success: false, message: "Authentification failed." });
             return;
         }
 
         const _id = Users.authentifyAuthKey(data.auth_key);
         if (!_id) {
-            callback({ success: false, message: "Authenfitication failed." });
+            callback({ success: false, message: "Authentification failed." });
             return;
         }
 
-        if (!data.inviter_id) {
+        if (!data.inviter_pseudonym) {
             callback({ success: false, message: "Request body wrongly formatted." });
             return;
         }
 
         let user = Users.getUserById(_id);
 
-        let inviter = Users.getUserById(data.inviter_id);
+        let inviter = Users.getUserById(data.inviter_pseudonym);
         if (!inviter) {
             callback({ success: false, message: "Inviter id is invalid." });
             return;

@@ -1,7 +1,7 @@
 const Users = require('../controllers/users');
 module.exports = function (socket) {
 
-    socket.on('userLobbyInvite', function (data, callback) { // {auth_key, invited_pseudonym}
+    socket.on('userLobbyAccept', function (data, callback) { // {auth_key, inviter_pseudonym}
 
         if (!data.auth_key) {
             callback({ success: false, message: "Authentification failed." });
@@ -14,34 +14,28 @@ module.exports = function (socket) {
             return;
         }
 
-        if (!data.invited_pseudonym) {
+        if (!data.inviter_pseudonym) {
             callback({ success: false, message: "Request body wrongly formatted." });
             return;
         }
 
         let user = Users.getUserById(_id);
 
-        let invited = Users.getUserByPseudonym(data.invited_pseudonym);
-        if (!invited) {
-            callback({ success: false, message: "Invited pseudonym is invalid." });
-            return;
-        }
-
-        if (!user.hasFriend(invited)){
-            callback({ success: false, message: "Invited player is not is your friendlist." });
+        let inviter = Users.getUserByPseudonym(data.inviter_pseudonym);
+        if (!inviter) {
+            callback({ success: false, message: "Inviter pseudonym is invalid." });
             return;
         }
 
         try {
-            user.lobby.invite(invited);
-            invited.sendLobbyInvite(user.pseudonym);
+            inviter.lobby.refuse(user);
         }
         catch (e) {
             callback({ success: false, message: e });
             return;
         }
 
-        callback({ success: true, message: "Invitation sent." });
+        callback({ success: true, message: "Invitation refused." });
 
     });
 

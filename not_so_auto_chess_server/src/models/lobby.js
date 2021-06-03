@@ -10,6 +10,17 @@ class Lobby {
 
     }
 
+    updateLobby(){
+
+        for(var i = 0; i < lobby.players.length; i++){
+
+            let lobby_player = lobby.players[i];
+            lobby_player.updateLobby();
+
+        }
+
+    }
+
     hasPlayer(player) {
 
         this.players.includes(player);
@@ -53,10 +64,22 @@ class Lobby {
 
     }
 
+    refuse(player) {
+
+        if (!this.isInvited(player)) {
+            throw ("This player isn't invited in this lobby.");
+        }
+
+        this.removeInvitation(player);
+
+    }
+
     addPlayer(player) {
 
+        player.lobby.removePlayer(player);
         this.players.push(player);
         player.lobby = this;
+        this.updateLobby();
 
     }
 
@@ -77,7 +100,9 @@ class Lobby {
         });
 
         this.players = filtered;
+        this.updateLobby();
         player.lobby = new Lobby(player);
+        player.updateLobby();
 
     }
 

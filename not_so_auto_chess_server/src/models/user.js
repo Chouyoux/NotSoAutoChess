@@ -105,6 +105,11 @@ class User {
         }
     }
 
+    sendLobbyInvite(pseudonym){
+        if (this.isConnected()){
+            this.socket.emit("lobbyInvite", pseudonym);
+        }
+    }
     
 
 }

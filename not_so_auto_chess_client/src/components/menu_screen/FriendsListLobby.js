@@ -22,6 +22,7 @@ avatars.push(avatar5);
 const FriendsListLobby = ( { socket } ) => {
 
     const [lobbyPlayers, setLobbyPlayers] = useState([]);
+    const [inviterPseudonym, setInviterPsuedonym] = useState("");
 
     const updateContent = function () {
 
@@ -34,13 +35,19 @@ const FriendsListLobby = ( { socket } ) => {
 
     }
 
+    const inviteCallback = function(data) {
+        setInviterPsuedonym(data.pseudonym);
+    }
+
     useEffect(() => {
         updateContent();
 
         socket.on("updateLobby", function() {updateContent()});
+        socket.on("lobbyInvite", function() {inviteCallback()});
 
         return () => {
             socket.removeEventListener("updateLobby", function() {updateContent()});
+            socket.removeEventListener("lobbyInvite", function() {inviteCallback()});
         };
 
     }, []);
@@ -58,7 +65,7 @@ const FriendsListLobby = ( { socket } ) => {
         );
         i++;
     }
-    while (i < 7){
+    while (i < 8){
         lobby_players_elements.push(
             <img
                 className="friendsListLobbyAvatar selectDisable"
@@ -68,6 +75,22 @@ const FriendsListLobby = ( { socket } ) => {
             />
         );
         i++;
+    }
+
+    const lobbyInvite = null;
+
+    if (inviterPseudonym != ""){
+        lobbyInvite = (
+            <div>
+            <label>{inviterPseudonym} is inviting you :</label>
+            <button>
+                ACCEPT
+            </button>
+            <button>
+                REFUSE
+            </button>
+            </div>
+        );
     }
 
     return (

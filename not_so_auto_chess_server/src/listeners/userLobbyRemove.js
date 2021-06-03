@@ -1,7 +1,7 @@
 const Users = require('../controllers/users');
 module.exports = function (socket) {
 
-    socket.on('userLobbyRemove', function (data, callback) { // {auth_key, removed_id}
+    socket.on('userLobbyRemove', function (data, callback) { // {auth_key, removed_pseudonym}
 
         if (!data.auth_key) {
             callback({ success: false, message: "Authentification failed." });
@@ -14,16 +14,16 @@ module.exports = function (socket) {
             return;
         }
 
-        if (!data.removed_id) {
+        if (!data.removed_pseudonym) {
             callback({ success: false, message: "Request body wrongly formatted." });
             return;
         }
 
         let user = Users.getUserById(_id);
 
-        let removed = Users.getUserById(data.removed_id);
+        let removed = Users.getUserByPseudonym(data.removed_pseudonym);
         if (!removed) {
-            callback({ success: false, message: "Removed id is invalid." });
+            callback({ success: false, message: "Removed pseudonym is invalid." });
             return;
         }
 
