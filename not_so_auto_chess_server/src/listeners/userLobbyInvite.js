@@ -27,7 +27,7 @@ module.exports = function (socket) {
             return;
         }
 
-        if (!user.hasFriend(invited)){
+        if (!user.hasFriend(invited._id)){
             callback({ success: false, message: "Invited player is not is your friendlist." });
             return;
         }

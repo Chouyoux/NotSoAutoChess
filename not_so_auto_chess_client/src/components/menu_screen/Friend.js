@@ -6,7 +6,7 @@ import remove_friend_hover from '../../images/friend_list/remove_friend_hover.pn
 import add_friend_to_group from '../../images/friend_list/add_friend_to_group.png';
 import add_friend_to_group_hover from '../../images/friend_list/add_friend_to_group_hover.png';
 
-const Friend = ( {online, name, key, onRemove} ) => {
+const Friend = ( {online, name, key, onRemove, onInvite} ) => {
 
     const [removeFriendIcon, setRemoveFriendIcon] = useState(remove_friend);
     const [addFriendToGroupIcon, setAddFriendToGroupIcon] = useState(add_friend_to_group);
@@ -25,8 +25,10 @@ const Friend = ( {online, name, key, onRemove} ) => {
                 alt="add_group"
                 src={addFriendToGroupIcon}
                 onClick={() => {setAddFriendToGroupIcon(add_friend_to_group);}}
-                onMouseOver={() => {setAddFriendToGroupIcon(add_friend_to_group_hover)}}
-                onMouseOut={() => {setAddFriendToGroupIcon(add_friend_to_group)}}
+                onMouseOver={() => {setAddFriendToGroupIcon(add_friend_to_group_hover);}}
+                onMouseOut={() => {setAddFriendToGroupIcon(add_friend_to_group);}}
+                onClick={() => {setAddFriendToGroupIcon(add_friend_to_group);}}
+                onClick={() => {onInvite(name);}}
                 />
                 : null
             }
@@ -38,9 +40,9 @@ const Friend = ( {online, name, key, onRemove} ) => {
                 alt="remove"
                 src={removeFriendIcon}
                 onClick={() => {setRemoveFriendIcon(remove_friend);}}
-                onMouseOver={() => {setRemoveFriendIcon(remove_friend_hover)}}
-                onMouseOut={() => {setRemoveFriendIcon(remove_friend)}}
-                onClick={() => onRemove(name)}
+                onMouseOver={() => {setRemoveFriendIcon(remove_friend_hover);}}
+                onMouseOut={() => {setRemoveFriendIcon(remove_friend);}}
+                onClick={() => {onRemove(name);}}
             />
         </div>
     )

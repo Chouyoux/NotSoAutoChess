@@ -77,6 +77,23 @@ const FriendsList = ( { socket } ) => {
 
     }
 
+    const onInvite = function (name) {
+
+        if (!name || name === "") return;
+
+        let _data = {
+            auth_key : getCookie("auth_key"),
+            invited_pseudonym: name
+        }
+
+        socket.emit("userLobbyInvite", _data, (response) => {
+            console.log(response);
+            if (response.success){
+                //
+            }
+        });
+    }
+
     const updateContent = function () {
 
         socket.emit("userFriendsGet", { auth_key: getCookie("auth_key") }, (response) => {
@@ -121,7 +138,7 @@ const FriendsList = ( { socket } ) => {
         }
         else {
             friends_elements.push(
-                <Friend online={value.online} name={value.pseudonym} key={index} onRemove={onDecline} />
+                <Friend online={value.online} name={value.pseudonym} key={index} onRemove={onDecline} onInvite={onInvite} />
             );
         }
     }

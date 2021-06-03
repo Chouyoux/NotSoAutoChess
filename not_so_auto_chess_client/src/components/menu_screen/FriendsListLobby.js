@@ -22,7 +22,39 @@ avatars.push(avatar5);
 const FriendsListLobby = ( { socket } ) => {
 
     const [lobbyPlayers, setLobbyPlayers] = useState([]);
-    const [inviterPseudonym, setInviterPsuedonym] = useState("");
+    const [inviterPseudonym, setInviterPseudonym] = useState("");
+
+    const onAccept = function () {
+
+        let _data = {
+            auth_key : getCookie("auth_key"),
+            inviter_pseudonym: inviterPseudonym
+        }
+
+        socket.emit("userLobbyAccept", _data, (response) => {
+            console.log(response);
+            if (response.success){
+                //
+            }
+        });
+
+    }
+
+    const onRefuse = function () {
+
+        let _data = {
+            auth_key : getCookie("auth_key"),
+            inviter_pseudonym: inviterPseudonym
+        }
+
+        socket.emit("userLobbyRefuse", _data, (response) => {
+            console.log(response);
+            if (response.success){
+                setInviterPseudonym("");
+            }
+        });
+
+    }
 
     const updateContent = function () {
 
@@ -36,7 +68,7 @@ const FriendsListLobby = ( { socket } ) => {
     }
 
     const inviteCallback = function(data) {
-        setInviterPsuedonym(data.pseudonym);
+        setInviterPseudonym(data.pseudonym);
     }
 
     useEffect(() => {
@@ -83,10 +115,10 @@ const FriendsListLobby = ( { socket } ) => {
         lobbyInvite = (
             <div>
             <label>{inviterPseudonym} is inviting you :</label>
-            <button>
+            <button onClick={() => onAccept()}>
                 ACCEPT
             </button>
-            <button>
+            <button onClick={() => onRefuse()}>
                 REFUSE
             </button>
             </div>
