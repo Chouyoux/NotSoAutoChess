@@ -4,13 +4,13 @@ module.exports = function(socket) {
     socket.on('userInvitationsReceivedGet', function(data, callback){ // {auth_key}
 
         if (!data.auth_key){
-            callback({success:false, message:"Authenfitication failed."});
+            callback({success:false, message:"Authentification failed."});
             return;
         }
 
         const _id = Users.authentifyAuthKey(data.auth_key);
         if (!_id){
-            callback({success:false, message:"Authenfitication failed."});
+            callback({success:false, message:"Authentification failed."});
             return;
         }
 

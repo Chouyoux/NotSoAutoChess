@@ -4,13 +4,13 @@ module.exports = function(socket) {
     socket.on('userFriendsRemove', function(data, callback){ // {auth_key, pseudonym}
 
         if (!data.auth_key){
-            callback({success:false, message:"Authenfitication failed."});
+            callback({success:false, message:"Authentification failed."});
             return;
         }
 
         const _id = Users.authentifyAuthKey(data.auth_key);
         if (!_id){
-            callback({success:false, message:"Authenfitication failed."});
+            callback({success:false, message:"Authentification failed."});
             return;
         }
 
@@ -48,10 +48,7 @@ module.exports = function(socket) {
                 
             user.removeReceivedInvite(friend._id);
             friend.removePendingInvite(user._id);
-            
-            if (friend.socket != null){
-                friend.socket.emit("updateFriendsList");
-            }
+            friend.updateFriendList();
             callback({success:true, message:"Received invitation was removed."});
             return;
 
@@ -61,9 +58,7 @@ module.exports = function(socket) {
 
             friend.removeFriend(user._id);
             user.removeFriend(friend._id);
-            if (friend.socket != null){
-                friend.socket.emit("updateFriendsList");
-            }
+            friend.updateFriendList();
             callback({success:true, message:data.pseudonym+" was removed from your friends."});
             return;
 

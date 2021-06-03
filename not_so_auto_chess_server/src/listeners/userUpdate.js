@@ -6,13 +6,13 @@ module.exports = function(socket) {
     socket.on('userUpdate', function(data, callback){ // {auth_key, ?pseudonym, ?email, ?password, ?avatar, ?set}
 
         if (!data.auth_key){
-            callback({success:false, message:"Authenfitication failed."});
+            callback({success:false, message:"Authentification failed."});
             return;
         }
 
         const _id = Users.authentifyAuthKey(data.auth_key);
         if (!_id){
-            callback({success:false, message:"Authenfitication failed."});
+            callback({success:false, message:"Authentification failed."});
             return;
         }
 

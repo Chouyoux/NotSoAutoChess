@@ -14,3 +14,23 @@
     font-size: 175%;
     
 }
+
+@media screen and (max-height: 600px) {
+
+    .playCasterPlay {
+
+        transform: translate(-50%, -100px);
+        -webkit-transform: translate(-50%, -100px);
+        
+    }
+
+}
+
+@media screen and (max-width: 1300px) {
+
+    .playCasterPlay {
+        transform: translate(-50%, -100px);
+        -webkit-transform: translate(-50%, -100px);
+    }
+    
+}

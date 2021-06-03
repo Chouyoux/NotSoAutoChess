@@ -49,3 +49,17 @@
 
     
 }
+
+
+
+@media screen and (max-width: 600px) {
+
+    .sidebar {
+        width: 0%;
+    }
+
+    .screen_form_block {
+        width: 100%;
+        margin-left: 0%;
+    }
+}

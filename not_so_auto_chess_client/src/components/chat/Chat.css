@@ -85,3 +85,98 @@
     cursor: pointer;
     outline: none;
 }
+
+@media screen and (max-width: 600px) {
+
+    #wrapper {
+
+        position: fixed;
+        padding-bottom: 10px;
+        background-image: url("../../images/chat/chat_mobile.png");
+        width: 299px;
+        height: 299px;
+        text-align: center;
+
+        top: 100vh;
+        left: 50vw;
+
+        -webkit-transform: translate(-150px, -100%);
+        transform: translate(-150px, -100%);
+        background-repeat: no-repeat;
+
+    }
+
+    #chatbox {
+
+        text-align: left;
+        margin: 14px auto;
+        margin-bottom: 25px;
+        padding: 10px;
+        background: #7f371d;
+        height: 139px;
+        width: 200px;
+        overflow: auto;
+        color: white;
+
+    }
+
+    #usermsg {
+
+        width: 184px;
+        height: 13px;
+        border: none;
+        background-color: #7f371d;
+        margin-top: 26px;
+        color: white;
+        margin-left: 9px;
+        font: 12px arial;
+
+    }
+
+    .error {
+
+        color: #ff0000;
+
+    }
+
+    #menu {
+
+        padding: 12.5px 25px 12.5px 25px;
+
+    }
+
+    .msgln {
+
+        margin: 0 0 2px 0;
+
+    }
+
+    #usermsg:focus, #usermsg:hover {
+
+        outline: none;
+        background-color: #53210f;
+
+    }
+
+    #submitmsg {
+
+        background-image: url("../../images/chat/send.png");
+        width: 29px;
+        height: 29px;
+        text-align: center;
+        border: none;
+        vertical-align: middle;
+        margin-left: 6px;
+        margin-bottom: 1px;
+        cursor: pointer;
+
+    }
+
+    #submitmsg:focus {
+
+        cursor: pointer;
+        outline: none;
+
+    }
+
+}

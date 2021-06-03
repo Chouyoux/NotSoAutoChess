@@ -1,3 +1,5 @@
+const Lobby = require('./lobby');
+
 class User {
 
     constructor(_id, pseudonym, email, password, auth_key, friends, invitations_pending, invitations_received, avatar, set){
@@ -12,6 +14,7 @@ class User {
         this.avatar = avatar ? avatar : 0;
         this.set = set ? set : 0;
         this.socket = null;
+        this.lobby = new Lobby(this);
     }
 
     isConnected(){
@@ -88,6 +91,18 @@ class User {
         });
 
         this.invitations_received = filtered;
+    }
+
+    updateFriendList(){
+        if (this.isConnected()){
+            this.socket.emit("updateFriendsList");
+        }
+    }
+
+    updateLobby(){
+        if (this.isConnected()){
+            this.socket.emit("updateLobby");
+        }
     }
 
     
