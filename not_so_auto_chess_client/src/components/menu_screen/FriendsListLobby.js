@@ -68,14 +68,14 @@ const FriendsListLobby = ( { socket } ) => {
     }
 
     const inviteCallback = function(data) {
-        setInviterPseudonym(data.pseudonym);
+        setInviterPseudonym(data);
     }
 
     useEffect(() => {
         updateContent();
 
         socket.on("updateLobby", function() {updateContent()});
-        socket.on("lobbyInvite", function() {inviteCallback()});
+        socket.on("lobbyInvite", function(data) {inviteCallback(data)});
 
         return () => {
             socket.removeEventListener("updateLobby", function() {updateContent()});
@@ -109,21 +109,17 @@ const FriendsListLobby = ( { socket } ) => {
         i++;
     }
 
-    const lobbyInvite = null;
-
-    if (inviterPseudonym != ""){
-        lobbyInvite = (
-            <div>
-            <label>{inviterPseudonym} is inviting you :</label>
-            <button onClick={() => onAccept()}>
-                ACCEPT
-            </button>
-            <button onClick={() => onRefuse()}>
-                REFUSE
-            </button>
-            </div>
-        );
-    }
+    const lobbyInvite = inviterPseudonym == "" ? null : (
+        <div>
+        <label>{inviterPseudonym} is inviting you :</label>
+        <button onClick={() => onAccept()}>
+            ACCEPT
+        </button>
+        <button onClick={() => onRefuse()}>
+            REFUSE
+        </button>
+        </div>
+    );
 
     return (
         <div className="friendsListLobby" >
@@ -132,6 +128,7 @@ const FriendsListLobby = ( { socket } ) => {
             <div className="friendsListLobbyAvatars">
                 {lobby_players_elements}
             </div>
+            {lobbyInvite}
 
         </div>
     )

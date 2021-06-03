@@ -21,7 +21,7 @@ module.exports = function (socket) {
 
         let user = Users.getUserById(_id);
 
-        let inviter = Users.getUserById(data.inviter_pseudonym);
+        let inviter = Users.getUserByPseudonym(data.inviter_pseudonym);
         if (!inviter) {
             callback({ success: false, message: "Inviter id is invalid." });
             return;
