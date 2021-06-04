@@ -21,14 +21,11 @@ module.exports = function(socket) {
 
         const user = Users.getUserById(_id);
 
-        console.log("User sending \"" + data.msg + "\".");
-
         var date = new Date();
         var minutes = date.getMinutes();
         var hour = date.getHours();
         user.lobby.sendMsg("["+hour+"h"+minutes+"] "+user.pseudonym+" : "+data.msg);
         
-        console.log("Msg sent.");
         callback({success:true, message:"Message sent."});
 
     });
