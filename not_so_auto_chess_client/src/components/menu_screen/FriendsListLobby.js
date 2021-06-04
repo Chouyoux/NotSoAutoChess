@@ -1,28 +1,16 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState } from 'react';
+
+import FriendsListLobbyAvatar from './FriendsListLobbyAvatar';
 
 import getCookie from '../../utils/get_cookie.js';
-
-// Can't use FS in react ? manual filling for now
-import avatarempty from '../../images/profile_screen/avatars/avatar_empty.png';
-import avatar0 from '../../images/profile_screen/avatars/avatar0.png';
-import avatar1 from '../../images/profile_screen/avatars/avatar1.png';
-import avatar2 from '../../images/profile_screen/avatars/avatar2.png';
-import avatar3 from '../../images/profile_screen/avatars/avatar3.png';
-import avatar4 from '../../images/profile_screen/avatars/avatar4.png';
-import avatar5 from '../../images/profile_screen/avatars/avatar5.png';
-
-const avatars = [];
-avatars.push(avatar0);
-avatars.push(avatar1);
-avatars.push(avatar2);
-avatars.push(avatar3);
-avatars.push(avatar4);
-avatars.push(avatar5);
 
 const FriendsListLobby = ( { socket } ) => {
 
     const [lobbyPlayers, setLobbyPlayers] = useState([]);
     const [inviterPseudonym, setInviterPseudonym] = useState("");
+    const [hoverPseudonym, setHoverPseudonym] = useState("");
+    const [feedBackMsg, setFeedBackMsg] = useState("");
+    const [feedBackMsgTimeOut, setFeedBackMsgTimeOut] = useState(null);
 
     const onAccept = function () {
 
@@ -36,7 +24,10 @@ const FriendsListLobby = ( { socket } ) => {
             if (response.success){
                 //
             }
+            setFeedBackMsgTimer(response.message);
         });
+
+        setInviterPseudonym("");
 
     }
 
@@ -50,8 +41,28 @@ const FriendsListLobby = ( { socket } ) => {
         socket.emit("userLobbyRefuse", _data, (response) => {
             console.log(response);
             if (response.success){
-                setInviterPseudonym("");
+                //
             }
+            setFeedBackMsgTimer(response.message);
+        });
+
+        setInviterPseudonym("");
+
+    }
+
+    const onRemove = function (pseudonym) {
+
+        let _data = {
+            auth_key : getCookie("auth_key"),
+            removed_pseudonym: pseudonym
+        }
+
+        socket.emit("userLobbyRemove", _data, (response) => {
+            console.log(response);
+            if (response.success){
+                setHoverPseudonym("");
+            }
+            setFeedBackMsgTimer(response.message);
         });
 
     }
@@ -67,6 +78,15 @@ const FriendsListLobby = ( { socket } ) => {
 
     }
 
+    const setFeedBackMsgTimer = function(msg){
+        setFeedBackMsg(msg);
+        if (feedBackMsgTimeOut){
+            clearTimeout(feedBackMsgTimeOut);
+            setFeedBackMsgTimeOut(null);
+        }
+        setFeedBackMsgTimeOut(setTimeout(function(){ setFeedBackMsg(""); }, 5000))
+    }
+
     const inviteCallback = function(data) {
         setInviterPseudonym(data);
     }
@@ -79,7 +99,7 @@ const FriendsListLobby = ( { socket } ) => {
 
         return () => {
             socket.removeEventListener("updateLobby", function() {updateContent()});
-            socket.removeEventListener("lobbyInvite", function() {inviteCallback()});
+            socket.removeEventListener("lobbyInvite", function(data) {inviteCallback(data)});
         };
 
     }, []);
@@ -88,23 +108,13 @@ const FriendsListLobby = ( { socket } ) => {
     var i = 0;
     for (const [index, value] of lobbyPlayers.entries()) {
         lobby_players_elements.push(
-            <img
-                className="friendsListLobbyAvatar selectDisable"
-                onDragStart={(event) => {event.preventDefault();}}
-                unselectable="on"
-                src={avatars[value.avatar]}
-            />
+            <FriendsListLobbyAvatar avatar={value.avatar} pseudonym={value.pseudonym} onRemove={onRemove} onHover={setHoverPseudonym} />
         );
         i++;
     }
     while (i < 8){
         lobby_players_elements.push(
-            <img
-                className="friendsListLobbyAvatar selectDisable"
-                onDragStart={(event) => {event.preventDefault();}}
-                unselectable="on"
-                src={avatarempty}
-            />
+            <FriendsListLobbyAvatar avatar={-1} />
         );
         i++;
     }
@@ -112,11 +122,17 @@ const FriendsListLobby = ( { socket } ) => {
     const lobbyInvite = inviterPseudonym == "" ? null : (
         <div>
         <label>{inviterPseudonym} is inviting you :</label>
-        <button onClick={() => onAccept()}>
-            ACCEPT
+        <button
+            className="buttonAcceptRefuseLobby"
+            onClick={() => onAccept()}
+        >
+            Accept
         </button>
-        <button onClick={() => onRefuse()}>
-            REFUSE
+        <button
+            className="buttonAcceptRefuseLobby"
+            onClick={() => onRefuse()}
+        >
+            Refuse
         </button>
         </div>
     );
@@ -124,12 +140,12 @@ const FriendsListLobby = ( { socket } ) => {
     return (
         <div className="friendsListLobby" >
             <h1 className="">LOBBY</h1>
-
+            {feedBackMsg != "" ? feedBackMsg : null} <br />
+            {hoverPseudonym != "" ? hoverPseudonym : <br />}
             <div className="friendsListLobbyAvatars">
                 {lobby_players_elements}
             </div>
             {lobbyInvite}
-
         </div>
     )
 }

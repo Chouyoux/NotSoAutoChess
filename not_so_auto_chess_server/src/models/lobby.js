@@ -10,11 +10,11 @@ class Lobby {
 
     }
 
-    updateLobby(){
+    updateLobby() {
 
-        for(var i = 0; i < lobby.players.length; i++){
+        for (var i = 0; i < this.players.length; i++) {
 
-            let lobby_player = lobby.players[i];
+            let lobby_player = this.players[i];
             lobby_player.updateLobby();
 
         }
@@ -23,7 +23,12 @@ class Lobby {
 
     hasPlayer(player) {
 
-        this.players.includes(player);
+        for (var i = 0; i < this.players.length; i++) {
+            if (this.players[i]._id.toString() == player._id.toString()) {
+                return true;
+            }
+        }
+        return false;
 
     }
 
@@ -56,7 +61,7 @@ class Lobby {
     accept(player) {
 
         if (!this.isInvited(player)) {
-            throw ("This player isn't invited in this lobby.");
+            throw ("You were not invited.");
         }
 
         this.removeInvitation(player);
@@ -67,7 +72,7 @@ class Lobby {
     refuse(player) {
 
         if (!this.isInvited(player)) {
-            throw ("This player isn't invited in this lobby.");
+            throw ("You were not invited.");
         }
 
         this.removeInvitation(player);
@@ -85,8 +90,11 @@ class Lobby {
 
     requestPlayerRemoval(requester, player) {
 
-        if (!this.isLeader(requester)) {
-            throw ("Only the lobby's leader can remove players from it.")
+        if (!this.isLeader(requester) && requester != player) {
+            throw ("Only the Leader can kick.")
+        }
+        if (this.players.length < 2) {
+            throw ("Can't remove the last player.")
         }
 
         this.removePlayer(player);

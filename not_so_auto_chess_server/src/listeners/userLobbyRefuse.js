@@ -1,7 +1,7 @@
 const Users = require('../controllers/users');
 module.exports = function (socket) {
 
-    socket.on('userLobbyAccept', function (data, callback) { // {auth_key, inviter_pseudonym}
+    socket.on('userLobbyRefuse', function (data, callback) { // {auth_key, inviter_pseudonym}
 
         if (!data.auth_key) {
             callback({ success: false, message: "Authentification failed." });
