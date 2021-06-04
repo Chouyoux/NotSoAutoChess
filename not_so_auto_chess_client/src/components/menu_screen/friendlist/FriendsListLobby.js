@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 
 import FriendsListLobbyAvatar from './FriendsListLobbyAvatar';
 
-import getCookie from '../../utils/get_cookie.js';
+import getCookie from '../../../utils/get_cookie.js';
 
 const FriendsListLobby = ( { socket } ) => {
 

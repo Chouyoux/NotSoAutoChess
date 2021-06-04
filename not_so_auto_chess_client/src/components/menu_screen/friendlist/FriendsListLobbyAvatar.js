@@ -1,17 +1,17 @@
 import React, { useState } from 'react'
 
-import decline from '../../images/friend_list/decline.png';
-import decline_hover from '../../images/friend_list/decline_hover.png';
-import decline_click from '../../images/friend_list/decline_click.png';
+import decline from '../../../images/friend_list/decline.png';
+import decline_hover from '../../../images/friend_list/decline_hover.png';
+import decline_click from '../../../images/friend_list/decline_click.png';
 
 // Can't use FS in react ? manual filling for now
-import avatarempty from '../../images/profile_screen/avatars/avatar_empty.png';
-import avatar0 from '../../images/profile_screen/avatars/avatar0.png';
-import avatar1 from '../../images/profile_screen/avatars/avatar1.png';
-import avatar2 from '../../images/profile_screen/avatars/avatar2.png';
-import avatar3 from '../../images/profile_screen/avatars/avatar3.png';
-import avatar4 from '../../images/profile_screen/avatars/avatar4.png';
-import avatar5 from '../../images/profile_screen/avatars/avatar5.png';
+import avatarempty from '../../../images/profile_screen/avatars/avatar_empty.png';
+import avatar0 from '../../../images/profile_screen/avatars/avatar0.png';
+import avatar1 from '../../../images/profile_screen/avatars/avatar1.png';
+import avatar2 from '../../../images/profile_screen/avatars/avatar2.png';
+import avatar3 from '../../../images/profile_screen/avatars/avatar3.png';
+import avatar4 from '../../../images/profile_screen/avatars/avatar4.png';
+import avatar5 from '../../../images/profile_screen/avatars/avatar5.png';
 
 const avatars = [];
 avatars.push(avatar0);

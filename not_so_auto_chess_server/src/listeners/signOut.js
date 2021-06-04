@@ -20,7 +20,6 @@ module.exports = function(socket) {
                   online_friend.updateFriendList();
                 }
                 user.lobby.removePlayer(user);
-                user.lobby.updateLobby();
 
             }
 

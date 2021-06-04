@@ -1,10 +1,10 @@
 import React, { useState } from 'react'
 
-import remove_friend from '../../images/friend_list/remove_friend.png';
-import remove_friend_hover from '../../images/friend_list/remove_friend_hover.png';
+import remove_friend from '../../../images/friend_list/remove_friend.png';
+import remove_friend_hover from '../../../images/friend_list/remove_friend_hover.png';
 
-import add_friend_to_group from '../../images/friend_list/add_friend_to_group.png';
-import add_friend_to_group_hover from '../../images/friend_list/add_friend_to_group_hover.png';
+import add_friend_to_group from '../../../images/friend_list/add_friend_to_group.png';
+import add_friend_to_group_hover from '../../../images/friend_list/add_friend_to_group_hover.png';
 
 const Friend = ( {online, name, key, onRemove, onInvite} ) => {
 

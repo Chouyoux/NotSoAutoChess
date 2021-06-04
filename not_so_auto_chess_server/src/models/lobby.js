@@ -124,6 +124,15 @@ class Lobby {
 
     }
 
+    sendMsg(msg){
+
+        for (var i = 0; i < this.players.length; i++){
+            let player = this.players[i];
+            player.sendMsg(msg);
+        }
+
+    }
+
 }
 
 module.exports = Lobby;

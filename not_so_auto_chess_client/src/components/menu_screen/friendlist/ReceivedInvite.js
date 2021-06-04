@@ -1,11 +1,11 @@
 import React, { useState } from 'react'
 
-import validate from '../../images/friend_list/validate.png';
-import validate_hover from '../../images/friend_list/validate_hover.png';
-import validate_click from '../../images/friend_list/validate_click.png';
-import decline from '../../images/friend_list/decline.png';
-import decline_hover from '../../images/friend_list/decline_hover.png';
-import decline_click from '../../images/friend_list/decline_click.png';
+import validate from '../../../images/friend_list/validate.png';
+import validate_hover from '../../../images/friend_list/validate_hover.png';
+import validate_click from '../../../images/friend_list/validate_click.png';
+import decline from '../../../images/friend_list/decline.png';
+import decline_hover from '../../../images/friend_list/decline_hover.png';
+import decline_click from '../../../images/friend_list/decline_click.png';
 
 const ReceivedInvite = ( {name, key, onValidate, onDecline} ) => {
 

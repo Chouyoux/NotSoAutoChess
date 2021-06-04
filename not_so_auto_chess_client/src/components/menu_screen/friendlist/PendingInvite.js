@@ -1,8 +1,8 @@
 import React, {useState} from 'react'
 
-import decline from '../../images/friend_list/decline.png';
-import decline_hover from '../../images/friend_list/decline_hover.png';
-import decline_click from '../../images/friend_list/decline_click.png';
+import decline from '../../../images/friend_list/decline.png';
+import decline_hover from '../../../images/friend_list/decline_hover.png';
+import decline_click from '../../../images/friend_list/decline_click.png';
 
 const PendingInvite = ( {name, key, onDecline} ) => {
 

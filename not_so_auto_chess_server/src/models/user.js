@@ -93,6 +93,12 @@ class User {
         this.invitations_received = filtered;
     }
 
+    sendMsg(msg){
+        if (this.isConnected()){
+            this.socket.emit("msgReceived", msg);
+        }
+    }
+
     updateFriendList(){
         if (this.isConnected()){
             this.socket.emit("updateFriendsList");

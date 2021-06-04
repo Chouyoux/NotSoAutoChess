@@ -7,7 +7,7 @@ import Friend from './Friend';
 import ReceivedInvite from './ReceivedInvite'
 import PendingInvite from './PendingInvite'
 
-import getCookie from '../../utils/get_cookie.js';
+import getCookie from '../../../utils/get_cookie.js';
 
 const FriendsList = ( { socket } ) => {
 

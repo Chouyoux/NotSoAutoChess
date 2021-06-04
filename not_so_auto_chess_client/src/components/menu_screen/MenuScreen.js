@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import { useTransition, animated } from 'react-spring'
 import PlayCaster from './PlayCaster'
 import ProfileScreen from '../profile_screen/ProfileScreen'
-import FriendsList from './FriendsList'
+import FriendsList from './friendlist/FriendsList'
 import Chat from '../chat/Chat'
 
 import icon_profile from '../../images/menu_screen/icon_profile.png';
@@ -75,7 +75,7 @@ const MenuScreen = ( { hide, checkLogin, onLogout, socket } ) => {
                 onMouseOut={() => {setIconFriends(icon_friends)}}
             />
 
-            <Chat />
+            <Chat socket={socket} />
 
             <div className="menuScreenMenu">
 

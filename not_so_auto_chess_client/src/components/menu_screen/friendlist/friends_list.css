@@ -1,6 +1,6 @@
 @font-face {
     font-family: pixel;
-    src: url(../../fonts/alagard-webfont.woff);
+    src: url(../../../fonts/alagard-webfont.woff);
 }
 
 .friendsListDiv {
@@ -15,7 +15,7 @@
     height : calc(100vh - 84px);
     width : 300px;
 
-    background-image: url("../../images/friend_list/friend_list.png");
+    background-image: url("../../../images/friend_list/friend_list.png");
     
 }
 
