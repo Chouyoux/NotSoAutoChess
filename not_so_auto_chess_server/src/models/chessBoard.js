@@ -93,14 +93,14 @@ class ChessBoard {
 
         else {
 
+            this.board.push([Pieces.BROOK, Pieces.BKNIGHT, Pieces.BBISHOP, Pieces.BQUEEN, Pieces.BKING, Pieces.BBISHOP, Pieces.BKNIGHT, Pieces.BROOK]);
+            this.board.push([Pieces.BPAWN, Pieces.BPAWN, Pieces.BPAWN, Pieces.BPAWN, Pieces.BPAWN, Pieces.BPAWN, Pieces.BPAWN, Pieces.BPAWN]);
             this.board.push([Pieces.EMPTY, Pieces.EMPTY, Pieces.EMPTY, Pieces.EMPTY, Pieces.EMPTY, Pieces.EMPTY, Pieces.EMPTY, Pieces.EMPTY]);
             this.board.push([Pieces.EMPTY, Pieces.EMPTY, Pieces.EMPTY, Pieces.EMPTY, Pieces.EMPTY, Pieces.EMPTY, Pieces.EMPTY, Pieces.EMPTY]);
             this.board.push([Pieces.EMPTY, Pieces.EMPTY, Pieces.EMPTY, Pieces.EMPTY, Pieces.EMPTY, Pieces.EMPTY, Pieces.EMPTY, Pieces.EMPTY]);
             this.board.push([Pieces.EMPTY, Pieces.EMPTY, Pieces.EMPTY, Pieces.EMPTY, Pieces.EMPTY, Pieces.EMPTY, Pieces.EMPTY, Pieces.EMPTY]);
-            this.board.push([Pieces.EMPTY, Pieces.EMPTY, Pieces.EMPTY, Pieces.EMPTY, Pieces.EMPTY, Pieces.EMPTY, Pieces.EMPTY, Pieces.EMPTY]);
-            this.board.push([Pieces.EMPTY, Pieces.EMPTY, Pieces.EMPTY, Pieces.EMPTY, Pieces.EMPTY, Pieces.EMPTY, Pieces.EMPTY, Pieces.EMPTY]);
-            this.board.push([Pieces.EMPTY, Pieces.EMPTY, Pieces.EMPTY, Pieces.EMPTY, Pieces.EMPTY, Pieces.EMPTY, Pieces.EMPTY, Pieces.EMPTY]);
-            this.board.push([Pieces.EMPTY, Pieces.EMPTY, Pieces.EMPTY, Pieces.EMPTY, Pieces.EMPTY, Pieces.EMPTY, Pieces.EMPTY, Pieces.EMPTY]);
+            this.board.push([Pieces.WPAWN, Pieces.WPAWN, Pieces.WPAWN, Pieces.WPAWN, Pieces.WPAWN, Pieces.WPAWN, Pieces.WPAWN, Pieces.WPAWN]);
+            this.board.push([Pieces.WROOK, Pieces.WKNIGHT, Pieces.WBISHOP, Pieces.WQUEEN, Pieces.WKING, Pieces.WBISHOP, Pieces.WKNIGHT, Pieces.WROOK]);
 
         }
 

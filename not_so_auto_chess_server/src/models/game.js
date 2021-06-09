@@ -2,6 +2,8 @@ const ChessBoard = require('./chessBoard');
 
 class Game {
 
+    static MaxPlayers = 2;
+
     constructor(players, board){
 
         this.players = players;

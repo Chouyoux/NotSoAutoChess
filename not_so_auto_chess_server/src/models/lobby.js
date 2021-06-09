@@ -108,6 +108,11 @@ class Lobby {
         });
 
         this.players = filtered;
+
+        if (this.isLeader(player)) {
+            this.leader = this.players[0];
+        }
+
         this.updateLobby();
         player.lobby = new Lobby(player);
         player.updateLobby();
