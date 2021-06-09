@@ -113,6 +113,12 @@ class User {
         }
     }
 
+    updateGame(){
+        if (this.isConnected()){
+            this.socket.emit("updateGame");
+        }
+    }
+
     sendLobbyInvite(pseudonym){
         if (this.isConnected()){
             this.socket.emit("lobbyInvite", pseudonym);

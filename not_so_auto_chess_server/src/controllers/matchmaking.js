@@ -59,13 +59,13 @@ class MatchMaking {
 
     }
 
-    requestAddLobbyToQueue(player, lobby) {
+    requestAddLobbyToQueue(player) {
 
         if (!lobby.isLeader(player)) {
             throw("Requesting player is not the leader of its lobby");
         }
 
-        this.addLobbyToQueue(lobby);
+        this.addLobbyToQueue(player.lobby);
 
     }
 

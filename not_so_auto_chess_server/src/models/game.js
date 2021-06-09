@@ -15,6 +15,16 @@ class Game {
 
     }
 
+    getState() {
+
+        let state = {};
+        state["board"] = this.chess_board.board;
+        state["turn"] = this.chess_board.playerTurn;
+
+        return state;
+
+    }
+
     endGame(){
 
         for (var i = 0; i < this.players.length; i++){
