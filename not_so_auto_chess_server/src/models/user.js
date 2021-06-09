@@ -1,4 +1,5 @@
 const Lobby = require('./lobby');
+const Game = require('./game');
 
 class User {
 
@@ -15,6 +16,7 @@ class User {
         this.set = set ? set : 0;
         this.socket = null;
         this.lobby = new Lobby(this);
+        this.game = null;
     }
 
     isConnected(){
