@@ -5,7 +5,7 @@ import play_button from '../../images/menu_screen/play_button.png';
 import play_button_hover from '../../images/menu_screen/play_button_hover.png';
 import play_button_click from '../../images/menu_screen/play_button_click.png';
 
-const PlayCaster = () => {
+const PlayCaster = ({ onClick }) => {
 
     const [playButton, setPlayButton] = useState(play_button);
 
@@ -25,6 +25,7 @@ const PlayCaster = () => {
                     onMouseOut={() => {setPlayButton(play_button)}}
                     onMouseDown={() => {setPlayButton(play_button_click)}}
                     onMouseUp={() => {setPlayButton(play_button_hover)}}
+                    onClick={() => {onClick();}}
                 />
             </a>
             

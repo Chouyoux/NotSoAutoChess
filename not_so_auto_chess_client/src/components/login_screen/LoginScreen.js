@@ -4,11 +4,11 @@ import SubscriptionForm from './SubscriptionForm'
 import LoginForm from './LoginForm'
 import './login_screen.css';
 
-const LoginScreen = ( { hide, onLogin, socket } ) => {
+const LoginScreen = ( { onLogin, socket } ) => {
 
     const [login, setLogin] = useState(true);
 
-    return hide ? null : (
+    return (
         <div>
             <Sidebar />
             <div className="screen_form_block">

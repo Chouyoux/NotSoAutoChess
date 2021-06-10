@@ -5,6 +5,8 @@ import ProfileScreen from '../profile_screen/ProfileScreen'
 import FriendsList from './friendlist/FriendsList'
 import Chat from '../chat/Chat'
 
+import getCookie from '../../utils/get_cookie.js';
+
 import icon_profile from '../../images/menu_screen/icon_profile.png';
 import icon_profile_hover from '../../images/menu_screen/icon_profile_hover.png';
 import icon_friends from '../../images/menu_screen/icon_friends.png';
@@ -14,7 +16,7 @@ import icon_logout_hover from '../../images/menu_screen/icon_logout_hover.png';
 
 import './menu_screen.css';
 
-const MenuScreen = ( { hide, checkLogin, onLogout, socket } ) => {
+const MenuScreen = ( { checkLogin, onLogout, socket } ) => {
 
     const [showProfile, setShowProfile] = useState(false);
     const [iconProfile, setIconProfile] = useState(icon_profile);
@@ -34,8 +36,19 @@ const MenuScreen = ( { hide, checkLogin, onLogout, socket } ) => {
         setShowProfile(false);
 
     }
+
+    const onPlayCasterClick = function () {
+
+        socket.emit("userGameJoin", { auth_key: getCookie("auth_key") }, (response) => {
+            console.log(response);
+            if (response.success){
+                //
+            }
+        });
+
+    }
     
-    return hide ? null : showProfile ?
+    return showProfile ?
     (
         <div>
             <ProfileScreen backToMenu={backToMenu} onLogout={onLogout} hide={!showProfile} socket={socket} />
@@ -79,7 +92,7 @@ const MenuScreen = ( { hide, checkLogin, onLogout, socket } ) => {
 
             <div className="menuScreenMenu">
 
-                <PlayCaster /> <br />
+                <PlayCaster onClick={onPlayCasterClick} /> <br />
                 
             </div>
 

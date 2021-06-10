@@ -34,7 +34,7 @@ module.exports = function (socket) {
         catch (e) {
             callback({ success: false, message: e });
         }
-        
+
         callback({ success: true });
 
     });

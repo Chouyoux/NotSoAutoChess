@@ -1,55 +1,55 @@
 const Users = require('../controllers/users');
-module.exports = function(socket) {
+module.exports = function (socket) {
 
-    socket.on('userFriendsAdd', function(data, callback){ // {auth_key, pseudonym}
+    socket.on('userFriendsAdd', function (data, callback) { // {auth_key, pseudonym}
 
-        if (!data.auth_key){
-            callback({success:false, message:"Authentification failed."});
+        if (!data.auth_key) {
+            callback({ success: false, message: "Authentification failed." });
             return;
         }
 
         const _id = Users.authentifyAuthKey(data.auth_key);
-        if (!_id){
-            callback({success:false, message:"Authentification failed."});
+        if (!_id) {
+            callback({ success: false, message: "Authentification failed." });
             return;
         }
 
-        if (!data.pseudonym){
-            callback({success:false, message:"Request body wrongly formatted."});
+        if (!data.pseudonym) {
+            callback({ success: false, message: "Request body wrongly formatted." });
             return;
         }
 
         const user = Users.getUserById(_id);
         const friend = Users.getUserByPseudonym(data.pseudonym);
 
-        if (!friend){
-            callback({success:false, message:data.pseudonym+" doesn't exist."});
+        if (!friend) {
+            callback({ success: false, message: data.pseudonym + " doesn't exist." });
             return;
         }
 
-        if (friend._id.toString() === user._id.toString()){
-            callback({success:false, message:"You can't add yourself as a friend."});
+        if (friend._id.toString() === user._id.toString()) {
+            callback({ success: false, message: "You can't add yourself as a friend." });
             return;
         }
 
-        if (user.hasPendingInvite(friend._id)){
-            callback({success:false, message:"An invitation has already been sent to this user."});
+        if (user.hasPendingInvite(friend._id)) {
+            callback({ success: false, message: "An invitation has already been sent to this user." });
             return;
         }
 
-        if (user.hasFriend(friend._id)){
-            callback({success:false, message:data.pseudonym+" already is in your friends."});
+        if (user.hasFriend(friend._id)) {
+            callback({ success: false, message: data.pseudonym + " already is in your friends." });
             return;
         }
 
-        if (user.hasReceivedInvite(friend._id)){
-                
+        if (user.hasReceivedInvite(friend._id)) {
+
             user.removeReceivedInvite(friend._id);
             friend.removePendingInvite(user._id);
             friend.addFriend(user._id);
             user.addFriend(friend._id);
             friend.updateFriendList();
-            callback({success:true, message:data.pseudonym+" has been added as friend."});
+            callback({ success: true, message: data.pseudonym + " has been added as friend." });
             return;
 
         }
@@ -59,11 +59,11 @@ module.exports = function(socket) {
             friend.addReceivedInvite(user._id);
             user.addPendingInvite(friend._id);
             friend.updateFriendList();
-            callback({success:true, message:data.pseudonym+" has been sent an invitation."});
+            callback({ success: true, message: data.pseudonym + " has been sent an invitation." });
             return;
 
         }
-  
+
     });
 
 }

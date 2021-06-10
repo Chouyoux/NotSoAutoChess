@@ -3,7 +3,7 @@ const Game = require('./game');
 
 class User {
 
-    constructor(_id, pseudonym, email, password, auth_key, friends, invitations_pending, invitations_received, avatar, set){
+    constructor(_id, pseudonym, email, password, auth_key, friends, invitations_pending, invitations_received, avatar, set) {
         this._id = _id || null;
         this.pseudonym = pseudonym;
         this.email = email;
@@ -19,15 +19,15 @@ class User {
         this.game = null;
     }
 
-    isConnected(){
+    isConnected() {
         return this.socket && this.socket.connected;
     }
 
-    hasFriend(friend){
-        for (var i = 0; i < this.friends.length; i++){
+    hasFriend(friend) {
+        for (var i = 0; i < this.friends.length; i++) {
             let afriend = this.friends[i];
 
-            if (afriend.toString() === friend.toString()){
+            if (afriend.toString() === friend.toString()) {
                 return true;
             }
         }
@@ -35,23 +35,23 @@ class User {
         return false;
     }
 
-    addFriend(friend){
+    addFriend(friend) {
         this.friends.push(friend);
     }
 
-    removeFriend(friend){
-        var filtered = this.friends.filter(function(value, index, arr){ 
+    removeFriend(friend) {
+        var filtered = this.friends.filter(function (value, index, arr) {
             return friend.toString() !== value.toString();
         });
 
         this.friends = filtered;
     }
 
-    hasPendingInvite(pendingInvite){
-        for (var i = 0; i < this.invitations_pending.length; i++){
+    hasPendingInvite(pendingInvite) {
+        for (var i = 0; i < this.invitations_pending.length; i++) {
             let ainvitations_pending = this.invitations_pending[i];
 
-            if (ainvitations_pending.toString() === pendingInvite.toString()){
+            if (ainvitations_pending.toString() === pendingInvite.toString()) {
                 return true;
             }
         }
@@ -59,23 +59,23 @@ class User {
         return false;
     }
 
-    addPendingInvite(pendingInvite){
+    addPendingInvite(pendingInvite) {
         this.invitations_pending.push(pendingInvite);
     }
 
-    removePendingInvite(pendingInvite){
-        var filtered = this.invitations_pending.filter(function(value, index, arr){ 
+    removePendingInvite(pendingInvite) {
+        var filtered = this.invitations_pending.filter(function (value, index, arr) {
             return pendingInvite.toString() !== value.toString();
         });
 
         this.invitations_pending = filtered;
     }
 
-    hasReceivedInvite(receivedInvite){
-        for (var i = 0; i < this.invitations_received.length; i++){
+    hasReceivedInvite(receivedInvite) {
+        for (var i = 0; i < this.invitations_received.length; i++) {
             let ainvitations_received = this.invitations_received[i];
 
-            if (ainvitations_received.toString() === receivedInvite.toString()){
+            if (ainvitations_received.toString() === receivedInvite.toString()) {
                 return true;
             }
         }
@@ -83,48 +83,48 @@ class User {
         return false;
     }
 
-    addReceivedInvite(receivedInvite){
+    addReceivedInvite(receivedInvite) {
         this.invitations_received.push(receivedInvite);
     }
 
-    removeReceivedInvite(receivedInvite){
-        var filtered = this.invitations_received.filter(function(value, index, arr){ 
+    removeReceivedInvite(receivedInvite) {
+        var filtered = this.invitations_received.filter(function (value, index, arr) {
             return receivedInvite.toString() !== value.toString();
         });
 
         this.invitations_received = filtered;
     }
 
-    sendMsg(msg){
-        if (this.isConnected()){
+    sendMsg(msg) {
+        if (this.isConnected()) {
             this.socket.emit("msgReceived", msg);
         }
     }
 
-    updateFriendList(){
-        if (this.isConnected()){
+    updateFriendList() {
+        if (this.isConnected()) {
             this.socket.emit("updateFriendsList");
         }
     }
 
-    updateLobby(){
-        if (this.isConnected()){
+    updateLobby() {
+        if (this.isConnected()) {
             this.socket.emit("updateLobby");
         }
     }
 
-    updateGame(){
-        if (this.isConnected()){
+    updateGame() {
+        if (this.isConnected()) {
             this.socket.emit("updateGame");
         }
     }
 
-    sendLobbyInvite(pseudonym){
-        if (this.isConnected()){
+    sendLobbyInvite(pseudonym) {
+        if (this.isConnected()) {
             this.socket.emit("lobbyInvite", pseudonym);
         }
     }
-    
+
 
 }
 

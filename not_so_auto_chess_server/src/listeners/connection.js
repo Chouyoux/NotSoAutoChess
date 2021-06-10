@@ -1,5 +1,5 @@
-module.exports = function(io) {
-  io.on("connection", function(socket) {
+module.exports = function (io) {
+  io.on("connection", function (socket) {
 
     const fs = require("fs");
     const path = require("path");

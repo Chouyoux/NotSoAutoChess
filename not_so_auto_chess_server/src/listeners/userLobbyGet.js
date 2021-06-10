@@ -1,16 +1,16 @@
 const Users = require('../controllers/users');
-module.exports = function(socket) {
+module.exports = function (socket) {
 
-    socket.on('userLobbyGet', function(data, callback){ // {auth_key}
+    socket.on('userLobbyGet', function (data, callback) { // {auth_key}
 
-        if (!data.auth_key){
-            callback({success:false, message:"Authentification failed."});
+        if (!data.auth_key) {
+            callback({ success: false, message: "Authentification failed." });
             return;
         }
 
         const _id = Users.authentifyAuthKey(data.auth_key);
-        if (!_id){
-            callback({success:false, message:"Authentification failed."});
+        if (!_id) {
+            callback({ success: false, message: "Authentification failed." });
             return;
         }
 
@@ -19,7 +19,7 @@ module.exports = function(socket) {
         let lobby = user.lobby;
 
         let lobby_players = [];
-        for (let i = 0; i < lobby.players.length; i++){
+        for (let i = 0; i < lobby.players.length; i++) {
 
             let loop_player = lobby.players[i];
             let lobby_player = {};
@@ -27,12 +27,12 @@ module.exports = function(socket) {
             lobby_player["pseudonym"] = loop_player.pseudonym;
             lobby_player["avatar"] = loop_player.avatar;
 
-            lobby_players.push({pseudonym: loop_player.pseudonym, avatar:loop_player.avatar});
+            lobby_players.push({ pseudonym: loop_player.pseudonym, avatar: loop_player.avatar });
 
         }
 
-        callback({success:true, "lobby" : lobby_players});
-  
+        callback({ success: true, "lobby": lobby_players });
+
     });
 
 }

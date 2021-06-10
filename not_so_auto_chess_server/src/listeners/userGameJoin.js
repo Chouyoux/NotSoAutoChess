@@ -1,5 +1,5 @@
 const Users = require('../controllers/users');
-const MatMaking =  require('../controllers/matchmaking');
+const MatchMaking = require('../controllers/matchmaking');
 
 module.exports = function (socket) {
 
@@ -22,9 +22,10 @@ module.exports = function (socket) {
             MatchMaking.requestAddLobbyToQueue(user);
         }
         catch (e) {
+            console.log(e);
             callback({ success: false, message: e });
         }
-        
+
         callback({ success: true });
 
     });

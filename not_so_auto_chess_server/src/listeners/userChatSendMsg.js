@@ -1,21 +1,21 @@
 const Users = require('../controllers/users');
-module.exports = function(socket) {
+module.exports = function (socket) {
 
-    socket.on('userChatSendMsg', function(data, callback){ // {auth_key, msg}
+    socket.on('userChatSendMsg', function (data, callback) { // {auth_key, msg}
 
-        if (!data.auth_key){
-            callback({success:false, message:"Authentification failed."});
+        if (!data.auth_key) {
+            callback({ success: false, message: "Authentification failed." });
             return;
         }
 
         const _id = Users.authentifyAuthKey(data.auth_key);
-        if (!_id){
-            callback({success:false, message:"Authentification failed."});
+        if (!_id) {
+            callback({ success: false, message: "Authentification failed." });
             return;
         }
 
-        if (!data.msg){
-            callback({success:false, message:"Request body wrongly formatted."});
+        if (!data.msg) {
+            callback({ success: false, message: "Request body wrongly formatted." });
             return;
         }
 
@@ -24,9 +24,9 @@ module.exports = function(socket) {
         var date = new Date();
         var minutes = date.getMinutes();
         var hour = date.getHours();
-        user.lobby.sendMsg("["+hour+"h"+minutes+"] "+user.pseudonym+" : "+data.msg);
-        
-        callback({success:true, message:"Message sent."});
+        user.lobby.sendMsg("[" + hour + "h" + minutes + "] " + user.pseudonym + " : " + data.msg);
+
+        callback({ success: true, message: "Message sent." });
 
     });
 

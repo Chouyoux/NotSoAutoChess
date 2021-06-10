@@ -129,9 +129,9 @@ class Lobby {
 
     }
 
-    sendMsg(msg){
+    sendMsg(msg) {
 
-        for (var i = 0; i < this.players.length; i++){
+        for (var i = 0; i < this.players.length; i++) {
             let player = this.players[i];
             player.sendMsg(msg);
         }

@@ -1,0 +1,41 @@
+.background {
+    background-image: url("../../images/game_screen/chess_board/board.png");
+    background-size: 768px;
+    width: 768px;
+    height: 768px;
+    background-repeat: no-repeat;
+    image-rendering: pixelated;
+}
+
+.chessboard {
+    width: 600px;
+    height: 600px;
+    padding: 82px;
+    border: solid 1px black;
+}
+
+.black {
+    float: left;
+    width: 75px;
+    height: 75px;
+    background-color: #76211b;
+    text-align:center;
+    display: table-cell;
+    vertical-align:middle;
+}
+
+.white {
+    float: left;
+    width: 75px;
+    height: 75px;
+    background-color: #c26d46;
+    text-align:center;
+    display: table-cell;
+    vertical-align:middle;
+}
+
+.piece {
+    width: 64px;
+    height: 64px;
+    margin-top: 5px;
+}

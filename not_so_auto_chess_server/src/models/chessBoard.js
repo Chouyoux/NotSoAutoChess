@@ -1,4 +1,4 @@
-const Pieces = Object.freeze({ "WPAWN": 0, "WKNIGHT": 1, "WBISHOP": 3, "WROOK": 4, "WQUEEN": 5, "WKING": 6, "BPAWN": 7, "BKNIGHT": 8, "BBISHOP": 9, "BROOK": 10, "BQUEEN": 11, "BKING": 12, "EMPTY": 13 });
+const Pieces = Object.freeze({ "WPAWN": 0, "WKNIGHT": 1, "WBISHOP": 2, "WROOK": 3, "WQUEEN": 4, "WKING": 5, "BPAWN": 6, "BKNIGHT": 7, "BBISHOP": 8, "BROOK": 9, "BQUEEN": 10, "BKING": 11, "EMPTY": 12 });
 
 class Move {
 
@@ -75,7 +75,7 @@ class ChessBoard {
 
     constructor(board) {
 
-        this.board = {}
+        this.board = [];
         this.playerTurn = 0;
 
         if (board) {
@@ -148,6 +148,9 @@ class ChessBoard {
             throw (e);
         }
 
+        for (var i = 0; i < this.players.length; i++) {
+            this.players[i].updateGame();
+        }
         this.playerTurn = (this.playerTurn + 1) % this.players.length;
 
     }

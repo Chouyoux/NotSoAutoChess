@@ -66,10 +66,10 @@ module.exports = function (socket) {
         });
 
         user.save()
-          .then((result) => {
-            console.log(data.pseudonym + " (" + data.email + ") just created an account.")
-          })
-          .catch((err) => console.log(err));
+            .then((result) => {
+                console.log(data.pseudonym + " (" + data.email + ") just created an account.")
+            })
+            .catch((err) => console.log(err));
 
 
         Users.add(data.pseudonym, data.email, data.password1);
