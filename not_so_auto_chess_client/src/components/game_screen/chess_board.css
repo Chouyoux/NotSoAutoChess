@@ -7,6 +7,21 @@
     image-rendering: pixelated;
 }
 
+.chess-piece {
+    width: 75px;
+    height: 75px;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+.chess-piece:hover {
+    cursor: grab;
+}
+
+.chess-piece:active {
+    cursor: grabbing;
+}
+
 .chessboard {
     width: 600px;
     height: 600px;

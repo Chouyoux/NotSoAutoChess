@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useRef, useState } from 'react';
 
 import './chess_board.css';
 
@@ -56,13 +56,84 @@ sets_imgs[1].push(bones_brook);
 sets_imgs[1].push(bones_bqueen);
 sets_imgs[1].push(bones_bking);
 
-const ChessBoard = ({ board }) => {
+const ChessBoard = ({ board, onMove, reverse }) => {
+
+    const chessBoardRef = useRef(null);
+
+    var activePiece = null;
+    var whereWasPieceX = 0;
+    var whereWasPieceY = 0;
+
+    let fromPos = {x: 0, y: 0};
+    let toPos = {x: 0, y: 0};
+
+    const grabPiece = function (e) {
+        const element = e.target;
+        const chessboard = chessBoardRef.current;
+        if (element.classList.contains("chess-piece") && !activePiece && chessboard) {
+            
+            var rect = element.getBoundingClientRect();
+            whereWasPieceX = rect.left;
+            whereWasPieceY = rect.top;
+            
+            fromPos.x = Math.floor((e.clientX - chessboard.offsetLeft - 80) / ((chessboard.clientWidth-160)/8));
+            fromPos.y = Math.floor((e.clientY - chessboard.offsetTop - 80) / ((chessboard.clientHeight-160)/8));
+
+            var x = e.clientX - 37;
+            var y = e.clientY - 37;
+            element.style.position = "absolute";
+            element.style.left = `${x}px`;
+            element.style.top = `${y}px`;
+
+            activePiece = element;
+        }
+    }
+
+    const movePiece = function (e) {
+        const chessboard = chessBoardRef.current;
+        if (activePiece && chessboard) {
+
+            const minX = chessboard.offsetLeft - 37;
+            const minY = chessboard.offsetTop - 37;
+            const maxX = minX + chessboard.clientWidth;
+            const maxY = minY + chessboard.clientHeight;
+
+            var x = e.clientX - 37;
+            var y = e.clientY - 37;
+            activePiece.style.position = "absolute";
+            activePiece.style.left = x < minX ? `${minX}px`: x > maxX ? `${maxX}px` : `${x}px`;
+            activePiece.style.top = y < minY ? `${minY}px`: y > maxY ? `${maxY}px` : `${y}px`;
+        }
+
+    }
+
+    const dropPiece = function (e) {
+        const chessboard = chessBoardRef.current;
+        if (activePiece && chessboard) {
+            toPos.x = Math.floor((e.clientX - chessboard.offsetLeft - 80) / ((chessboard.clientWidth-160)/8));
+            toPos.y = Math.floor((e.clientY - chessboard.offsetTop - 80) / ((chessboard.clientHeight-160)/8));
+
+            console.log(fromPos, toPos);
+            if (reverse) { fromPos['y'] = 7 - fromPos['y']; toPos['y'] = 7 - toPos['y']; }
+
+            activePiece.style.left = `${whereWasPieceX}px`;
+            activePiece.style.top = `${whereWasPieceY}px`;
+            onMove(fromPos, toPos);
+            activePiece = null;
+            fromPos = {x: 0, y: 0};
+            toPos = {x: 0, y: 0};
+        }
+
+
+
+
+    }
 
     const squares = [];
     var color = "white";
     var key = 0;
 
-    for (var x = 0; x < board.length; x++) {
+    for (var x = reverse ? 7 : 0; reverse ? x >= 0 : x < board.length; reverse ? x-- : x++) {
 
         var row = board[x];
 
@@ -77,8 +148,8 @@ const ChessBoard = ({ board }) => {
             }
             else {
                 squares.push(
-                    <div className={color} key={key} >
-                        <img className="piece" src={sets_imgs[1][piece_key]} />
+                    <div className={color} key={key}  >
+                        <div style={{backgroundImage: `url(${sets_imgs[1][piece_key]})`}} className="chess-piece" />
                     </div>
                 );
             }
@@ -96,7 +167,13 @@ const ChessBoard = ({ board }) => {
     return (
         <div>
             <div className="background">
-                <div className="chessboard">
+                <div
+                    onMouseMove={e => movePiece(e)}
+                    onMouseDown={e => grabPiece(e)}
+                    onMouseUp={e => dropPiece(e)}
+                    className="chessboard"
+                    ref={chessBoardRef}
+                >
                     {squares}
                 </div>
             </div>

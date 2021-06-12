@@ -6,14 +6,35 @@ import ChessBoard from './ChessBoard'
 
 const GameScreen = ({ socket }) => {
 
-    const [gameState, setGameState] = useState({});
+    const [gameState, setGameState] = useState({})
 
     const updateGameState = function () {
 
         socket.emit("userGameGet", { auth_key: getCookie("auth_key") }, (response) => {
             console.log(response);
-            if (response.success){
-                setGameState({...response["game"]});
+
+
+
+            if (response.success) {
+                
+                setGameState({ ...response["game"] });
+
+            }
+        });
+
+    }
+
+    const sendChessBoardMove = function (fromPos, toPos) {
+
+        let _data = {
+            auth_key: getCookie("auth_key"),
+            move: [[fromPos.x, fromPos.y], [toPos.x, toPos.y]]
+        }
+
+        socket.emit("userGameMove", _data, (response) => {
+            console.log(response);
+            if (response.success) {
+                //
             }
         });
 
@@ -22,16 +43,16 @@ const GameScreen = ({ socket }) => {
     useEffect(() => {
         updateGameState();
 
-        socket.on("updateGame", function() {updateGameState()});
+        socket.on("updateGame", function () { updateGameState() });
 
         return () => {
-            socket.removeEventListener("updateGame", function() {updateGameState()});
+            socket.removeEventListener("updateGame", function () { updateGameState() });
         };
 
     }, []);
 
     return (
-        gameState === {} || gameState["board"] === undefined ? null : <ChessBoard board={gameState["board"]} />
+        gameState === {} || gameState["board"] === undefined ? null : <ChessBoard onMove={sendChessBoardMove} board={gameState["board"]} reverse={gameState["player2"] && gameState["player2"] === getCookie("auth_key")} />
     )
 }
 

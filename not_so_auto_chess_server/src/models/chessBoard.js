@@ -38,6 +38,7 @@ class Move {
         }
 
         let distance = this.abs_distance_x > 0 ? this.abs_distance_x - 1 : this.abs_distance_y - 1;
+        console.log(distance);
         let x = this.x_from;
         let y = this.y_from;
 
@@ -47,7 +48,7 @@ class Move {
 
                 x = this.abs_distance_x > 0 ? (this.distance_x > 0 ? x + 1 : x - 1) : x;
                 y = this.abs_distance_y > 0 ? (this.ditance_y > 0 ? y + 1 : y - 1) : y;
-                squares.push([x, y])
+                squares.push([x, y]);
 
             }
 
@@ -57,9 +58,20 @@ class Move {
 
             for (var i = 0; i < distance; i++) {
 
-                x = this.distance_x > 0 ? x + 1 : x - 1;
-                y = this.ditance_y > 0 ? y + 1 : y - 1;
-                squares.push([x, y])
+                if (this.distance_x > 0) {
+                    x++;
+                }
+                else {
+                    x--;
+                }
+                if (this.distance_y > 0) {
+                    y++;
+                }
+                else {
+                    y--;
+                }
+
+                squares.push([x, y]);
 
             }
 
@@ -73,9 +85,10 @@ class Move {
 
 class ChessBoard {
 
-    constructor(board) {
+    constructor(board, players) {
 
         this.board = [];
+        this.players = players;
         this.playerTurn = 0;
 
         if (board) {
@@ -111,11 +124,11 @@ class ChessBoard {
     }
 
     piecesAreSameColour(piece1, piece2) {
-        return this.isPieceWhite(piece1) === this.isPieceWhite(piece2);
+        return this.isPieceWhite(piece1) === this.isPieceWhite(piece2) && piece1 !== Pieces.EMPTY && piece2 !== Pieces.EMPTY;
     }
 
     isPlayerWhite(player) {
-        return player === this.players[0];
+        return player == this.players[0];
     }
 
     isPieceWhite(piece) {
@@ -130,12 +143,12 @@ class ChessBoard {
 
         var move = new Move(move);
 
-        if (!this.checkMoveAcces(move)) {
+        if (!this.checkMoveAccess(move)) {
             throw ("Out of bounds move.");
         }
 
-        let piece_from = this.board[move.x_from][move.y_from];
-        let piece_to = this.board[move.x_to][move.y_to];
+        let piece_from = this.board[move.y_from][move.x_from];
+        let piece_to = this.board[move.y_to][move.x_to];
 
         if (piece_from === Pieces.EMPTY || !this.pieceBelongsToPlayer(piece_from, player)) {
             throw ("Invalid piece choice.");
@@ -168,11 +181,11 @@ class ChessBoard {
         // PAWN LOGIC
         if (piece_from === Pieces.BPAWN || piece_from === Pieces.WPAWN) {
 
-            if (piece_from === Pieces.WPAWN && move.distance_y <= 0) {
+            if (piece_from === Pieces.WPAWN && move.distance_y >= 0) {
                 throw ("Pawns can't move that way.");
             }
 
-            if (piece_from === Pieces.BPAWN && move.distance_y >= 0) {
+            if (piece_from === Pieces.BPAWN && move.distance_y <= 0) {
                 throw ("Pawns can't move that way.");
             }
 
@@ -184,7 +197,7 @@ class ChessBoard {
                 throw ("Pawns can't move that way.");
             }
 
-            if (move.abs_distance_y === 2 && (move.abs_distance_x !== 0 || (move.x_from !== 1 && move.x_from !== 6))) {
+            if (move.abs_distance_y === 2 && (move.abs_distance_x !== 0 || (move.y_from !== 1 && move.y_from !== 6))) {
                 throw ("Pawns can't move that way.");
             }
 
@@ -197,7 +210,7 @@ class ChessBoard {
         // KNIGHTS LOGIC
         if (piece_from === Pieces.BKNIGHT || piece_from === Pieces.WKNIGHT) {
 
-            if (move.abs_distance_x !== 1 || move.abs_distance_y !== 2) {
+            if ( (move.abs_distance_x !== 1 && move.abs_distance_y !== 2) && (move.abs_distance_x !== 2 && move.abs_distance_y !== 1)) {
                 throw ("Knights can't move this way");
             }
 
@@ -212,9 +225,9 @@ class ChessBoard {
 
             let squares = move.getBetween();
 
-            for (var i = 0; squares.length; i++) {
+            for (var i = 0; i < squares.length; i++) {
 
-                if (this.board[squares[i][0]][squares[i][1]] !== Pieces.EMPTY) {
+                if (this.board[squares[i][1]][squares[i][0]] !== Pieces.EMPTY) {
                     throw ("Bishops can't move that way.");
                 }
 
@@ -230,9 +243,9 @@ class ChessBoard {
 
             let squares = move.getBetween();
 
-            for (var i = 0; squares.length; i++) {
+            for (var i = 0; i < squares.length; i++) {
 
-                if (this.board[squares[i][0]][squares[i][1]] !== Pieces.EMPTY) {
+                if (this.board[squares[i][1]][squares[i][0]] !== Pieces.EMPTY) {
                     throw ("Rooks can't move that way.");
                 }
 
@@ -249,9 +262,10 @@ class ChessBoard {
 
             let squares = move.getBetween();
 
-            for (var i = 0; squares.length; i++) {
+            for (var i = 0; i < squares.length; i++) {
 
-                if (this.board[squares[i][0]][squares[i][1]] !== Pieces.EMPTY) {
+                console.log("PIECE BETWEEN : " + this.board[squares[i][0]][squares[i][1]]);
+                if (this.board[squares[i][1]][squares[i][0]] !== Pieces.EMPTY) {
                     throw ("Queens can't move that way.");
                 }
 
@@ -268,14 +282,14 @@ class ChessBoard {
 
         }
 
-        this.board[move.x_from][move.y_from] = Pieces.EMPTY;
-        this.board[move.x_to][move.y_to] = piece_from;
+        this.board[move.y_from][move.x_from] = Pieces.EMPTY;
+        this.board[move.y_to][move.x_to] = piece_from;
 
     }
 
     checkMoveAccess(move) {
 
-        return (this.board[move.x_from] && this.board[move.x_from][move.y_from] && this.board[move.x_to] && this.board[move.x_to][move.y_to]);
+        return move.x_from >= 0 && move.x_from < 8 && move.y_from >= 0 && move.y_from < 8 && move.x_to >= 0 && move.x_to < 8 && move.y_to >= 0 && move.y_to < 8;
 
     }
 

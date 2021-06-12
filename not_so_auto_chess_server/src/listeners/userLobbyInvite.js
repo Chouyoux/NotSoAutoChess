@@ -27,7 +27,7 @@ module.exports = function (socket) {
             return;
         }
 
-        if (!user.hasFriend(invited._id)){
+        if (!user.hasFriend(invited._id)) {
             callback({ success: false, message: "Invited player is not in your friendlist." });
             return;
         }
@@ -39,7 +39,7 @@ module.exports = function (socket) {
             callback({ success: false, message: e });
             return;
         }
-        
+
         invited.sendLobbyInvite(user.pseudonym);
         callback({ success: true, message: "Invitation sent." });
 
