@@ -10,7 +10,7 @@ import getCookie from './utils/get_cookie.js'
 
 import './App.css';
 
-const socket = io.connect('https://notsoautochess:3002/');
+const socket = io.connect('https://notsoautochess.com:3002/');
 
 function App() {
 
