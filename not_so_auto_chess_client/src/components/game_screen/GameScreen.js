@@ -2,6 +2,8 @@ import React, { useState, useEffect } from 'react'
 
 import getCookie from '../../utils/get_cookie.js';
 
+import './game_screen.css';
+
 import ChessBoard from './ChessBoard'
 
 const GameScreen = ({ socket }) => {
@@ -13,10 +15,8 @@ const GameScreen = ({ socket }) => {
         socket.emit("userGameGet", { auth_key: getCookie("auth_key") }, (response) => {
             console.log(response);
 
-
-
             if (response.success) {
-                
+
                 setGameState({ ...response["game"] });
 
             }
@@ -52,7 +52,9 @@ const GameScreen = ({ socket }) => {
     }, []);
 
     return (
-        gameState === {} || gameState["board"] === undefined ? null : <ChessBoard onMove={sendChessBoardMove} board={gameState["board"]} reverse={gameState["player2"] && gameState["player2"] === getCookie("auth_key")} />
+        <div className="gameScreen">
+            { gameState === {} || gameState["board"] === undefined ? null : <ChessBoard onMove={sendChessBoardMove} board={gameState["board"]} reverse={gameState["player2"] && gameState["player2"] === getCookie("auth_key")} /> }
+        </div>
     )
 }
 

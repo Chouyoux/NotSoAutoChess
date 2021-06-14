@@ -1,5 +1,16 @@
+.back-chessboard {
+    position: absolute;
+
+    left: calc(50vw);
+    top: calc(50vh);
+    
+    transform: translate( -50% , -50%);
+    -webkit-transform: translate( -50% , -50%);
+
+}
+
 .background {
-    background-image: url("../../images/game_screen/chess_board/board.png");
+    background-image: url("../../images/game_screen/chess_board/bones_board.png");
     background-size: 768px;
     width: 768px;
     height: 768px;
@@ -33,7 +44,8 @@
     float: left;
     width: 75px;
     height: 75px;
-    background-color: #76211b;
+    /*background-color: #76211b;*/
+    background-color: #6c81bb;
     text-align:center;
     display: table-cell;
     vertical-align:middle;
@@ -43,7 +55,8 @@
     float: left;
     width: 75px;
     height: 75px;
-    background-color: #c26d46;
+    /*background-color: #c26d46;*/
+    background-color: #a7b5db;
     text-align:center;
     display: table-cell;
     vertical-align:middle;

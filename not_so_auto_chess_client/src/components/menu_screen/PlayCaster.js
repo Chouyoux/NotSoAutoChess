@@ -12,10 +12,6 @@ const PlayCaster = ({ onClick }) => {
     return (
         <div className="playCaster">
 
-            <a
-                href="https://www.youtube.com/watch?v=dQw4w9WgXcQ"
-                target="_blank"
-            >
                 <img
                     className="playCasterPlay selectDisable"
                     onDragStart={(event) => {event.preventDefault();}}
@@ -27,7 +23,6 @@ const PlayCaster = ({ onClick }) => {
                     onMouseUp={() => {setPlayButton(play_button_hover)}}
                     onClick={() => {onClick();}}
                 />
-            </a>
             
             
         </div>

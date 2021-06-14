@@ -68,19 +68,33 @@ const ChessBoard = ({ board, onMove, reverse }) => {
     let toPos = {x: 0, y: 0};
 
     const grabPiece = function (e) {
+
+        if (!((e.buttons & 1) === 1) && activePiece) {
+            activePiece.style.left = `${whereWasPieceX}px`;
+            activePiece.style.top = `${whereWasPieceY}px`;
+            activePiece = null;
+            fromPos = {x: 0, y: 0};
+            toPos = {x: 0, y: 0};
+            return;
+        }
+
         const element = e.target;
         const chessboard = chessBoardRef.current;
         if (element.classList.contains("chess-piece") && !activePiece && chessboard) {
             
             var rect = element.getBoundingClientRect();
-            whereWasPieceX = rect.left;
-            whereWasPieceY = rect.top;
-            
-            fromPos.x = Math.floor((e.clientX - chessboard.offsetLeft - 80) / ((chessboard.clientWidth-160)/8));
-            fromPos.y = Math.floor((e.clientY - chessboard.offsetTop - 80) / ((chessboard.clientHeight-160)/8));
+            var chess_rect = chessboard.getBoundingClientRect();
+            whereWasPieceX = rect.left - chess_rect.left;
+            whereWasPieceY = rect.top - chess_rect.top;
 
-            var x = e.clientX - 37;
-            var y = e.clientY - 37;
+            
+            fromPos.x = Math.floor((e.clientX - chess_rect.left - 80) / ((chessboard.clientWidth-160)/8));
+            fromPos.y = Math.floor((e.clientY - chess_rect.top - 80) / ((chessboard.clientHeight-160)/8));
+
+            var x = e.clientX - 37 - chess_rect.left;
+            var y = e.clientY - 37 - chess_rect.top;
+            console.log("Clicked " + x, y);
+            console.log("Offset " + chess_rect.left, chess_rect.top);
             element.style.position = "absolute";
             element.style.left = `${x}px`;
             element.style.top = `${y}px`;
@@ -93,13 +107,15 @@ const ChessBoard = ({ board, onMove, reverse }) => {
         const chessboard = chessBoardRef.current;
         if (activePiece && chessboard) {
 
-            const minX = chessboard.offsetLeft - 37;
-            const minY = chessboard.offsetTop - 37;
-            const maxX = minX + chessboard.clientWidth;
-            const maxY = minY + chessboard.clientHeight;
+            const minX = chessboard.offsetLeft - 37 + 80;
+            const minY = chessboard.offsetTop - 37 + 80;
+            const maxX = minX + chessboard.clientWidth - 160;
+            const maxY = minY + chessboard.clientHeight - 160;
 
-            var x = e.clientX - 37;
-            var y = e.clientY - 37;
+            var chess_rect = chessboard.getBoundingClientRect();
+
+            var x = e.clientX - 37 - chess_rect.left;
+            var y = e.clientY - 37 - chess_rect.top;
             activePiece.style.position = "absolute";
             activePiece.style.left = x < minX ? `${minX}px`: x > maxX ? `${maxX}px` : `${x}px`;
             activePiece.style.top = y < minY ? `${minY}px`: y > maxY ? `${maxY}px` : `${y}px`;
@@ -110,8 +126,9 @@ const ChessBoard = ({ board, onMove, reverse }) => {
     const dropPiece = function (e) {
         const chessboard = chessBoardRef.current;
         if (activePiece && chessboard) {
-            toPos.x = Math.floor((e.clientX - chessboard.offsetLeft - 80) / ((chessboard.clientWidth-160)/8));
-            toPos.y = Math.floor((e.clientY - chessboard.offsetTop - 80) / ((chessboard.clientHeight-160)/8));
+            var chess_rect = chessboard.getBoundingClientRect();
+            toPos.x = Math.floor((e.clientX - chess_rect.left - 80) / ((chessboard.clientWidth-160)/8));
+            toPos.y = Math.floor((e.clientY - chess_rect.top - 80) / ((chessboard.clientHeight-160)/8));
 
             console.log(fromPos, toPos);
             if (reverse) { fromPos['y'] = 7 - fromPos['y']; toPos['y'] = 7 - toPos['y']; }
@@ -123,10 +140,6 @@ const ChessBoard = ({ board, onMove, reverse }) => {
             fromPos = {x: 0, y: 0};
             toPos = {x: 0, y: 0};
         }
-
-
-
-
     }
 
     const squares = [];
@@ -165,7 +178,7 @@ const ChessBoard = ({ board, onMove, reverse }) => {
 
 
     return (
-        <div>
+        <div className="back-chessboard" >
             <div className="background">
                 <div
                     onMouseMove={e => movePiece(e)}

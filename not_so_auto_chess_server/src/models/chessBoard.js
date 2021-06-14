@@ -46,8 +46,25 @@ class Move {
 
             for (var i = 0; i < distance; i++) {
 
-                x = this.abs_distance_x > 0 ? (this.distance_x > 0 ? x + 1 : x - 1) : x;
-                y = this.abs_distance_y > 0 ? (this.ditance_y > 0 ? y + 1 : y - 1) : y;
+                console.log(x, y);
+
+                if (this.abs_distance_x > 0) {
+                    if (this.distance_x > 0) {
+                        x++;
+                    }
+                    else {
+                        x--;
+                    }
+                }
+                if (this.abs_distance_y > 0) {
+                    if (this.distance_y > 0) {
+                        y++;
+                    }
+                    else {
+                        y--;
+                    }
+                }
+
                 squares.push([x, y]);
 
             }
@@ -57,6 +74,8 @@ class Move {
         if (this.isDiagonal()) {
 
             for (var i = 0; i < distance; i++) {
+
+                console.log(x, y);
 
                 if (this.distance_x > 0) {
                     x++;
@@ -210,7 +229,7 @@ class ChessBoard {
         // KNIGHTS LOGIC
         if (piece_from === Pieces.BKNIGHT || piece_from === Pieces.WKNIGHT) {
 
-            if ( (move.abs_distance_x !== 1 && move.abs_distance_y !== 2) && (move.abs_distance_x !== 2 && move.abs_distance_y !== 1)) {
+            if ( (move.abs_distance_x !== 1 || move.abs_distance_y !== 2) && (move.abs_distance_x !== 2 || move.abs_distance_y !== 1)) {
                 throw ("Knights can't move this way");
             }
 
