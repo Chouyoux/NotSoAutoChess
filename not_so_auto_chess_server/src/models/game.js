@@ -23,6 +23,7 @@ class Game {
         state["turn"] = this.chess_board.playerTurn;
         state["player1"] = this.players[0].auth_key;
         state["player2"] = this.players[1].auth_key;
+        state["lastMove"] = [[this.chess_board.lastMove.x_from, this.chess_board.lastMove.y_from], [this.chess_board.lastMove.x_to, this.chess_board.lastMove.y_to]];
 
         return state;
 

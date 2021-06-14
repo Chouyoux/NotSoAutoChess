@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 
 import './chess_board.css';
 
@@ -56,7 +56,7 @@ sets_imgs[1].push(bones_brook);
 sets_imgs[1].push(bones_bqueen);
 sets_imgs[1].push(bones_bking);
 
-const ChessBoard = ({ board, onMove, reverse }) => {
+const ChessBoard = ({ lastMove, board, onMove, reverse }) => {
 
     const chessBoardRef = useRef(null);
 
@@ -93,8 +93,6 @@ const ChessBoard = ({ board, onMove, reverse }) => {
 
             var x = e.clientX - 37 - chess_rect.left;
             var y = e.clientY - 37 - chess_rect.top;
-            console.log("Clicked " + x, y);
-            console.log("Offset " + chess_rect.left, chess_rect.top);
             element.style.position = "absolute";
             element.style.left = `${x}px`;
             element.style.top = `${y}px`;
@@ -120,7 +118,6 @@ const ChessBoard = ({ board, onMove, reverse }) => {
             activePiece.style.left = x < minX ? `${minX}px`: x > maxX ? `${maxX}px` : `${x}px`;
             activePiece.style.top = y < minY ? `${minY}px`: y > maxY ? `${maxY}px` : `${y}px`;
         }
-
     }
 
     const dropPiece = function (e) {
@@ -143,7 +140,7 @@ const ChessBoard = ({ board, onMove, reverse }) => {
     }
 
     const squares = [];
-    var color = "white";
+    var color =  reverse ? "black" : "white";
     var key = 0;
 
     for (var x = reverse ? 7 : 0; reverse ? x >= 0 : x < board.length; reverse ? x-- : x++) {
@@ -155,13 +152,15 @@ const ChessBoard = ({ board, onMove, reverse }) => {
             const piece_key = board[x][y];
 
             if (piece_key === 12) {
+                var a = lastMove !== "None" && ( (lastMove[0][0] === y && lastMove[0][1] === x) || (lastMove[1][0] === y && lastMove[1][1] === x) ) ? " lastMove" : "" ;
                 squares.push(
-                    <div className={color} key={key} />
+                    <div className={color + a} key={key} />
                 );
             }
             else {
+                var a = lastMove !== "None" && ( (lastMove[0][0] === y && lastMove[0][1] === x) || (lastMove[1][0] === y && lastMove[1][1] === x) ) ? " lastMove" : "" ;
                 squares.push(
-                    <div className={color} key={key}  >
+                    <div className={color + a} key={key}  >
                         <div style={{backgroundImage: `url(${sets_imgs[1][piece_key]})`}} className="chess-piece" />
                     </div>
                 );

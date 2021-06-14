@@ -46,8 +46,6 @@ class Move {
 
             for (var i = 0; i < distance; i++) {
 
-                console.log(x, y);
-
                 if (this.abs_distance_x > 0) {
                     if (this.distance_x > 0) {
                         x++;
@@ -74,8 +72,6 @@ class Move {
         if (this.isDiagonal()) {
 
             for (var i = 0; i < distance; i++) {
-
-                console.log(x, y);
 
                 if (this.distance_x > 0) {
                     x++;
@@ -109,6 +105,7 @@ class ChessBoard {
         this.board = [];
         this.players = players;
         this.playerTurn = 0;
+        this.lastMove = "None";
 
         if (board) {
 
@@ -283,7 +280,6 @@ class ChessBoard {
 
             for (var i = 0; i < squares.length; i++) {
 
-                console.log("PIECE BETWEEN : " + this.board[squares[i][0]][squares[i][1]]);
                 if (this.board[squares[i][1]][squares[i][0]] !== Pieces.EMPTY) {
                     throw ("Queens can't move that way.");
                 }
@@ -303,6 +299,7 @@ class ChessBoard {
 
         this.board[move.y_from][move.x_from] = Pieces.EMPTY;
         this.board[move.y_to][move.x_to] = piece_from;
+        this.lastMove = move;
 
     }
 

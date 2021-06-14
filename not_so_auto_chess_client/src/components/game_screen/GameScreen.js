@@ -36,6 +36,11 @@ const GameScreen = ({ socket }) => {
             if (response.success) {
                 //
             }
+            else {
+                if (response.message === "It's not this player's turn.") {
+                    //
+                }
+            }
         });
 
     }
@@ -43,7 +48,7 @@ const GameScreen = ({ socket }) => {
     useEffect(() => {
         updateGameState();
 
-        socket.on("updateGame", function () { updateGameState() });
+        socket.on("updateGame", function () { updateGameState(); });
 
         return () => {
             socket.removeEventListener("updateGame", function () { updateGameState() });
@@ -53,7 +58,7 @@ const GameScreen = ({ socket }) => {
 
     return (
         <div className="gameScreen">
-            { gameState === {} || gameState["board"] === undefined ? null : <ChessBoard onMove={sendChessBoardMove} board={gameState["board"]} reverse={gameState["player2"] && gameState["player2"] === getCookie("auth_key")} /> }
+            { gameState === {} || gameState["board"] === undefined ? null : <ChessBoard lastMove={gameState["lastMove"]} onMove={sendChessBoardMove} board={gameState["board"]} reverse={gameState["player2"] && gameState["player2"] === getCookie("auth_key")} /> }
         </div>
     )
 }
