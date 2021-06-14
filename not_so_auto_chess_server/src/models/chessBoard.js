@@ -38,7 +38,6 @@ class Move {
         }
 
         let distance = this.abs_distance_x > 0 ? this.abs_distance_x - 1 : this.abs_distance_y - 1;
-        console.log(distance);
         let x = this.x_from;
         let y = this.y_from;
 
