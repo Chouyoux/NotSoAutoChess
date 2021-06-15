@@ -29,7 +29,7 @@ const PlayerInfo = ({ time, pseudonym, avatar, reverse }) => {
     
         <div className="player-info-avatarFrame">
         <div className="player-info-avatarContainer" style={{backgroundImage: `url(${avatars[avatar]})`}}>
-            <p className="player-info-pseudoFrame">{pseudonym}</p>
+            <div className="player-info-pseudoFrame">{pseudonym}</div>
         </div>
         </div>
     </div>
