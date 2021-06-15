@@ -56,25 +56,33 @@ sets_imgs[1].push(bones_brook);
 sets_imgs[1].push(bones_bqueen);
 sets_imgs[1].push(bones_bking);
 
-const ChessBoard = ({ lastMove, board, onMove, reverse }) => {
+let ChessBoard = ({ lastMove, board, onMove, reverse }) => {
 
     const chessBoardRef = useRef(null);
 
-    var activePiece = null;
-    var whereWasPieceX = 0;
-    var whereWasPieceY = 0;
+    const [activePiece, setActivePiece] = useState(null);
+    const [whereWasPieceX, setWhereWasPieceX] = useState(0);
+    const [whereWasPieceY, setWhereWasPieceY] = useState(0);
 
-    let fromPos = {x: 0, y: 0};
-    let toPos = {x: 0, y: 0};
+    
+    const [fromPos, setFromPos] = useState({x: 0, y: 0});
+    const [toPos, setToPos] = useState({x: 0, y: 0});
+
+    //var activePiece = null;
+    //var whereWasPieceX = 0;
+    //var whereWasPieceY = 0;
+
+    //let fromPos = {x: 0, y: 0};
+    //let toPos = {x: 0, y: 0};
 
     const grabPiece = function (e) {
 
         if (!((e.buttons & 1) === 1) && activePiece) {
             activePiece.style.left = `${whereWasPieceX}px`;
             activePiece.style.top = `${whereWasPieceY}px`;
-            activePiece = null;
-            fromPos = {x: 0, y: 0};
-            toPos = {x: 0, y: 0};
+            setActivePiece(null);
+            setFromPos({x: 0, y: 0});
+            setToPos({x: 0, y: 0});
             return;
         }
 
@@ -84,20 +92,21 @@ const ChessBoard = ({ lastMove, board, onMove, reverse }) => {
             
             var rect = element.getBoundingClientRect();
             var chess_rect = chessboard.getBoundingClientRect();
-            whereWasPieceX = rect.left - chess_rect.left;
-            whereWasPieceY = rect.top - chess_rect.top;
+            setWhereWasPieceX(rect.left - chess_rect.left);
+            setWhereWasPieceY(rect.top - chess_rect.top);
 
             
-            fromPos.x = Math.floor((e.clientX - chess_rect.left - 80) / ((chessboard.clientWidth-160)/8));
-            fromPos.y = Math.floor((e.clientY - chess_rect.top - 80) / ((chessboard.clientHeight-160)/8));
+            setFromPos({x : Math.floor((e.clientX - chess_rect.left) / ((chessboard.clientWidth)/8)), y : Math.floor((e.clientY - chess_rect.top) / ((chessboard.clientHeight)/8))});
 
-            var x = e.clientX - 37 - chess_rect.left;
-            var y = e.clientY - 37 - chess_rect.top;
+            console.log(fromPos);
+
+            var x = e.clientX - 32 - chess_rect.left;
+            var y = e.clientY - 32 - chess_rect.top;
             element.style.position = "absolute";
             element.style.left = `${x}px`;
             element.style.top = `${y}px`;
 
-            activePiece = element;
+            setActivePiece(element);
         }
     }
 
@@ -105,15 +114,17 @@ const ChessBoard = ({ lastMove, board, onMove, reverse }) => {
         const chessboard = chessBoardRef.current;
         if (activePiece && chessboard) {
 
-            const minX = chessboard.offsetLeft - 37 + 80;
-            const minY = chessboard.offsetTop - 37 + 80;
-            const maxX = minX + chessboard.clientWidth - 160;
-            const maxY = minY + chessboard.clientHeight - 160;
+            var chess_rect = chessboard.getBoundingClientRect();
+
+            const minX = 0 - 32;
+            const minY = 0 - 32;
+            const maxX = minX + chessboard.clientWidth;
+            const maxY = minY + chessboard.clientHeight;
 
             var chess_rect = chessboard.getBoundingClientRect();
 
-            var x = e.clientX - 37 - chess_rect.left;
-            var y = e.clientY - 37 - chess_rect.top;
+            var x = e.clientX - 32 - chess_rect.left;
+            var y = e.clientY - 32 - chess_rect.top;
             activePiece.style.position = "absolute";
             activePiece.style.left = x < minX ? `${minX}px`: x > maxX ? `${maxX}px` : `${x}px`;
             activePiece.style.top = y < minY ? `${minY}px`: y > maxY ? `${maxY}px` : `${y}px`;
@@ -124,18 +135,17 @@ const ChessBoard = ({ lastMove, board, onMove, reverse }) => {
         const chessboard = chessBoardRef.current;
         if (activePiece && chessboard) {
             var chess_rect = chessboard.getBoundingClientRect();
-            toPos.x = Math.floor((e.clientX - chess_rect.left - 80) / ((chessboard.clientWidth-160)/8));
-            toPos.y = Math.floor((e.clientY - chess_rect.top - 80) / ((chessboard.clientHeight-160)/8));
+            toPos.x = Math.floor((e.clientX - chess_rect.left) / ((chessboard.clientWidth)/8));
+            toPos.y = Math.floor((e.clientY - chess_rect.top) / ((chessboard.clientHeight)/8));
 
-            console.log(fromPos, toPos);
             if (reverse) { fromPos['y'] = 7 - fromPos['y']; toPos['y'] = 7 - toPos['y']; }
 
             activePiece.style.left = `${whereWasPieceX}px`;
             activePiece.style.top = `${whereWasPieceY}px`;
             onMove(fromPos, toPos);
-            activePiece = null;
-            fromPos = {x: 0, y: 0};
-            toPos = {x: 0, y: 0};
+            setActivePiece(null);
+            setFromPos({x: 0, y: 0});
+            setToPos({x: 0, y: 0});
         }
     }
 
@@ -180,10 +190,10 @@ const ChessBoard = ({ lastMove, board, onMove, reverse }) => {
         <div className="back-chessboard" >
             <div className="background">
                 <div
+                    className="chessboard"
                     onMouseMove={e => movePiece(e)}
                     onMouseDown={e => grabPiece(e)}
                     onMouseUp={e => dropPiece(e)}
-                    className="chessboard"
                     ref={chessBoardRef}
                 >
                     {squares}
@@ -194,4 +204,6 @@ const ChessBoard = ({ lastMove, board, onMove, reverse }) => {
     )
 }
 
+
+ChessBoard = React.memo(ChessBoard);
 export default ChessBoard

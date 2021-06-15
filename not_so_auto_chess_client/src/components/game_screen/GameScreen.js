@@ -4,7 +4,8 @@ import getCookie from '../../utils/get_cookie.js';
 
 import './game_screen.css';
 
-import ChessBoard from './ChessBoard'
+import ChessBoard from './ChessBoard';
+import PlayerInfo from './PlayerInfo';
 
 const GameScreen = ({ socket }) => {
 
@@ -13,7 +14,6 @@ const GameScreen = ({ socket }) => {
     const updateGameState = function () {
 
         socket.emit("userGameGet", { auth_key: getCookie("auth_key") }, (response) => {
-            console.log(response);
 
             if (response.success) {
 
@@ -58,7 +58,28 @@ const GameScreen = ({ socket }) => {
 
     return (
         <div className="gameScreen">
-            { gameState === {} || gameState["board"] === undefined ? null : <ChessBoard lastMove={gameState["lastMove"]} onMove={sendChessBoardMove} board={gameState["board"]} reverse={gameState["player2"] && gameState["player2"] === getCookie("auth_key")} /> }
+            { gameState === {} || gameState["board"] === undefined ? null :
+                <div>
+                <ChessBoard
+                    lastMove={gameState["lastMove"]}
+                    onMove={sendChessBoardMove}
+                    board={gameState["board"]}
+                    reverse={gameState["player2"] && gameState["player2"] === getCookie("auth_key")}
+                />
+                <PlayerInfo
+                    reverse={gameState["player2"] && gameState["player2"] === getCookie("auth_key")}
+                    time={gameState["player1Time"]}
+                    pseudonym={gameState["player1Pseudonym"]}
+                    avatar={gameState["player1Avatar"]}
+                />
+                <PlayerInfo
+                    reverse={gameState["player1"] && gameState["player1"] === getCookie("auth_key")}
+                    time={gameState["player2Time"]}
+                    pseudonym={gameState["player2Pseudonym"]}
+                    avatar={gameState["player2Avatar"]}
+                />
+                </div>
+            }
         </div>
     )
 }

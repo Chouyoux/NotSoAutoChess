@@ -1,0 +1,90 @@
+.player-info-timer {
+    background-image: url("../../images/game_screen/player_info/timer.png");
+    background-size: 96px;
+    image-rendering: pixelated;
+    height: 48px;
+    width: 96px;
+    margin: 0;
+}
+
+.player-info-timer-reverse {
+    background-image: url("../../images/game_screen/player_info/timer.png");
+    background-size: 96px;
+    image-rendering: pixelated;
+    height: 48px;
+    width: 96px;
+    left: 30px;
+    margin: 0;
+}
+
+.player-info-avatarFrame {
+    background-image: url("../../images/game_screen/player_info/frame.png");
+    background-size: 168px;
+    height: 168px;
+    width: 168px;
+    image-rendering: pixelated;
+}
+
+.player-info-pseudoFrame {
+    color: white;
+    font-size: 18px;
+    font-family: pixel;
+    display: block;
+    background-color: rgb(0, 0, 0, .7);
+    height: 18px;
+    top: 110px;
+    position: relative;text-align: center;
+}
+
+.player-info-pic {
+    width: 128px;
+    height: 128px;
+}
+
+.player-info-avatarContainer {
+    background-image: url("../../images/profile_screen/avatars/avatar0.png");
+    background-size: 100%;
+    height: 128px;
+    width: 128px;
+    left: 20px;
+    top: 20px;
+    position: relative;
+    margin: 0;
+}
+
+.player-info {
+    left: 50vw;
+    top: 50vh;
+    
+    transform: translate( calc(456px - 50%) , calc(220px - 50%));
+    -webkit-transform: translate( calc(456px - 50%) , calc(220px - 50%));
+
+    position: absolute;
+    display: inline-block;
+}
+
+.player-info-reverse {
+    left: 50vw;
+    top: 50vh;
+    
+    transform: translate( calc(-456px - 50%) , calc(-220px - 50%));
+    -webkit-transform: translate( calc(-456px - 50%) , calc(-220px - 50%));
+
+    position: absolute;
+    display: inline-block;
+}
+
+.player-info-timer-txt {
+    font-size: 32px;
+    font-family: pixel;
+    color: white;
+    top: 7px;
+    left: 2px;
+    text-align: center;
+    position: relative;
+}
+
+p {
+    margin: 0;
+    padding: 0;
+} 

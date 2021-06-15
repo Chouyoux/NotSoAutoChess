@@ -99,12 +99,29 @@ class Move {
 
 class ChessBoard {
 
-    constructor(board, players) {
+    constructor(board, players, time) {
 
         this.board = [];
         this.players = players;
         this.playerTurn = 0;
         this.lastMove = "None";
+        this.perPlayerTime = time || 120;
+
+        this.playerTimes = {};
+        for (var i = 0; i < this.players.length; i++) {
+            this.playerTimes[this.players[i]._id.toString()] = this.perPlayerTime;
+        }
+
+        this.clock = setInterval((chessboard) => {
+            chessboard.playerTimes[chessboard.players[chessboard.playerTurn]._id.toString()]--;
+            if (this.checkWin()) this.gameEnd();
+            for (var i = 0; i < this.players.length; i++) {
+                this.players[i].updateGame();
+            }
+            if (chessboard.playerTimes[chessboard.players[chessboard.playerTurn]._id.toString()] < 0) {
+                clearInterval(chessboard.clock);
+            }
+        }, 1000, this);
 
         if (board) {
 
@@ -134,6 +151,49 @@ class ChessBoard {
 
     }
 
+    gameEnd() {
+        console.log("Game of " + this.players[0].pseudonym + " and " + this.players[1].pseudonym  + " just finished.");
+        for (var i = 0; i < this.players.length; i++) {
+            this.players[i].updateGame();
+            this.players[i].game = null;
+        }
+    }
+
+    checkWin() {
+
+        var color = "white";
+
+        for (const [key, value] of Object.entries(this.playerTimes)) {
+            if (value < 0) {
+                return true;
+            }
+        }
+
+        for (var x = 0; x < this.board.length; x++){
+            for (var y = 0; y < this.board[x].length; y++){
+                var piece = this.board[x][y];
+
+                if (this.isPieceWhite(piece) && color !== "white") {
+                    return false;
+                }
+                else if (!this.isPieceWhite(piece) && Pieces.EMPTY !== piece &&  color !== "black") {
+                    return false;
+                }
+
+                if (this.isPieceWhite(piece)) {
+                    color = "white";
+                }
+                else if (!this.isPieceWhite(piece) && Pieces.EMPTY !== piece) {
+                    color = "black";
+                }
+                
+            }
+        }
+
+        return true;
+
+    }
+
     pieceBelongsToPlayer(piece, player) {
         return this.isPlayerWhite(player) === this.isPieceWhite(piece);
     }
@@ -154,6 +214,10 @@ class ChessBoard {
 
         if (player !== this.players[this.playerTurn]) {
             throw ("It's not this player's turn.");
+        }
+
+        if (this.playerTimes[player._id.toString()] < 0) {
+            throw ("You don't have time.");
         }
 
         var move = new Move(move);
@@ -299,6 +363,7 @@ class ChessBoard {
         this.board[move.y_from][move.x_from] = Pieces.EMPTY;
         this.board[move.y_to][move.x_to] = piece_from;
         this.lastMove = move;
+        if (this.checkWin()) this.gameEnd();
 
     }
 

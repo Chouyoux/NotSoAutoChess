@@ -54,7 +54,41 @@ class MatchMaking {
 
         }
 
+        var toRemove = [];
+
+        for (var i = 0; i < this.lobbies.length; i++) {
+
+            var lobby = this.lobbies[i];
+            var check = true;
+
+            for (var y = 0; y < lobby.players.length; y++) {
+
+                var player = lobby.players[y];
+                if (!player.game) {
+                    check = false;
+                }
+
+            }
+
+            if (check) {
+                toRemove.push(lobby);
+            }
+
+        }
+
+        for (var i = 0; i < toRemove.length; i++) {
+
+            var lobby = toRemove[i];
+            const index = this.lobbies.indexOf(lobby);
+            if (index > -1) {
+                this.lobbies.splice(index, 1);
+            }
+
+        }
+
     }
+
+
 
     requestAddLobbyToQueue(player) {
 
