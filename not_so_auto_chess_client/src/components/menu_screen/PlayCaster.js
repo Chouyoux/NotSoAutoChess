@@ -22,7 +22,8 @@ const PlayCaster = ({ socket }) => {
         socket.emit(isSearching ? "userMatchmakingLeave" : "userMatchmakingJoin", { auth_key: getCookie("auth_key") }, (response) => {
             console.log(response);
             if (response.success){
-                //
+                setIsSearching(!isSearching);
+                setPlayButton(!isSearching ? cancel_button_hover : play_button_hover);
             }
         });
 
@@ -36,7 +37,7 @@ const PlayCaster = ({ socket }) => {
             console.log(response);
             if (response.success){
                 setIsSearching(response.isSearching);
-                setPlayButton(isSearching ? cancel_button : play_button);
+                setPlayButton(response.isSearching ? cancel_button : play_button);
             }
         });
 
