@@ -22,7 +22,7 @@ function App() {
 
     var logged = false;
 
-    logged = socket.emit("signIn", { auth_key: getCookie("auth_key") }, (response) => {
+    logged = socket.emit("userAuthenfity", { auth_key: getCookie("auth_key") }, (response) => {
       console.log(response);
       if (response.success){
         onLogin();

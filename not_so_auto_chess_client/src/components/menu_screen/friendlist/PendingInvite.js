@@ -4,12 +4,12 @@ import decline from '../../../images/friend_list/decline.png';
 import decline_hover from '../../../images/friend_list/decline_hover.png';
 import decline_click from '../../../images/friend_list/decline_click.png';
 
-const PendingInvite = ( {name, key, onDecline} ) => {
+const PendingInvite = ( {name, index, onDecline} ) => {
 
     const [declineIcon, setDeclineIcon] = useState(decline);
 
     return (
-        <div className="contact" key={key}>
+        <div className="contact" key={index}>
             <p>{name.length > 9 ? name.substring(0, 8)+"..." : name}</p>
             <img
                 className="FLFirstIcon selectDisable"

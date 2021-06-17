@@ -37,6 +37,13 @@ const Chat = ({ socket }) => {
   useEffect(() => {
     socket.on("msgReceived", function (msg) { handleNewMsg(msg) });
 
+    socket.emit("userChatGetMsgList", { auth_key: getCookie("auth_key") }, (response) => {
+      console.log(response);
+      if (response.success){
+        setMsgs(msgs => [...response.msg_list]);
+      }
+    });
+
     return () => {
       socket.removeEventListener("msgReceived", function (msg) { handleNewMsg(msg) });
     };

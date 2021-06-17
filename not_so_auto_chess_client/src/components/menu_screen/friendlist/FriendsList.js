@@ -138,27 +138,27 @@ const FriendsList = ( { socket } ) => {
         }
         else {
             friends_elements.push(
-                <Friend online={value.online} name={value.pseudonym} key={index} onRemove={onDecline} onInvite={onInvite} />
+                <Friend online={value.online} name={value.pseudonym} index={index} onRemove={onDecline} onInvite={onInvite} />
             );
         }
     }
     for (const [index, value] of offline_friends.entries()) {
         friends_elements.push(
-            <Friend online={value.online} name={value.pseudonym} key={index} onRemove={onDecline} />
+            <Friend online={value.online} name={value.pseudonym} index={index+friends.length} onRemove={onDecline} />
         );
     }
 
     const invitations_received_elements = [];
     for (const [index, value] of invitationsReceived.entries()) {
         invitations_received_elements.push(
-            <ReceivedInvite name={value} key={index+friends.length} onValidate={onValidate} onDecline={onDecline} />
+            <ReceivedInvite name={value} index={index+friends.length+offline_friends.length} onValidate={onValidate} onDecline={onDecline} />
         );
     }
 
     const invitations_pending_elements = [];
     for (const [index, value] of invitationsPending.entries()) {
         invitations_pending_elements.push(
-            <PendingInvite name={value} key={index+friends.length+invitations_received_elements.length} onDecline={onDecline} />
+            <PendingInvite name={value} index={index+friends.length+offline_friends.length+invitations_received_elements.length} onDecline={onDecline} />
         );
     }
 

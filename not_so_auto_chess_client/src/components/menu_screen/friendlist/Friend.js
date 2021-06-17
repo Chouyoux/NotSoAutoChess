@@ -6,13 +6,13 @@ import remove_friend_hover from '../../../images/friend_list/remove_friend_hover
 import add_friend_to_group from '../../../images/friend_list/add_friend_to_group.png';
 import add_friend_to_group_hover from '../../../images/friend_list/add_friend_to_group_hover.png';
 
-const Friend = ( {online, name, key, onRemove, onInvite} ) => {
+const Friend = ( {online, name, index, onRemove, onInvite} ) => {
 
     const [removeFriendIcon, setRemoveFriendIcon] = useState(remove_friend);
     const [addFriendToGroupIcon, setAddFriendToGroupIcon] = useState(add_friend_to_group);
 
     return (
-        <div className="contact" key={key}>
+        <div className="contact" key={index}>
 
             <p className={online ? "online" : "offline"}>{name.length > 9 ? name.substring(0, 8)+"..." : name}</p>
             
