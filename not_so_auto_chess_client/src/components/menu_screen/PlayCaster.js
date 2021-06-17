@@ -36,6 +36,7 @@ const PlayCaster = ({ socket }) => {
             console.log(response);
             if (response.success){
                 setIsSearching(response.isSearching);
+                setPlayButton(isSearching ? cancel_button : play_button);
             }
         });
 
