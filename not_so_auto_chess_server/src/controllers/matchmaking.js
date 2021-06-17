@@ -78,17 +78,37 @@ class MatchMaking {
 
         for (var i = 0; i < toRemove.length; i++) {
 
-            var lobby = toRemove[i];
-            const index = this.lobbies.indexOf(lobby);
-            if (index > -1) {
-                this.lobbies.splice(index, 1);
-            }
+            this.removeLobby(toRemove[i]);
 
         }
 
     }
 
+    hasLobby(lobby) {
+        return this.lobbies.includes(lobby);
+    }
 
+    requestRemoveLobbyFromQueue(player) {
+
+        if (!player.lobby.isLeader(player)) {
+            throw("Requesting player is not the leader of its lobby");
+        }
+
+        if (!this.lobbies.includes(player.lobby)) {
+            throw("Requesting lobby is not in Matchmaking");
+        }
+
+        this.removeLobby(player.lobby);
+
+    }
+
+    removeLobby(lobby) {
+        const index = this.lobbies.indexOf(lobby);
+        if (index > -1) {
+            this.lobbies.splice(index, 1);
+            lobby.notifyMatchMakingCanceled();
+        }
+    }
 
     requestAddLobbyToQueue(player) {
 
@@ -97,7 +117,7 @@ class MatchMaking {
         }
 
         if (this.lobbies.includes(player.lobby)) {
-            throw("Requesting lobby is already in MatchMaking");
+            throw("Requesting lobby is already in Matchmaking");
         }
 
         this.addLobbyToQueue(player.lobby);
@@ -107,6 +127,7 @@ class MatchMaking {
     addLobbyToQueue(lobby) {
 
         this.lobbies.push(lobby);
+        lobby.notifyMatchMakingEntered();
         this.searchGame();
 
     }

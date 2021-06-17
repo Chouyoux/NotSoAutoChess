@@ -17,6 +17,7 @@ class User {
         this.socket = null;
         this.lobby = new Lobby(this);
         this.game = null;
+        this.msg_list = [];
     }
 
     isConnected() {
@@ -98,6 +99,10 @@ class User {
     sendMsg(msg) {
         if (this.isConnected()) {
             this.socket.emit("msgReceived", msg);
+            this.msg_list.push(msg);
+            if (this.msg_list.length > 30) {
+                this.msg_list.shift();
+            }
         }
     }
 
@@ -116,6 +121,18 @@ class User {
     updateGame() {
         if (this.isConnected()) {
             this.socket.emit("updateGame");
+        }
+    }
+
+    notifyMatchMakingEntered() {
+        if (this.isConnected()) {
+            this.socket.emit("MMEntered");
+        }
+    }
+
+    notifyMatchMakingCanceled() {
+        if (this.isConnected()) {
+            this.socket.emit("MMCanceled");
         }
     }
 

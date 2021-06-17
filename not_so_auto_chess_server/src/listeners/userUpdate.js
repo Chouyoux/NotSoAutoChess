@@ -60,7 +60,13 @@ module.exports = function(socket) {
             new_password = data.password;
         }
 
-        user.pseudonym = new_pseudonym;
+        let old_pseudonym = "";
+        let changed_pseudonym = false;
+        if (user.pseudonym !== new_pseudonym) {
+            changed_pseudonym = true;
+            old_pseudonym = user.pseudonym;
+            user.pseudonym = new_pseudonym;
+        }
         user.email = new_email;
         user.password = new_password;
         user.avatar = new_avatar;
@@ -70,6 +76,9 @@ module.exports = function(socket) {
         for (var i = 0; i < online_friends.length; i++){
             let online_friend = online_friends[i];
             online_friend.updateFriendList();
+            if (changed_pseudonym) {
+                online_friend.sendMsg(old_pseudonym + " is now called " + new_pseudonym + ".");
+            }
         }
 
         user.lobby.updateLobby();

@@ -1,4 +1,5 @@
 const Users = require('../controllers/users');
+const Lobby = require('../models/lobby');
 
 module.exports = function (socket) {
 
@@ -18,6 +19,11 @@ module.exports = function (socket) {
         for (var i = 0; i < online_friends.length; i++) {
           let online_friend = online_friends[i];
           online_friend.socket.emit("updateFriendsList");
+          online_friend.sendMsg(user.pseudonym + " connected.");
+        }
+
+        if (!user.lobby) {
+          user.lobby = new Lobby(user);
         }
 
         callback({ success: true, token: Users.getUserById(user._id).auth_key });
@@ -30,15 +36,20 @@ module.exports = function (socket) {
 
       const _id = Users.authentifyAuthKey(data.auth_key);
       if (_id) {
-        Users.getUserById(_id).socket = this;
+        const user = Users.getUserById(_id);
+        user.socket = this;
 
         let online_friends = Users.getOnlineFriends(_id);
         for (var i = 0; i < online_friends.length; i++) {
           let online_friend = online_friends[i];
-          online_friend.socket.emit("updateFriendsList");
+          online_friend.updateFriendList();
         }
 
-        callback({ success: true, token: Users.getUserById(_id).auth_key });
+        if (!user.lobby) {
+          user.lobby = new Lobby(user);
+        }
+
+        callback({ success: true, token: user.auth_key });
         return;
       }
 

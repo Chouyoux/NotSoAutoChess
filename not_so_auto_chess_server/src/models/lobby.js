@@ -1,4 +1,5 @@
 const MaxPlayers = 8;
+const MatchMaking = require('../controllers/matchmaking');
 
 class Lobby {
 
@@ -81,10 +82,13 @@ class Lobby {
 
     addPlayer(player) {
 
+        MatchMaking.removeLobby(this);
+
         player.lobby.removePlayer(player);
         this.players.push(player);
         player.lobby = this;
         this.updateLobby();
+        this.sendMsg(player.pseudonym + " joined the lobby.");
 
     }
 
@@ -103,19 +107,27 @@ class Lobby {
 
     removePlayer(player) {
 
+        MatchMaking.removeLobby(this);
+
+        if (this.players.length > 1) {
+
+            if (this.isLeader(player)) {
+                this.leader = this.players[1];
+            }
+
+            this.updateLobby();
+            player.lobby = new Lobby(player);
+            player.updateLobby();
+
+        }
+
         var filtered = this.players.filter(function (value, index, arr) {
             return player != value;
         });
 
         this.players = filtered;
-
-        if (this.isLeader(player)) {
-            this.leader = this.players[0];
-        }
-
-        this.updateLobby();
-        player.lobby = new Lobby(player);
-        player.updateLobby();
+        
+        this.sendMsg(player.pseudonym + " left the lobby.");
 
     }
 
@@ -127,6 +139,22 @@ class Lobby {
 
         this.invitations = filtered;
 
+    }
+
+    notifyMatchMakingEntered() {
+        for (var i = 0; i < this.players.length; i++) {
+            let player = this.players[i];
+            player.notifyMatchMakingEntered();
+            player.sendMsg("Your lobby entered the MatchMaking.");
+        }
+    }
+
+    notifyMatchMakingCanceled() {
+        for (var i = 0; i < this.players.length; i++) {
+            let player = this.players[i];
+            player.notifyMatchMakingCanceled();
+            player.sendMsg("Your lobby left the MatchMaking.");
+        }
     }
 
     sendMsg(msg) {

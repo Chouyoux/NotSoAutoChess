@@ -3,7 +3,7 @@ const MatchMaking = require('../controllers/matchmaking');
 
 module.exports = function (socket) {
 
-    socket.on('userGameJoin', function (data, callback) { // {auth_key}
+    socket.on('userMatchmakingJoin', function (data, callback) { // {auth_key}
 
         if (!data.auth_key) {
             callback({ success: false, message: "Authentification failed." });

@@ -19,7 +19,9 @@ module.exports = function (socket) {
                     let online_friend = online_friends[i];
                     online_friend.updateFriendList();
                 }
+
                 user.lobby.removePlayer(user);
+                user.lobby = null;
 
             }
 
