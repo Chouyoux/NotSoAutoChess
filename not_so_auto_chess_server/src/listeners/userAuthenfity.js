@@ -13,6 +13,7 @@ module.exports = function (socket) {
         if (_id) {
             const user = Users.getUserById(_id);
             if (user) {
+                user.socket = this;
                 callback({ success: true, token: user.auth_key });
                 return;
             }
