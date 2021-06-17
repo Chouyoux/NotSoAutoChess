@@ -51,7 +51,7 @@ const GameScreen = ({ socket }) => {
         socket.on("updateGame", function () { updateGameState(); });
 
         return () => {
-            socket.removeEventListener("updateGame", function () { updateGameState() });
+            socket.removeEventListener("updateGame", function () { updateGameState(); });
         };
 
     }, []);

@@ -74,7 +74,7 @@ const Chat = ({ socket }) => {
     <div id="wrapper">
       <div id="menu" />
       <div id="chatbox">
-        {msgs.map(msg => <p className="chatmsg">{msg}</p>)}
+        {msgs.map((msg, index) => <p key={index} className="chatmsg">{msg}</p>)}
         <div ref={messagesEndRef} />
       </div>
       <div name="message">
