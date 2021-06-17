@@ -13,6 +13,7 @@ import cancel_button_click from '../../images/menu_screen/cancel_button_click.pn
 
 const PlayCaster = ({ socket }) => {
 
+    const [isMouseOver, setIsMouseOver] = useState(false);
     const [isSearching, setIsSearching] = useState(false);
     const [playButton, setPlayButton] = useState(isSearching ? cancel_button : play_button);
 
@@ -23,15 +24,15 @@ const PlayCaster = ({ socket }) => {
             console.log(response);
             if (response.success){
                 setIsSearching(!isSearching);
-                setPlayButton(!isSearching ? cancel_button_hover : play_button_hover);
+                setPlayButton(!isSearching ? (isMouseOver ? cancel_button_hover : cancel_button) : (isMouseOver ? play_button_hover : play_button));
             }
         });
 
     }
 
     useEffect(() => {
-        socket.on("MMEntered", function() {setIsSearching(true); setPlayButton(cancel_button_hover);});
-        socket.on("MMCanceled", function() {setIsSearching(false); setPlayButton(play_button_hover);});
+        socket.on("MMEntered", function() {setIsSearching(true); setPlayButton(isMouseOver ? cancel_button_hover : cancel_button);});
+        socket.on("MMCanceled", function() {setIsSearching(false); setPlayButton(isMouseOver ? play_button_hover : play_button);});
 
         socket.emit("userMatchmakingGet", { auth_key: getCookie("auth_key") }, (response) => {
             console.log(response);
@@ -42,8 +43,8 @@ const PlayCaster = ({ socket }) => {
         });
 
         return () => {
-            socket.removeEventListener("MMEntered", function() {setIsSearching(true); setPlayButton(cancel_button_hover);});
-            socket.removeEventListener("MMCanceled", function() {setIsSearching(false); setPlayButton(play_button_hover);});
+            socket.removeEventListener("MMEntered", function() {setIsSearching(true); setPlayButton(isMouseOver ? cancel_button_hover : cancel_button);});
+            socket.removeEventListener("MMCanceled", function() {setIsSearching(false); setPlayButton(isMouseOver ? play_button_hover : play_button);});
         };
 
     }, []);
@@ -56,8 +57,8 @@ const PlayCaster = ({ socket }) => {
                     onDragStart={(event) => {event.preventDefault();}}
                     alt="Play"
                     src={playButton}
-                    onMouseOver={() => {setPlayButton(isSearching ? cancel_button_hover : play_button_hover)}}
-                    onMouseOut={() => {setPlayButton(isSearching ? cancel_button : play_button)}}
+                    onMouseOver={() => {setPlayButton(isSearching ? cancel_button_hover : play_button_hover); setIsMouseOver(true);}}
+                    onMouseOut={() => {setPlayButton(isSearching ? cancel_button : play_button); setIsMouseOver(false);}}
                     onMouseDown={() => {setPlayButton(isSearching ? cancel_button_click : play_button_click)}}
                     onMouseUp={() => {setPlayButton(isSearching ? cancel_button_hover : play_button_hover)}}
                     onClick={() => {onClick();}}
