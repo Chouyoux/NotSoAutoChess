@@ -19,7 +19,6 @@ module.exports = function (socket) {
         for (var i = 0; i < online_friends.length; i++) {
           let online_friend = online_friends[i];
           online_friend.socket.emit("updateFriendsList");
-          online_friend.sendMsg(user.pseudonym + " connected.");
         }
 
         if (!user.lobby) {
