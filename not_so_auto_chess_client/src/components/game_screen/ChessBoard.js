@@ -14,6 +14,7 @@ import classic_brook from '../../images/game_screen/chess_board/pieces/classic/b
 import classic_bbishop from '../../images/game_screen/chess_board/pieces/classic/bbishop.png';
 import classic_bknight from '../../images/game_screen/chess_board/pieces/classic/bknight.png';
 import classic_bpawn from '../../images/game_screen/chess_board/pieces/classic/bpawn.png';
+import classic_board from '../../images/game_screen/chess_board/classic_board.png';
 
 import bones_wking from '../../images/game_screen/chess_board/pieces/bones/wking.png';
 import bones_wqueen from '../../images/game_screen/chess_board/pieces/bones/wqueen.png';
@@ -27,6 +28,7 @@ import bones_brook from '../../images/game_screen/chess_board/pieces/bones/brook
 import bones_bbishop from '../../images/game_screen/chess_board/pieces/bones/bbishop.png';
 import bones_bknight from '../../images/game_screen/chess_board/pieces/bones/bknight.png';
 import bones_bpawn from '../../images/game_screen/chess_board/pieces/bones/bpawn.png';
+import bones_board from '../../images/game_screen/chess_board/bones_board.png';
 
 const sets_imgs = [];
 sets_imgs.push([]);
@@ -42,6 +44,7 @@ sets_imgs[0].push(classic_bbishop);
 sets_imgs[0].push(classic_brook);
 sets_imgs[0].push(classic_bqueen);
 sets_imgs[0].push(classic_bking);
+sets_imgs[0].push(classic_board);
 sets_imgs.push([]);
 sets_imgs[1].push(bones_wpawn);
 sets_imgs[1].push(bones_wknight);
@@ -55,8 +58,17 @@ sets_imgs[1].push(bones_bbishop);
 sets_imgs[1].push(bones_brook);
 sets_imgs[1].push(bones_bqueen);
 sets_imgs[1].push(bones_bking);
+sets_imgs[1].push(bones_board);
 
-let ChessBoard = ({ lastMove, board, onMove, reverse }) => {
+const sets_board_colors = [];
+sets_board_colors.push([]);
+sets_board_colors[0].push("#c26d46");
+sets_board_colors[0].push("#76211b");
+sets_board_colors.push([]);
+sets_board_colors[1].push("#a7b5db");
+sets_board_colors[1].push("#6c81bb");
+
+let ChessBoard = ({ lastMove, board, onMove, reverse, skin1, skin2, skinBoard }) => {
 
     const chessBoardRef = useRef(null);
 
@@ -75,9 +87,55 @@ let ChessBoard = ({ lastMove, board, onMove, reverse }) => {
     //let fromPos = {x: 0, y: 0};
     //let toPos = {x: 0, y: 0};
 
+    function pieceToSkin(piece_key) {
+        if (piece_key < 6) {
+            return skin1;
+        }
+        else {
+            return skin2;
+        }
+    }
+
+    function touchHandler(event) {
+
+        var touches = event.changedTouches,
+            first = touches[0],
+            type = "";
+        switch(event.type)
+        {
+            case "touchstart": type = "mousedown"; break;
+            case "touchmove":  type = "mousemove"; break;        
+            case "touchend":   type = "mouseup";   break;
+            default:           return;
+        }
+
+        // initMouseEvent(type, canBubble, cancelable, view, clickCount, 
+        //                screenX, screenY, clientX, clientY, ctrlKey, 
+        //                altKey, shiftKey, metaKey, button, relatedTarget);
+
+        var simulatedEvent = document.createEvent("MouseEvent");
+        simulatedEvent.initMouseEvent(type, true, true, window, 1, 
+                                    first.screenX, first.screenY, 
+                                    first.clientX, first.clientY, false, 
+                                    false, false, false, 0/*left*/, null);
+
+        first.target.dispatchEvent(simulatedEvent);
+        event.preventDefault();
+    }
+      
+
     const grabPiece = function (e) {
 
-        if (!((e.buttons & 1) === 1) && activePiece) {
+        var isRightMB;
+        e = e || window.event;
+
+        if ("which" in e)  // Gecko (Firefox), WebKit (Safari/Chrome) & Opera
+            isRightMB = e.which == 3; 
+        else if ("button" in e)  // IE, Opera 
+            isRightMB = e.button == 2; 
+
+        if (isRightMB && activePiece) {
+            console.log("right click")
             activePiece.style.left = `${whereWasPieceX}px`;
             activePiece.style.top = `${whereWasPieceY}px`;
             setActivePiece(null);
@@ -164,14 +222,14 @@ let ChessBoard = ({ lastMove, board, onMove, reverse }) => {
             if (piece_key === 12) {
                 var a = lastMove !== "None" && ( (lastMove[0][0] === y && lastMove[0][1] === x) || (lastMove[1][0] === y && lastMove[1][1] === x) ) ? " lastMove" : "" ;
                 squares.push(
-                    <div className={color + a} key={key} />
+                    <div style={{backgroundColor: `${sets_board_colors[skinBoard][color === "white" ? 0 : 1]}`}}  className={color + a} key={key} />
                 );
             }
             else {
                 var a = lastMove !== "None" && ( (lastMove[0][0] === y && lastMove[0][1] === x) || (lastMove[1][0] === y && lastMove[1][1] === x) ) ? " lastMove" : "" ;
                 squares.push(
-                    <div className={color + a} key={key}  >
-                        <div style={{backgroundImage: `url(${sets_imgs[1][piece_key]})`}} className="chess-piece" />
+                    <div style={{backgroundColor: `${sets_board_colors[skinBoard][color === "white" ? 0 : 1]}`}} className={color + a} key={key}  >
+                        <div style={{backgroundImage: `url(${sets_imgs[pieceToSkin(piece_key)][piece_key]})`}} className="chess-piece" />
                     </div>
                 );
             }
@@ -188,12 +246,18 @@ let ChessBoard = ({ lastMove, board, onMove, reverse }) => {
 
     return (
         <div className="back-chessboard" >
-            <div className="background">
+            <div
+                className="background"
+                style={{backgroundImage: `url(${sets_imgs[skinBoard][12]})`}}
+            >
                 <div
                     className="chessboard"
                     onMouseMove={e => movePiece(e)}
                     onMouseDown={e => grabPiece(e)}
                     onMouseUp={e => dropPiece(e)}
+                    onTouchStart={e => touchHandler(e)}
+                    onTouchMove={e => touchHandler(e)}
+                    onTouchEnd={e => touchHandler(e)}
                     ref={chessBoardRef}
                 >
                     {squares}

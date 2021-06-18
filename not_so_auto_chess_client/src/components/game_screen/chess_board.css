@@ -52,8 +52,6 @@
     float: left;
     width: calc(100% / 8);
     height: calc(100% / 8);
-    /*background-color: #76211b;*/
-    background-color: #6c81bb;
     text-align:center;
     display: table-cell;
     vertical-align:middle;
@@ -63,8 +61,6 @@
     float: left;
     width: calc(100% / 8);
     height: calc(100% / 8);
-    /*background-color: #c26d46;*/
-    background-color: #a7b5db;
     text-align:center;
     display: table-cell;
     vertical-align: middle;

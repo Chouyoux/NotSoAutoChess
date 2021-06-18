@@ -27,6 +27,8 @@ class Game {
         state["player2Pseudonym"] = this.players[1].pseudonym;
         state["player1Avatar"] = this.players[0].avatar;
         state["player2Avatar"] = this.players[1].avatar;
+        state["player1Set"] = this.players[0].set;
+        state["player2Set"] = this.players[1].set;
         state["player1Time"] = this.chess_board.playerTimes[this.chess_board.players[0]._id.toString()];
         state["player2Time"] = this.chess_board.playerTimes[this.chess_board.players[1]._id.toString()];
         state["lastMove"] = [[this.chess_board.lastMove.x_from, this.chess_board.lastMove.y_from], [this.chess_board.lastMove.x_to, this.chess_board.lastMove.y_to]];

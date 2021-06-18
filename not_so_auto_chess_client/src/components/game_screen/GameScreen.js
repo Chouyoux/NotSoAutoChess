@@ -65,6 +65,9 @@ const GameScreen = ({ socket }) => {
                     onMove={sendChessBoardMove}
                     board={gameState["board"]}
                     reverse={gameState["player2"] && gameState["player2"] === getCookie("auth_key")}
+                    skin1={gameState["player1Set"]}
+                    skin2={gameState["player2Set"]}
+                    skinBoard={gameState["player1Set"] === 0 ? gameState["player2Set"] : gameState["player1Set"]}
                 />
                 <PlayerInfo
                     reverse={gameState["player2"] && gameState["player2"] === getCookie("auth_key")}
