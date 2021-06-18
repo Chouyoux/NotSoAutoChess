@@ -67,7 +67,7 @@ const GameScreen = ({ socket }) => {
                     reverse={gameState["player2"] && gameState["player2"] === getCookie("auth_key")}
                     skin1={gameState["player1Set"]}
                     skin2={gameState["player2Set"]}
-                    skinBoard={gameState["player1Set"] ? gameState["player2Set"] : gameState["player1Set"]}
+                    skinBoard={gameState["player1Set"] != 0 ? gameState["player1Set"] : gameState["player2Set"]}
                 />
                 <PlayerInfo
                     reverse={gameState["player2"] && gameState["player2"] === getCookie("auth_key")}
